@@ -6,16 +6,17 @@
     </head>
 
     <body>
-        Авторизация
+        Регистрация
+        {{#message}}
+            {{message}}
+        {{/message}}
         <br/>
-        <form action="/login" method="post">
+        <form action="/registration" method="post">
             <div><label> User Name : <input type="text" name="username"/> </label></div>
             <div><label> Password: <input type="password" name="password"/> </label></div>
             <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-            <div><input type="submit" value="Войти"/></div>
+            <div><input type="submit" value="Зарегистрироваться"/></div>
         </form>
-        <br/>
-        <a href="/registration">Регистрация</a>
     </body>
 
 </html>
