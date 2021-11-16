@@ -1,21 +1,25 @@
 package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.models.Message;
+import com.example.coffeapp.models.User;
 import com.example.coffeapp.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 @Controller()
+@RequestMapping("/message")
 public class MessageController {
 
     @Autowired
     private MessageRepo messageRepo;
 
-    @GetMapping("/message")
+    @GetMapping()
     public String main(Map<String, Object> model) {
         Iterable<Message> messages = messageRepo.findAll();
 
@@ -24,9 +28,13 @@ public class MessageController {
         return "message";
     }
 
-    @PostMapping("/message")
-    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model){
-        Message message = new Message(text, tag);
+    @PostMapping()
+    public String add(
+                @AuthenticationPrincipal User user,
+                @RequestParam String text,
+                @RequestParam String tag,
+                Map<String, Object> model){
+        Message message = new Message(text, tag, user);
 
         messageRepo.save(message);
 
@@ -37,7 +45,7 @@ public class MessageController {
         return "message";
     }
 
-    @PostMapping("/message/filter")
+    @PostMapping("/filter")
     public String filter(@RequestParam String filter, Map<String, Object> model) {
         Iterable<Message> messages;
 
@@ -51,4 +59,5 @@ public class MessageController {
 
         return "message";
     }
+
 }
