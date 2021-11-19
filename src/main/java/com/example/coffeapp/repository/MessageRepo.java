@@ -1,6 +1,6 @@
-package com.example.coffeapp.repos;
+package com.example.coffeapp.repository;
 
-import com.example.coffeapp.models.Message;
+import com.example.coffeapp.entity.Message;
 import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.coffeapp.models;
+package com.example.coffeapp.entity;
 
 import javax.persistence.*;
 

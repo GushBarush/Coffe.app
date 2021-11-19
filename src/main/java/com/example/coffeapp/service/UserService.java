@@ -1,6 +1,6 @@
 package com.example.coffeapp.service;
 
-import com.example.coffeapp.repos.UserRepo;
+import com.example.coffeapp.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

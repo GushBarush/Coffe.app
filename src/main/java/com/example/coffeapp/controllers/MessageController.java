@@ -1,8 +1,8 @@
 package com.example.coffeapp.controllers;
 
-import com.example.coffeapp.models.Message;
-import com.example.coffeapp.models.User;
-import com.example.coffeapp.repos.MessageRepo;
+import com.example.coffeapp.entity.Message;
+import com.example.coffeapp.entity.User;
+import com.example.coffeapp.repository.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

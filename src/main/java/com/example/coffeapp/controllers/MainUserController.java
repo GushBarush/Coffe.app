@@ -1,6 +1,6 @@
 package com.example.coffeapp.controllers;
 
-import com.example.coffeapp.models.User;
+import com.example.coffeapp.entity.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

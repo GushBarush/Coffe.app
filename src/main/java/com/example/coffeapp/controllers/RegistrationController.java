@@ -1,8 +1,8 @@
 package com.example.coffeapp.controllers;
 
-import com.example.coffeapp.models.Role;
-import com.example.coffeapp.models.User;
-import com.example.coffeapp.repos.UserRepo;
+import com.example.coffeapp.entity.Role;
+import com.example.coffeapp.entity.User;
+import com.example.coffeapp.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
