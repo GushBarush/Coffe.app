@@ -4,25 +4,28 @@ import com.example.coffeapp.models.Role;
 import com.example.coffeapp.models.User;
 import com.example.coffeapp.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/registration")
 public class RegistrationController {
 
     @Autowired
     private UserRepo userRepo;
 
-    @GetMapping("/registration")
+    @GetMapping
     public String registration() {
         return "registration";
     }
 
-    @PostMapping("/registration")
+    @PostMapping
     public String addUser(User user, Map<String, Object> model) {
         User userFromDb = userRepo.findByUsername(user.getUsername());
 

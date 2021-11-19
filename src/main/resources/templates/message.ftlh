@@ -1,11 +1,14 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
-    <div>
+    <div xmlns="http://www.w3.org/1999/html">
         <form method="post" action="/logout">
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <input type="submit" value="Sign Out"/>
         </form>
+        <br/>
+        <span><a href="/user">Администрирование</a></span>
+        <hr/>
     </div>
     <div>
         <form method="post" action="/message">

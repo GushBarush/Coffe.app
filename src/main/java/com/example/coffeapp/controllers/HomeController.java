@@ -7,7 +7,7 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-    @GetMapping()
+    @GetMapping
     public String greeting(Map<String, Object> model) {
         return "home";
     }
