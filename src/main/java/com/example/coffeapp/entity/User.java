@@ -18,7 +18,7 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
-    private Long numberPhone;
+    private String numberPhone;
     private Long coffee;
     private Long happyCoffee;
     private boolean active;
@@ -69,11 +69,11 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public Long getNumberPhone() {
+    public String getNumberPhone() {
         return numberPhone;
     }
 
-    public void setNumberPhone(Long numberPhone) {
+    public void setNumberPhone(String numberPhone) {
         this.numberPhone = numberPhone;
     }
 
