@@ -1,6 +1,6 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
-<div>Здарова заебал</div>
-<a href="/message">Войти</a>
+<div>RAFT</div>
+<a href="/main">Войти</a>
 </@c.page>

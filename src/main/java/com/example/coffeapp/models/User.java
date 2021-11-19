@@ -1,5 +1,6 @@
 package com.example.coffeapp.models;
 
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,6 +17,10 @@ public class User implements UserDetails {
     private Long id;
     private String username;
     private String password;
+    private String email;
+    private Long numberPhone;
+    private Long coffee;
+    private Long happyCoffee;
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -56,6 +61,22 @@ public class User implements UserDetails {
         this.id = id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Long getNumberPhone() {
+        return numberPhone;
+    }
+
+    public void setNumberPhone(Long numberPhone) {
+        this.numberPhone = numberPhone;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -86,5 +107,21 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Long getCoffee() {
+        return coffee;
+    }
+
+    public void setCoffee(Long coffee) {
+        this.coffee = coffee;
+    }
+
+    public Long getHappyCoffee() {
+        return happyCoffee;
+    }
+
+    public void setHappyCoffee(Long happyCoffee) {
+        this.happyCoffee = happyCoffee;
     }
 }
