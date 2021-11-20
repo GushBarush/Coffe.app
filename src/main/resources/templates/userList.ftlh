@@ -7,6 +7,7 @@
         <thead>
         <tr>
             <th>Имя</th>
+            <th>Номер</th>
             <th>Роль</th>
             <th></th>
             <th></th>
@@ -15,7 +16,8 @@
         <tbody>
         <#list users as user>
             <tr>
-                <td>${user.username}</td>
+                <td>${user.uname!}</td>
+                <td>${user.username!}</td>
                 <td><#list user.roles as role>${role}<#sep>. </#list></td>
                 <td><a href="/user/${user.id}">⚙️</a></td>
                 <td><a href="/user/delete/${user.id}">❌️</a></td>

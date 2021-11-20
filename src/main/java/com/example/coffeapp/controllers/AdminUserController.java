@@ -37,11 +37,11 @@ public class AdminUserController {
 
     @PostMapping
     public String userSave(
-            @RequestParam String username,
+            @RequestParam String uname,
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user
     ) {
-        user.setUsername(username);
+        user.setUname(uname);
 
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)

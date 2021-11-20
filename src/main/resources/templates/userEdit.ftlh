@@ -4,7 +4,7 @@
     <h1>Редактирование пользователей</h1>
     <hr/>
     <form action="/user" method="post">
-        <input type="text" name="username" value="${user.username}">
+        <input type="text" name="uname" value="${user.uname!}">
         <#list roles as role>
             <div>
                 <label><input type="checkbox" name="${role}" ${user.roles?seq_contains(role)?string("checked", "")}>${role}</label>

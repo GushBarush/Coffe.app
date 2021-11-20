@@ -1,5 +1,6 @@
 package com.example.coffeapp.entity;
 
+import org.hibernate.annotations.NotFound;
 import javax.persistence.*;
 
 @Entity

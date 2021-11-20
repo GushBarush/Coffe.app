@@ -27,20 +27,20 @@ public class RegistrationController {
     @PostMapping
     public String addUser(User user, Map<String, Object> model) {
         User userDBEmail = userRepo.findByEmail(user.getEmail());
-        User userDBNumber = userRepo.findByNumberPhone(user.getNumberPhone());
+        User userDBName = userRepo.findByUsername(user.getUsername());
 
         if (userDBEmail != null) {
             model.put("message", "Этот Email уже зарегестрирорван");
             return "registration";
         }
 
-        if (userDBNumber != null) {
+        if (userDBName != null) {
             model.put("message", "Этот номер телефона уже зарегестрирован");
             return "registration";
         }
 
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.ADMIN));
+        user.setRoles(Collections.singleton(Role.USER));
         userRepo.save(user);
 
         return "redirect:/login";

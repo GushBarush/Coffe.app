@@ -4,11 +4,11 @@
     <h1>Профиль</h1>
     <br/>
     <hr/>
-    Имя: ${user.username}
+    Номер: ${user.username}
     <br/>
     Почта: ${user.email!}
     <br/>
-    Номер: ${user.numberPhone!}
+    Имя: ${user.Uname!}
     <br/>
     <hr/>
     Кофе: ${user.coffee!}
