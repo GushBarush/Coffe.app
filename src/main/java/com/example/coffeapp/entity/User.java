@@ -17,6 +17,7 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private String nameUser;
+    private String userNumber;
     @Value("0")
     private Long coffee;
     @Value("0")
@@ -125,6 +126,18 @@ public class User implements UserDetails {
         this.happyCoffee = happyCoffee;
     }
 
+    public String getUserNumber() {
+        return userNumber;
+    }
+
+    public void setUserNumber(String userNumber) {
+        this.userNumber = userNumber;
+    }
+
+    public void setNewUserNumber() {
+        this.userNumber = username.substring(username.length() - 4);
+    }
+
     public void addCoffee() {
         if (coffee == 5) {
             coffee = (long) 0;
@@ -139,5 +152,4 @@ public class User implements UserDetails {
         } else
             happyCoffee --;
     }
-
 }

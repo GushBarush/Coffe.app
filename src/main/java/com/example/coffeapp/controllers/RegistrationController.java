@@ -39,6 +39,7 @@ public class RegistrationController {
             return "registration";
         }
 
+        user.setNewUserNumber();
         user.setCoffee((long)0);
         user.setHappyCoffee((long)0);
         user.setActive(true);
