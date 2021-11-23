@@ -39,6 +39,8 @@ public class RegistrationController {
             return "registration";
         }
 
+        user.setCoffee((long)0);
+        user.setHappyCoffee((long)0);
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         userRepo.save(user);

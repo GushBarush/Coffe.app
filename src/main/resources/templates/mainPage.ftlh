@@ -1,17 +1,33 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
-    <h1>Профиль</h1>
-    <br/>
-    <hr/>
-    Номер: ${user.username}
-    <br/>
-    Почта: ${user.email!}
-    <br/>
-    Имя: ${user.Uname!}
-    <br/>
-    <hr/>
-    Кофе: ${user.coffee!}
-    <br/>
-    Подарочных Кофе: ${user.happyCoffee!}
+    <div>
+        <h3>Профиль</h3>
+        <br/>
+        <hr/>
+    </div>
+    <div>
+        Номер: ${user.username}
+        <br/>
+        Почта: ${user.email!}
+        <br/>
+        Имя: ${user.nameUser!}
+        <hr/>
+    </div>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Кофе</th>
+                <th>Подарки</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${user.coffee!}</td>
+                    <td>${user.happyCoffee!}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </@c.page>

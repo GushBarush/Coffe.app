@@ -1,13 +1,11 @@
 package com.example.coffeapp.entity;
 
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
-
 
 @Entity
 @Table(name = "usr")
@@ -18,8 +16,10 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
-    private String Uname;
+    private String nameUser;
+    @Value("0")
     private Long coffee;
+    @Value("0")
     private Long happyCoffee;
     private boolean active;
 
@@ -69,12 +69,12 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public String getUname() {
-        return Uname;
+    public String getNameUser() {
+        return nameUser;
     }
 
-    public void setUname(String Uname) {
-        this.Uname = Uname;
+    public void setNameUser(String Uname) {
+        this.nameUser = Uname;
     }
 
     public String getUsername() {
@@ -124,4 +124,20 @@ public class User implements UserDetails {
     public void setHappyCoffee(Long happyCoffee) {
         this.happyCoffee = happyCoffee;
     }
+
+    public void addCoffee() {
+        if (coffee == 5) {
+            coffee = (long) 0;
+            happyCoffee ++;
+        } else
+            coffee ++;
+    }
+
+    public void delHappyCoffee() {
+        if (happyCoffee == (long) 0) {
+
+        } else
+            happyCoffee --;
+    }
+
 }

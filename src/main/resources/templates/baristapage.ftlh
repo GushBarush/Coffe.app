@@ -1,16 +1,16 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
-    <h1>Список пользователей</h1>
+    <h3>Список пользователей</h3>
     <br/>
     <table>
         <thead>
         <tr>
             <th>Имя</th>
             <th>Номер</th>
-            <th>Роль</th>
-            <th></th>
-            <th></th>
+            <th>Кофе</th>
+            <th>Подарки</th>
+            <th>Добавить</th>
         </tr>
         </thead>
         <tbody>
@@ -18,9 +18,9 @@
             <tr>
                 <td>${user.nameUser!}</td>
                 <td>${user.username!}</td>
-                <td><#list user.roles as role>${role}<#sep>. </#list></td>
-                <td><a href="/user/${user.id}">⚙️</a></td>
-                <td><a href="/user/delete/${user.id}">❌️</a></td>
+                <td>${user.coffee!}</td>
+                <td>${user.happyCoffee!}</td>
+                <td><a href="/barista/add_bonus/${user.id}">+ / </a><a href="/barista/del_bonus/${user.id}">-</a></td>
             </tr>
         </#list>
         </tbody>
