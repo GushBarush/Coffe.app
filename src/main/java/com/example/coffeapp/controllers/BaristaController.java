@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/barista")
-@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('BARISTA')")
 public class BaristaController {
     @Autowired
     UserRepo userRepo;

@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>RAFT</title>
-    </head>
-    <body>
+<#import "parts/common.ftlh" as c>
+
+<@c.page>
     <h1>Редактирование пользователей</h1>
     <hr/>
     <form action="/user" method="post">
@@ -18,5 +14,4 @@
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <button type="submit">Save</button>
     </form>
-    </body>
-</html>
+</@c.page>
