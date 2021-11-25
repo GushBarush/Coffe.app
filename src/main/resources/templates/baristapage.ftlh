@@ -1,19 +1,25 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
-    <h3>Список пользователей</h3>
+    <p class="h3">Список пользователей</p>
+    <hr/>
     <form method="get" action="/barista">
-        <input type="text" name="filter" value="${filter!}">
-        <button type="submit">Поиск</button>
+        <div class="col-sm-5">
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" name="filter" aria-describedby="button-search" value="${filter!}">
+                <button class="btn btn-primary" type="submit" id="button-search">Поиск🔍</button>
+            </div>
+        </div>
     </form>
-    <table>
+    <table class="table table-dark table-striped">
         <thead>
         <tr>
             <th>Имя</th>
             <th>Номер</th>
             <th>Кофе</th>
             <th>Подарки</th>
-            <th>Действия</th>
+            <th>Добавить</th>
+            <th>Списать</th>
         </tr>
         </thead>
         <tbody>
@@ -26,11 +32,13 @@
                 <td>
                     <form method="get" action="/barista/add_bonus/${user.id}">
                         <input type="hidden" name="filter" value="${filter!}">
-                        <button type="submit">Добавить кофе</button>
+                        <button class="btn btn-success" type="submit">Добавить кофе</button>
                     </form>
+                </td>
+                <td>
                     <form method="get" action="/barista/del_bonus/${user.id}">
                         <input type="hidden" name="filter" value="${filter!}">
-                        <button type="submit">Списать подарок</button>
+                        <button class="btn btn-success" type="submit">Списать подарок</button>
                     </form>
                 </td>
             </tr>
