@@ -43,7 +43,7 @@ public class RegistrationController {
         user.setCoffee((long)0);
         user.setHappyCoffee((long)0);
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Collections.singleton(Role.ADMIN));
         userRepo.save(user);
 
         return "redirect:/login";
