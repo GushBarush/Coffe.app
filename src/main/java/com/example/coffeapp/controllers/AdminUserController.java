@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/admin")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminUserController {
     @Autowired
@@ -57,13 +57,13 @@ public class AdminUserController {
 
         userRepo.save(user);
 
-        return "redirect:/user";
+        return "redirect:/admin";
     }
 
     @GetMapping("delete/{user}")
     public String userDelete(@PathVariable User user) {
         userRepo.delete(user);
 
-        return "redirect:/user";
+        return "redirect:/admin";
     }
 }

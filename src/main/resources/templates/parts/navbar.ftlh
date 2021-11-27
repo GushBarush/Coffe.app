@@ -22,10 +22,7 @@
                 </#if>
                 <#if isAdmin>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/user">АдминПанель</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/message">Message</a>
+                        <a class="nav-link" aria-current="page" href="/admin">АдминПанель</a>
                     </li>
                 </#if>
             </ul>

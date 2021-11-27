@@ -3,7 +3,7 @@
 <@c.page>
     <h1>Редактирование пользователей</h1>
     <hr/>
-    <form action="/user" method="post">
+    <form action="/admin" method="post">
         <input type="text" name="nameUser" value="${user.nameUser!}">
         <#list roles as role>
             <div>

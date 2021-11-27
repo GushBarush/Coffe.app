@@ -20,11 +20,11 @@
                 <td>${user.username!}</td>
                 <td><#list user.roles as role>${role}<#sep>. </#list></td>
                 <td>
-                    <form method="get" action="/user/${user.id}">
+                    <form method="get" action="/admin/${user.id}">
                         <button type="submit" class="btn btn-info">⚙</button>
                     </form>
                 <td>
-                    <form method="get" action="/user/delete/${user.id}">
+                    <form method="get" action="/admin/delete/${user.id}">
                         <button type="submit" class="btn btn-danger">❌</button>
                     </form>
                 </td>
