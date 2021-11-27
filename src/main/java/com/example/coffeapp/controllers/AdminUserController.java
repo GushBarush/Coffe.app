@@ -39,8 +39,8 @@ public class AdminUserController {
     public String userSave(
             @RequestParam String nameUser,
             @RequestParam Map<String, String> form,
-            @RequestParam("userId") User user
-    ) {
+            @RequestParam("userId") User user) {
+
         user.setNameUser(nameUser);
 
         Set<String> roles = Arrays.stream(Role.values())

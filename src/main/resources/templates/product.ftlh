@@ -21,10 +21,10 @@
         <tbody>
         <#list products as product>
             <tr>
-                <td>${product.productName}</td>
-                <td>${product.averagePrice}</td>
-                <td>${product.middlePrice}</td>
-                <td>${product.bigPrice}</td>
+                <td>${product.productName!}</td>
+                <td>${product.averagePrice!}</td>
+                <td>${product.middlePrice!}</td>
+                <td>${product.bigPrice!}</td>
                 <td>
                     <form method="get" action="/admin/product/edit/${product.id}">
                         <button class="btn btn-success" type="submit">Изменить</button>
