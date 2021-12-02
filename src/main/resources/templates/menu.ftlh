@@ -18,10 +18,6 @@
                     <li class="list-group-item list-group-item-action list-group-item-dark">350мл. - ${product.middlePrice} р.</li>
                     <li class="list-group-item list-group-item-action list-group-item-dark">500мл. - ${product.bigPrice} р.</li>
                 </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Ссылка карточки</a>
-                    <a href="#" class="card-link">Другая ссылка</a>
-                </div>
             </div>
         </div>
     </#list>
