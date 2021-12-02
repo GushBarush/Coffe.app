@@ -14,9 +14,9 @@
                     <p class="card-text">Описание</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">280мл. - ${product.averagePrice} р.</li>
-                    <li class="list-group-item">350мл. - ${product.middlePrice} р.</li>
-                    <li class="list-group-item">500мл. - ${product.bigPrice} р.</li>
+                    <li class="list-group-item list-group-item-action list-group-item-dark">280мл. - ${product.averagePrice} р.</li>
+                    <li class="list-group-item list-group-item-action list-group-item-dark">350мл. - ${product.middlePrice} р.</li>
+                    <li class="list-group-item list-group-item-action list-group-item-dark">500мл. - ${product.bigPrice} р.</li>
                 </ul>
                 <div class="card-body">
                     <a href="#" class="card-link">Ссылка карточки</a>
