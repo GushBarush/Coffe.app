@@ -2,3 +2,8 @@ body {
     color: antiquewhite;
     background-color: rgb(87, 87, 87);
 }
+
+.name-on-navbar {
+    font-family: 'Rubik', sans-serif;
+    color: RGB(187, 30, 16);
+}
