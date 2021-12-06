@@ -5,6 +5,11 @@ body {
     background-color: rgb(87, 87, 87);
 }
 
+.collapse {
+    font-family: 'Rubik', sans-serif;
+    color: RGB(187, 30, 16);
+}
+
 .navbar-brand {
     font-family: 'Rubik', sans-serif;
     color: RGB(187, 30, 16);
