@@ -15,12 +15,6 @@
                 </div>
             </div>
             <div class="row mb-2">
-                <label class="col-sm-3 col-form-label">Email:</label>
-                    <div class="col-sm-5">
-                        <input class="form-control" type="email" name="email"/>
-                    </div>
-            </div>
-            <div class="row mb-2">
                 <label class="col-sm-3 col-form-label" >Имя:</label>
                     <div class="col-sm-5">
                         <input class="form-control" type="text" name="nameUser"/>

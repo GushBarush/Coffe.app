@@ -15,7 +15,6 @@ public class User implements UserDetails {
     private Long id;
     private String username;
     private String password;
-    private String email;
     private String nameUser;
     private String userNumber;
     @Value("0")
@@ -68,14 +67,6 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getNameUser() {

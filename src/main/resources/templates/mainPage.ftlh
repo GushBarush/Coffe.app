@@ -8,10 +8,6 @@
         <dd class="col-sm-5">${user.username}</dd>
     </dl>
     <dl class="row">
-        <dt class="col-sm-2">Почта:</dt>
-        <dd class="col-sm-5">${user.email!}</dd>
-    </dl>
-    <dl class="row">
         <dt class="col-sm-2">Имя:</dt>
         <dd class="col-sm-5">${user.nameUser!}</dd>
     </dl>
