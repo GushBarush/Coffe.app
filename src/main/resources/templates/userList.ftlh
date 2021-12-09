@@ -29,10 +29,12 @@
                 <td><#list user.roles as role>${role}<#sep>. </#list></td>
                 <td>
                     <form method="get" action="/admin/${user.id}">
+                        <input type="hidden" name="filter" value="${filter!}">
                         <button type="submit" class="btn btn-info">⚙</button>
                     </form>
                 <td>
                     <form method="get" action="/admin/delete/${user.id}">
+                        <input type="hidden" name="filter" value="${filter!}">
                         <button type="submit" class="btn btn-danger">❌</button>
                     </form>
                 </td>
