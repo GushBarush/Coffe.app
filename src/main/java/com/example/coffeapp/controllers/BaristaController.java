@@ -37,8 +37,8 @@ public class BaristaController {
     }
 
     @GetMapping("add_bonus/{user}")
-    public String addBonus(@PathVariable User user,
-                           @RequestParam(required = false, defaultValue = "") String filter,
+    public String addBonus(@RequestParam(required = false, defaultValue = "") String filter,
+                           @PathVariable User user,
                            Model model) {
         user.addCoffee();
 
@@ -58,8 +58,8 @@ public class BaristaController {
     }
 
     @GetMapping("del_bonus/{user}")
-    public String delBonus(@PathVariable User user,
-                           @RequestParam(required = false, defaultValue = "") String filter,
+    public String delBonus(@RequestParam(required = false, defaultValue = "") String filter,
+                           @PathVariable User user,
                            Model model) {
         user.delHappyCoffee();
 
