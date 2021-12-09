@@ -3,6 +3,14 @@
 <@c.page>
     <p class="h3">Список пользователей</p>
     <hr/>
+    <form method="get" action="/barista">
+        <div class="col-sm-5">
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" name="filter" aria-describedby="button-search" value="${filter!}">
+                <button class="btn btn-primary" type="submit" id="button-search">Поиск🔍</button>
+            </div>
+        </div>
+    </form>
     <table class="table table-dark table-striped">
         <thead>
         <tr>

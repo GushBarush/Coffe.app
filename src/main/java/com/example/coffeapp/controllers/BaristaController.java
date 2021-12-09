@@ -26,7 +26,8 @@ public class BaristaController {
         if (filter != null && !filter.isEmpty()) {
             users = userRepo.findByUserNumber(filter);
         } else {
-            users = userRepo.findAll();
+            filter = "0000";
+            users = userRepo.findByUserNumber(filter);
         }
 
         model.addAttribute("users", users);

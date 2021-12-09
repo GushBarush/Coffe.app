@@ -20,9 +20,20 @@ public class AdminUserController {
     @Autowired
     UserRepo userRepo;
 
+    Iterable<User> users;
+
     @GetMapping
-    public String userList(Model model) {
-        model.addAttribute("users", userRepo.findAll());
+    public String userList(@RequestParam(required = false, defaultValue = "") String filter ,Model model) {
+
+        if (filter != null && !filter.isEmpty()) {
+            users = userRepo.findByUserNumber(filter);
+        } else {
+            filter = "0000";
+            users = userRepo.findByUserNumber(filter);
+        }
+
+        model.addAttribute("users", users);
+        model.addAttribute("filter", filter);
 
         return "userList";
     }
