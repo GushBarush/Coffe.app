@@ -12,15 +12,15 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
     private String username;
     private String password;
     private String nameUser;
     private String userNumber;
     @Value("0")
-    private Long coffee;
+    private int coffee;
     @Value("0")
-    private Long happyCoffee;
+    private int happyCoffee;
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -59,14 +59,6 @@ public class User implements UserDetails {
 
     public boolean isBarista() {
         return roles.contains(Role.BARISTA);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNameUser() {
@@ -109,19 +101,27 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public Long getCoffee() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCoffee() {
         return coffee;
     }
 
-    public void setCoffee(Long coffee) {
+    public void setCoffee(int coffee) {
         this.coffee = coffee;
     }
 
-    public Long getHappyCoffee() {
+    public int getHappyCoffee() {
         return happyCoffee;
     }
 
-    public void setHappyCoffee(Long happyCoffee) {
+    public void setHappyCoffee(int happyCoffee) {
         this.happyCoffee = happyCoffee;
     }
 
@@ -134,21 +134,20 @@ public class User implements UserDetails {
     }
 
     public void setNewUserNumber() {
-        this.userNumber = username.substring(username.length() - 4);
+        setUserNumber(username.substring(username.length() - 4));
     }
 
     public void addCoffee() {
         if (coffee == 5) {
-            coffee = (long) 0;
+            coffee = 0;
             happyCoffee ++;
         } else
             coffee ++;
     }
 
     public void delHappyCoffee() {
-        if (happyCoffee == (long) 0) {
-
-        } else
-            happyCoffee --;
+        if (happyCoffee != 0) {
+            happyCoffee--;
+        }
     }
 }

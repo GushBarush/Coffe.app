@@ -3,12 +3,10 @@ package com.example.coffeapp.controllers;
 import com.example.coffeapp.entity.Role;
 import com.example.coffeapp.entity.User;
 import com.example.coffeapp.repository.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.util.Collections;
 import java.util.Map;
 
@@ -16,8 +14,11 @@ import java.util.Map;
 @RequestMapping("/registration")
 public class RegistrationController {
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+
+    public RegistrationController(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @GetMapping
     public String registration() {
@@ -34,10 +35,10 @@ public class RegistrationController {
         }
 
         user.setNewUserNumber();
-        user.setCoffee((long)0);
-        user.setHappyCoffee((long)0);
+        user.setCoffee(0);
+        user.setHappyCoffee(0);
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Collections.singleton(Role.ADMIN));
         userRepo.save(user);
 
         return "redirect:/login";

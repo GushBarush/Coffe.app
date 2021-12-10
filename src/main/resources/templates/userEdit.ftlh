@@ -16,6 +16,7 @@
             </div>
         </#list>
         <input type="hidden" value="${user.id}" name="userId">
+        <input type="hidden" name="filter" value="${user.userNumber!}">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <button class="btn btn-primary" type="submit">Сохранить</button>
     </form>

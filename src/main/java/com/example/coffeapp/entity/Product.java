@@ -1,7 +1,6 @@
 package com.example.coffeapp.entity;
 
 import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 
 @Entity
@@ -9,20 +8,20 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
     private String productName;
     @Value("0")
-    private Long averagePrice;
+    private int averagePrice;
     @Value("0")
-    private Long middlePrice;
+    private int middlePrice;
     @Value("0")
-    private Long bigPrice;
+    private int bigPrice;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -34,27 +33,27 @@ public class Product {
         this.productName = productName;
     }
 
-    public Long getAveragePrice() {
+    public int getAveragePrice() {
         return averagePrice;
     }
 
-    public void setAveragePrice(Long averagePrice) {
+    public void setAveragePrice(int averagePrice) {
         this.averagePrice = averagePrice;
     }
 
-    public Long getMiddlePrice() {
+    public int getMiddlePrice() {
         return middlePrice;
     }
 
-    public void setMiddlePrice(Long middlePrice) {
+    public void setMiddlePrice(int middlePrice) {
         this.middlePrice = middlePrice;
     }
 
-    public Long getBigPrice() {
+    public int getBigPrice() {
         return bigPrice;
     }
 
-    public void setBigPrice(Long bigPrice) {
+    public void setBigPrice(int bigPrice) {
         this.bigPrice = bigPrice;
     }
 }

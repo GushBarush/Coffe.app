@@ -3,7 +3,6 @@ package com.example.coffeapp.controllers;
 import com.example.coffeapp.entity.Role;
 import com.example.coffeapp.entity.User;
 import com.example.coffeapp.repository.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +16,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/admin")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminUserController {
-    @Autowired
-    UserRepo userRepo;
+
+    final UserRepo userRepo;
 
     Iterable<User> users;
+
+    public AdminUserController(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @GetMapping
     public String userList(@RequestParam(required = false, defaultValue = "") String filter ,Model model) {
@@ -28,8 +31,7 @@ public class AdminUserController {
         if (filter != null && !filter.isEmpty()) {
             users = userRepo.findByUserNumber(filter);
         } else {
-            filter = "0000";
-            users = userRepo.findByUserNumber(filter);
+            users = userRepo.findAll();
         }
 
         model.addAttribute("users", users);
@@ -40,6 +42,7 @@ public class AdminUserController {
     
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model){
+
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
 
@@ -47,8 +50,7 @@ public class AdminUserController {
     }
 
     @PostMapping
-    public String userSave(
-            @RequestParam String nameUser,
+    public String userSave(@RequestParam String nameUser,
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user) {
 

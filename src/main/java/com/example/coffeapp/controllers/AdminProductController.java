@@ -2,7 +2,6 @@ package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.entity.Product;
 import com.example.coffeapp.repository.ProductRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +11,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/product")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminProductController {
-    @Autowired
-    ProductRepo productRepo;
+
+    final ProductRepo productRepo;
 
     Iterable<Product> products;
+
+    public AdminProductController(ProductRepo productRepo) {
+        this.productRepo = productRepo;
+    }
 
     @GetMapping
     public String product(Model model) {
@@ -73,11 +76,29 @@ public class AdminProductController {
 
             return "productEdit";
         }
+        if (middlePrice == null || middlePrice.equals("")) {
+            model.addAttribute("product", product);
+            model.addAttribute("message", "Не может быть пустым");
+
+            return "productEdit";
+        }
+        if (averagePrice == null || averagePrice.equals("")) {
+            model.addAttribute("product", product);
+            model.addAttribute("message", "Не может быть пустым");
+
+            return "productEdit";
+        }
+        if (bigPrice == null || bigPrice.equals("")) {
+            model.addAttribute("product", product);
+            model.addAttribute("message", "Не может быть пустым");
+
+            return "productEdit";
+        }
 
         product.setProductName(productName);
-        product.setAveragePrice(Long.parseLong(averagePrice));
-        product.setMiddlePrice(Long.parseLong(middlePrice));
-        product.setBigPrice(Long.parseLong(bigPrice));
+        product.setAveragePrice(Integer.parseInt(averagePrice));
+        product.setMiddlePrice(Integer.parseInt(middlePrice));
+        product.setBigPrice(Integer.parseInt(bigPrice));
 
         productRepo.save(product);
 

@@ -12,7 +12,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="Coffe.app" value="2efc56b6-db5e-4c3d-9c2a-52685471a46b" />
-          <factory-entry name="entityManagerFactory" />
+          <factory-entry name="entityManagerFactory" value="705f63f6-7a1f-42e8-a138-4cab89508fb8" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

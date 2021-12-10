@@ -2,7 +2,6 @@ package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.entity.User;
 import com.example.coffeapp.repository.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/barista")
 @PreAuthorize("hasAuthority('BARISTA')")
 public class BaristaController {
-    @Autowired
-    UserRepo userRepo;
+
+    final UserRepo userRepo;
 
     Iterable<User> users;
+
+    public BaristaController(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @GetMapping
     public String userList(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
@@ -26,8 +29,7 @@ public class BaristaController {
         if (filter != null && !filter.isEmpty()) {
             users = userRepo.findByUserNumber(filter);
         } else {
-            filter = "0000";
-            users = userRepo.findByUserNumber(filter);
+            users = userRepo.findAll();
         }
 
         model.addAttribute("users", users);
@@ -47,8 +49,7 @@ public class BaristaController {
         if (filter != null && !filter.isEmpty()) {
             users = userRepo.findByUserNumber(filter);
         } else {
-            filter = "0000";
-            users = userRepo.findByUserNumber(filter);
+            users = userRepo.findAll();
         }
 
         model.addAttribute("users", users);
@@ -68,8 +69,7 @@ public class BaristaController {
         if (filter != null && !filter.isEmpty()) {
             users = userRepo.findByUserNumber(filter);
         } else {
-            filter = "0000";
-            users = userRepo.findByUserNumber(filter);
+            users = userRepo.findAll();
         }
 
         model.addAttribute("users", users);
