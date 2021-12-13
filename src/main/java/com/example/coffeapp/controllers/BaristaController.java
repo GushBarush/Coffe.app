@@ -1,7 +1,7 @@
 package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.entity.User;
-import com.example.coffeapp.repository.UserRepo;
+import com.example.coffeapp.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,24 +15,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @PreAuthorize("hasAuthority('BARISTA')")
 public class BaristaController {
 
-    final UserRepo userRepo;
+    final UserService userService;
 
-    Iterable<User> users;
-
-    public BaristaController(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public BaristaController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public String userList(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
 
-        if (filter != null && !filter.isEmpty()) {
-            users = userRepo.findByUserNumber(filter);
-        } else {
-            users = userRepo.findAll();
-        }
-
-        model.addAttribute("users", users);
+        model.addAttribute("users", userService.userFilterNumber(filter));
         model.addAttribute("filter", filter);
 
         return "baristapage";
@@ -42,17 +34,9 @@ public class BaristaController {
     public String addBonus(@RequestParam(required = false, defaultValue = "") String filter,
                            @PathVariable User user,
                            Model model) {
-        user.addCoffee();
+        userService.addCoffe(user);
 
-        userRepo.save(user);
-
-        if (filter != null && !filter.isEmpty()) {
-            users = userRepo.findByUserNumber(filter);
-        } else {
-            users = userRepo.findAll();
-        }
-
-        model.addAttribute("users", users);
+        model.addAttribute("users", userService.userFilterNumber(filter));
         model.addAttribute("filter", filter);
 
         return "baristapage";
@@ -62,17 +46,10 @@ public class BaristaController {
     public String delBonus(@RequestParam(required = false, defaultValue = "") String filter,
                            @PathVariable User user,
                            Model model) {
-        user.delHappyCoffee();
 
-        userRepo.save(user);
+        userService.delHappyCoffe(user);
 
-        if (filter != null && !filter.isEmpty()) {
-            users = userRepo.findByUserNumber(filter);
-        } else {
-            users = userRepo.findAll();
-        }
-
-        model.addAttribute("users", users);
+        model.addAttribute("users", userService.userFilterNumber(filter));
         model.addAttribute("filter", filter);
 
         return "baristapage";

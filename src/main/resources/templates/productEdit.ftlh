@@ -3,8 +3,8 @@
 <@c.page>
     <p class="h3">Редактирование товара</p>
     <hr/>
-    ${message!}
     <br/>
+    ${messageName!}
     <form action="/admin/product/edit" method="post">
         <div class="col-sm-5">
             <div class="input-group">
@@ -16,21 +16,21 @@
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="averagePrice">Цена Мал.</span>
-                <input class="form-control" type="text" value="${product.averagePrice!}" aria-describedby="averagePrice" name="averagePrice"/>
+                <input class="form-control" type="number" value="${product.averagePrice!}" aria-describedby="averagePrice" name="averagePrice"/>
             </div>
         </div>
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="middlePrice">Цена Ср.</span>
-                <input class="form-control" type="text" value="${product.middlePrice!}" aria-describedby="middlePrice" name="middlePrice"/>
+                <input class="form-control" type="number" value="${product.middlePrice!}" aria-describedby="middlePrice" name="middlePrice"/>
             </div>
         </div>
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="bigPrice">Цена Бол.</span>
-                <input class="form-control" type="text" value="${product.bigPrice!}" aria-describedby="bigPrice" name="bigPrice"/>
+                <input class="form-control" type="number" value="${product.bigPrice!}" aria-describedby="bigPrice" name="bigPrice"/>
             </div>
         </div>
         <br/>

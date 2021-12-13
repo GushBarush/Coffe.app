@@ -1,7 +1,7 @@
 package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.entity.Product;
-import com.example.coffeapp.repository.ProductRepo;
+import com.example.coffeapp.service.ProductService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,19 +12,15 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminProductController {
 
-    final ProductRepo productRepo;
+    final ProductService productService;
 
-    Iterable<Product> products;
-
-    public AdminProductController(ProductRepo productRepo) {
-        this.productRepo = productRepo;
+    public AdminProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
     public String product(Model model) {
-        products = productRepo.findAll();
-
-        model.addAttribute("products", products);
+        model.addAttribute("products", productService.allProduct());
 
         return "product";
     }
@@ -35,22 +31,24 @@ public class AdminProductController {
     }
 
     @PostMapping("/new")
-    public String productAddNew(Product product, Model model) {
+    public String productAddNew(@RequestParam String productName,
+                                @RequestParam(defaultValue = "0") int averagePrice,
+                                @RequestParam(defaultValue = "0") int middlePrice,
+                                @RequestParam(defaultValue = "0") int bigPrice, Model model) {
 
-        if (product.getProductName() == null || product.getProductName().equals("")) {
-            model.addAttribute("message", "Название не может быть пустым");
-
+        if (productName == null || productName.equals("")) {
+            model.addAttribute("messageName", "Название не может быть пустым");
             return "productNew";
         }
 
-        productRepo.save(product);
+        productService.newProduct(productName, averagePrice, middlePrice, bigPrice);
 
         return "redirect:/admin/product";
     }
 
     @GetMapping("/delete/{product}")
     public String productDelete(@PathVariable Product product) {
-        productRepo.delete(product);
+        productService.delProduct(product);
 
         return "redirect:/admin/product";
     }
@@ -64,43 +62,19 @@ public class AdminProductController {
 
     @PostMapping("/edit")
     public String productEdit(@RequestParam String productName,
-                              @RequestParam String averagePrice,
-                              @RequestParam String middlePrice,
-                              @RequestParam String bigPrice,
+                              @RequestParam(defaultValue = "0") int averagePrice,
+                              @RequestParam(defaultValue = "0") int middlePrice,
+                              @RequestParam(defaultValue = "0") int bigPrice,
                               @RequestParam("productId") Product product,
                               Model model){
 
         if (productName == null || productName.equals("")) {
             model.addAttribute("product", product);
-            model.addAttribute("message", "Название не может быть пустым");
-
-            return "productEdit";
-        }
-        if (middlePrice == null || middlePrice.equals("")) {
-            model.addAttribute("product", product);
-            model.addAttribute("message", "Не может быть пустым");
-
-            return "productEdit";
-        }
-        if (averagePrice == null || averagePrice.equals("")) {
-            model.addAttribute("product", product);
-            model.addAttribute("message", "Не может быть пустым");
-
-            return "productEdit";
-        }
-        if (bigPrice == null || bigPrice.equals("")) {
-            model.addAttribute("product", product);
-            model.addAttribute("message", "Не может быть пустым");
-
+            model.addAttribute("messageName", "Название не может быть пустым");
             return "productEdit";
         }
 
-        product.setProductName(productName);
-        product.setAveragePrice(Integer.parseInt(averagePrice));
-        product.setMiddlePrice(Integer.parseInt(middlePrice));
-        product.setBigPrice(Integer.parseInt(bigPrice));
-
-        productRepo.save(product);
+        productService.updateProduct(product, productName, averagePrice, middlePrice, bigPrice);
 
         return "redirect:/admin/product";
     }

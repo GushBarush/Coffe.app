@@ -2,39 +2,28 @@ package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.entity.Role;
 import com.example.coffeapp.entity.User;
-import com.example.coffeapp.repository.UserRepo;
+import com.example.coffeapp.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminUserController {
 
-    final UserRepo userRepo;
+    final UserService userService;
 
-    Iterable<User> users;
-
-    public AdminUserController(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public AdminUserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public String userList(@RequestParam(required = false, defaultValue = "") String filter ,Model model) {
 
-        if (filter != null && !filter.isEmpty()) {
-            users = userRepo.findByUserNumber(filter);
-        } else {
-            users = userRepo.findAll();
-        }
-
-        model.addAttribute("users", users);
+        model.addAttribute("users", userService.userFilterNumber(filter));
         model.addAttribute("filter", filter);
 
         return "userList";
@@ -54,28 +43,14 @@ public class AdminUserController {
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user) {
 
-        user.setNameUser(nameUser);
-
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
-
-        user.getRoles().clear();
-
-        for (String key : form.keySet()) {
-            if (roles.contains(key)) {
-                user.getRoles().add(Role.valueOf(key));
-            }
-        }
-
-        userRepo.save(user);
+        userService.updateUser(user, nameUser, form);
 
         return "redirect:/admin";
     }
 
     @GetMapping("delete/{user}")
     public String userDelete(@PathVariable User user) {
-        userRepo.delete(user);
+        userService.delUser(user);
 
         return "redirect:/admin";
     }

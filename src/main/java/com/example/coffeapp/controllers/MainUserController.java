@@ -1,7 +1,7 @@
 package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.entity.User;
-import com.example.coffeapp.repository.UserRepo;
+import com.example.coffeapp.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/main")
 public class MainUserController {
 
-    final UserRepo userRepo;
+    final UserService userService;
 
-    public MainUserController(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public MainUserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public String main(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("user", userRepo.findByUsername(user.getUsername()));
+        model.addAttribute("user", userService.loadUserByUsername(user.getUsername()));
 
         return "mainPage";
     }

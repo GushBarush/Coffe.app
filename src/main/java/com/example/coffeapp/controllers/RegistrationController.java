@@ -1,23 +1,21 @@
 package com.example.coffeapp.controllers;
 
-import com.example.coffeapp.entity.Role;
 import com.example.coffeapp.entity.User;
-import com.example.coffeapp.repository.UserRepo;
+import com.example.coffeapp.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.Collections;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
 
-    private final UserRepo userRepo;
+    private final UserService userService;
 
-    public RegistrationController(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
@@ -26,20 +24,14 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String addUser(User user, Map<String, Object> model) {
-        User userDBName = userRepo.findByUsername(user.getUsername());
+    public String addUser(User user, Model model) {
 
-        if (userDBName != null) {
-            model.put("message", "Этот номер телефона уже зарегестрирован");
+        if (userService.haveUser(user)) {
+            model.addAttribute("message", "Этот номер телефона уже зарегестрирован");
             return "registration";
         }
 
-        user.setNewUserNumber();
-        user.setCoffee(0);
-        user.setHappyCoffee(0);
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.ADMIN));
-        userRepo.save(user);
+        userService.addUser(user);
 
         return "redirect:/login";
     }
