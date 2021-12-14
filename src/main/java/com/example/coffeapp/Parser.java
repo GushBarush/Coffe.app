@@ -21,9 +21,9 @@ public class Parser {
     public String parser() {
 
         if (userParserService.parser()) {
-            return "userList";
+            return "menu";
         } else {
-            return  "redirect:";
+            return  "home";
         }
     }
 }

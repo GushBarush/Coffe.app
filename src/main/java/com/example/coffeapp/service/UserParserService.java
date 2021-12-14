@@ -37,6 +37,7 @@ public class UserParserService {
                 String numberPhone = lineArray[0];
 
                 if (numberPhone.length() != 11) {
+                    line = reader.readLine();
                     continue;
                 }
 
