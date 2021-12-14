@@ -8,10 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,11 +25,11 @@ public class UserService implements UserDetailsService {
         return userRepo.findByUsername(s);
     }
 
-    public Iterable<User> allUser() {
+    public List<User> allUser() {
         return userRepo.findAll();
     }
 
-    public Iterable<User> userByNumber(String number){
+    public List<User> userByNumber(String number){
         return userRepo.findByUserNumber(number);
     }
 
@@ -50,7 +47,7 @@ public class UserService implements UserDetailsService {
         userRepo.delete(user);
     }
 
-    public Iterable<User> userFilterNumber(String filter) {
+    public List<User> userFilterNumber(String filter) {
 
         if (filter != null && !filter.isEmpty()) {
             return userByNumber(filter);
