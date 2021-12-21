@@ -1,5 +1,7 @@
 package com.example.coffeapp.service;
 
+import com.example.coffeapp.dto.user.UserDTO;
+import com.example.coffeapp.dto.user.UserMapper;
 import com.example.coffeapp.entity.Role;
 import com.example.coffeapp.entity.User;
 import com.example.coffeapp.repository.UserRepo;
@@ -25,12 +27,26 @@ public class UserService implements UserDetailsService {
         return userRepo.findByUsername(s);
     }
 
-    public List<User> allUser() {
-        return userRepo.findAll();
+    public List<UserDTO> allUser() {
+        List<User> entity = userRepo.findAll();
+        List<UserDTO> userDTOS = new ArrayList<>();
+        UserMapper mapper = new UserMapper();
+
+        for (User user : entity) {
+            userDTOS.add(mapper.map(user));
+        }
+        return userDTOS;
     }
 
-    public List<User> userByNumber(String number){
-        return userRepo.findByUserNumber(number);
+    public List<UserDTO> userByNumber(String number){
+        List<User> entity = userRepo.findByUserNumber(number);
+        List<UserDTO> userDTOS = new ArrayList<>();
+        UserMapper mapper = new UserMapper();
+
+        for (User user : entity) {
+            userDTOS.add(mapper.map(user));
+        }
+        return userDTOS;
     }
 
     public boolean haveUser(User user){
@@ -47,7 +63,7 @@ public class UserService implements UserDetailsService {
         userRepo.delete(user);
     }
 
-    public List<User> userFilterNumber(String filter) {
+    public List<UserDTO> userFilterNumber(String filter) {
 
         if (filter != null && !filter.isEmpty()) {
             return userByNumber(filter);
