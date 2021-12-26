@@ -14,5 +14,6 @@ public class UserMapper {
                 user.getHappyCoffee(),
                 user.getRoles());
         return userDTO;
+
     }
 }
