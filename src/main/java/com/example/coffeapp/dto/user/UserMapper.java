@@ -1,7 +1,9 @@
 package com.example.coffeapp.dto.user;
 
 import com.example.coffeapp.entity.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserMapper {
 
     public UserDTO map(User user) {

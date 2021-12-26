@@ -5,6 +5,7 @@ import com.example.coffeapp.dto.user.UserMapper;
 import com.example.coffeapp.entity.Role;
 import com.example.coffeapp.entity.User;
 import com.example.coffeapp.repository.UserRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,13 +15,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
-
-    public UserService(UserRepo userRepo) {
-        this.userRepo = userRepo;
-    }
+    private final UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -30,10 +29,9 @@ public class UserService implements UserDetailsService {
     public List<UserDTO> allUser() {
         List<User> entity = userRepo.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();
-        UserMapper mapper = new UserMapper();
 
         for (User user : entity) {
-            userDTOS.add(mapper.map(user));
+            userDTOS.add(userMapper.map(user));
         }
         return userDTOS;
     }
@@ -41,10 +39,9 @@ public class UserService implements UserDetailsService {
     public List<UserDTO> userByNumber(String number){
         List<User> entity = userRepo.findByUserNumber(number);
         List<UserDTO> userDTOS = new ArrayList<>();
-        UserMapper mapper = new UserMapper();
 
         for (User user : entity) {
-            userDTOS.add(mapper.map(user));
+            userDTOS.add(userMapper.map(user));
         }
         return userDTOS;
     }
