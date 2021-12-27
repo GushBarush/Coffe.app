@@ -1,7 +1,7 @@
 package com.example.coffeapp.service;
 
-import com.example.coffeapp.entity.Role;
-import com.example.coffeapp.entity.User;
+import com.example.coffeapp.entity.user.Role;
+import com.example.coffeapp.entity.user.User;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;

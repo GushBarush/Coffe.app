@@ -1,11 +1,11 @@
 package com.example.coffeapp.dto.user;
 
-import com.example.coffeapp.entity.Role;
+import com.example.coffeapp.entity.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +18,6 @@ public class UserDTO {
     private String userNumber;
     private int coffee;
     private int happyCoffee;
-    private Set<Role> roles;
+    private List<Role> roles;
 
 }

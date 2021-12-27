@@ -1,6 +1,6 @@
 package com.example.coffeapp.controllers;
 
-import com.example.coffeapp.entity.User;
+import com.example.coffeapp.entity.user.User;
 import com.example.coffeapp.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

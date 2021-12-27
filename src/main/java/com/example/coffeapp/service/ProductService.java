@@ -1,6 +1,6 @@
 package com.example.coffeapp.service;
 
-import com.example.coffeapp.entity.Product;
+import com.example.coffeapp.entity.product.Product;
 import com.example.coffeapp.repository.ProductRepo;
 import org.springframework.stereotype.Service;
 

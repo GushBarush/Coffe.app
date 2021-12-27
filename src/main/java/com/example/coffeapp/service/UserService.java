@@ -2,8 +2,8 @@ package com.example.coffeapp.service;
 
 import com.example.coffeapp.dto.user.UserDTO;
 import com.example.coffeapp.dto.user.UserMapper;
-import com.example.coffeapp.entity.Role;
-import com.example.coffeapp.entity.User;
+import com.example.coffeapp.entity.user.Role;
+import com.example.coffeapp.entity.user.User;
 import com.example.coffeapp.repository.UserRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
