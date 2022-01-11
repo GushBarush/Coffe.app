@@ -1,11 +1,11 @@
 package com.example.coffeapp.service;
 
 import com.example.coffeapp.dto.user.UserDTO;
-import com.example.coffeapp.dto.user.UserMapper;
 import com.example.coffeapp.entity.user.Role;
 import com.example.coffeapp.entity.user.User;
 import com.example.coffeapp.repository.UserRepo;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,19 +19,19 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
-    private final UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userRepo.findByUsername(s);
+        return userRepo.findByPhoneNumber(s);
     }
 
     public List<UserDTO> allUser() {
         List<User> entity = userRepo.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();
+        ModelMapper mapper = new ModelMapper();
 
         for (User user : entity) {
-            userDTOS.add(userMapper.map(user));
+            userDTOS.add(mapper.map(user, UserDTO.class));
         }
         return userDTOS;
     }
@@ -39,9 +39,10 @@ public class UserService implements UserDetailsService {
     public List<UserDTO> userByNumber(String number){
         List<User> entity = userRepo.findByUserNumber(number);
         List<UserDTO> userDTOS = new ArrayList<>();
+        ModelMapper mapper = new ModelMapper();
 
         for (User user : entity) {
-            userDTOS.add(userMapper.map(user));
+            userDTOS.add(mapper.map(user, UserDTO.class));
         }
         return userDTOS;
     }
@@ -104,20 +105,20 @@ public class UserService implements UserDetailsService {
     }
 
     public void updateUser(User user, String newName, Map<String, String> form) {
-        user.setNameUser(newName);
-
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
-
-        user.getRoles().clear();
-
-        for (String key : form.keySet()) {
-            if (roles.contains(key)) {
-                user.getRoles().add(Role.valueOf(key));
-            }
-        }
-
-        saveUser(user);
+//        user.setName(newName);
+//
+//        Set<String> roles = Arrays.stream(Role.values())
+//                .map(Role::name)
+//                .collect(Collectors.toSet());
+//
+//        user.getRoles().clear();
+//
+//        for (String key : form.keySet()) {
+//            if (roles.contains(key)) {
+//                user.getRoles().add(Role.valueOf(key));
+//            }
+//        }
+//
+//        saveUser(user);
     }
 }

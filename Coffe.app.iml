@@ -10,7 +10,9 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="entityManagerFactory" value="b756a8e5-dd0c-4610-b3e1-17d85cc0a01c" />
+        </datasource-mapping>
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -99,5 +101,6 @@
     <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.3.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.checkerframework:checker-qual:3.5.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.22" level="project" />
+    <orderEntry type="library" name="Maven: org.modelmapper:modelmapper:3.0.0" level="project" />
   </component>
 </module>

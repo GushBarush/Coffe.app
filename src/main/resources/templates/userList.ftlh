@@ -24,8 +24,8 @@
         <tbody>
         <#list users as user>
             <tr>
-                <td>${user.nameUser!}</td>
-                <td>${user.username!}</td>
+                <td>${user.phoneNumber!}</td>
+                <td>${user.name!}</td>
                 <td><#list user.roles as role>${role}<#sep>. </#list></td>
                 <td>
                     <form method="get" action="/admin/${user.id}">

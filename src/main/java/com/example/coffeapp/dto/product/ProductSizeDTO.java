@@ -11,15 +11,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Setter
 @Getter
-public class ProductDTO implements Serializable {
+public class ProductSizeDTO implements Serializable {
 
     private Long id;
 
-    private String productName;
-
-    private String description;
-
-    private String imgPng;
-
-    private boolean isDop;
+    private String sizeName;
 }

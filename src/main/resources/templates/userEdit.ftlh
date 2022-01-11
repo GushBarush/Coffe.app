@@ -5,7 +5,7 @@
     <hr/>
     <form action="/admin" method="post">
         <div class="col-sm-5">
-            <input class="form-control" type="text" name="nameUser" value="${user.nameUser!}"/>
+            <input class="form-control" type="text" name="nameUser" value="${user.name!}"/>
         </div>
         <#list roles as role>
             <div class="form-check">

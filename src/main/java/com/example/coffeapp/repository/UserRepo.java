@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface UserRepo extends JpaRepository<User, Integer> {
+public interface UserRepo extends JpaRepository<User, Long> {
 
-    User findByUsername(String userName);
-    List<User> findByUserNumber(String filter);
+    User findByPhoneNumber(String s);
+
+    List<User> findByUserNumber(String s);
 }

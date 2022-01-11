@@ -1,5 +1,7 @@
 package com.example.coffeapp.dto.product;
 
+import com.example.coffeapp.entity.product.Product;
+import com.example.coffeapp.entity.product.ProductSize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,15 +13,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Setter
 @Getter
-public class ProductDTO implements Serializable {
+public class ProductPriceDTO implements Serializable {
 
     private Long id;
 
-    private String productName;
+    private Double price;
 
-    private String description;
+    private ProductSize productSize;
 
-    private String imgPng;
-
-    private boolean isDop;
+    private Product product;
 }

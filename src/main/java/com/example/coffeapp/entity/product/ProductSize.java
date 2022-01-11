@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Size implements Serializable {
+public class ProductSize implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

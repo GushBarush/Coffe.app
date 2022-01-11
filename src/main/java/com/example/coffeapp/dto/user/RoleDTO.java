@@ -1,4 +1,4 @@
-package com.example.coffeapp.dto.product;
+package com.example.coffeapp.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,15 +11,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Setter
 @Getter
-public class ProductDTO implements Serializable {
+public class RoleDTO implements Serializable {
 
     private Long id;
 
-    private String productName;
-
-    private String description;
-
-    private String imgPng;
-
-    private boolean isDop;
+    private String roleName;
 }

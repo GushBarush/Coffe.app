@@ -2,6 +2,7 @@ package com.example.coffeapp.service;
 
 import com.example.coffeapp.entity.user.Role;
 import com.example.coffeapp.entity.user.User;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,13 +13,10 @@ import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
+@AllArgsConstructor
 public class UserParserService {
 
     private final UserService userService;
-
-    public UserParserService(UserService userService) {
-        this.userService = userService;
-    }
 
     public boolean parser() {
         try {
@@ -47,8 +45,8 @@ public class UserParserService {
 
                 Long a = random.nextLong(10000, 99999);
 
-                user.setUsername(numberPhone.substring(1));
-                user.setNameUser(name);
+                user.setPhoneNumber(numberPhone.substring(1));
+                user.setName(name);
                 user.setPassword(String.valueOf(a));
                 userService.setNewUserNumber(user);
                 user.setCoffee(0);

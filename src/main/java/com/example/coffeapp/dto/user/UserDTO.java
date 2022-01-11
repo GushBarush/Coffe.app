@@ -1,23 +1,34 @@
 package com.example.coffeapp.dto.user;
 
-import com.example.coffeapp.entity.user.Role;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+@Setter
+@Getter
+public class UserDTO implements Serializable {
 
-    private String id;
-    private String username;
-    private String nameUser;
+    private Long id;
+
+    private String phoneNumber;
+
+    private String password;
+
+    private String name;
+
     private String userNumber;
-    private int coffee;
-    private int happyCoffee;
-    private List<Role> roles;
 
+    private int coffee;
+
+    private int happyCoffee;
+
+    private boolean active;
+
+    private List<RoleDTO> roles;
 }

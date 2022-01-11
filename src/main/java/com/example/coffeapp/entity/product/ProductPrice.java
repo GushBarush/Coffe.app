@@ -26,7 +26,7 @@ public class ProductPrice implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "size_id")
-    private Size size;
+    private ProductSize productSize;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

@@ -2,18 +2,18 @@ package com.example.coffeapp.service;
 
 import com.example.coffeapp.entity.product.Product;
 import com.example.coffeapp.repository.ProductRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
+@AllArgsConstructor
 public class ProductService {
 
     private final ProductRepo productRepo;
 
-    public ProductService(ProductRepo productRepo) {
-        this.productRepo = productRepo;
-    }
-
-    public Iterable<Product>  allProduct(){
+    public List<Product> allProduct(){
         return productRepo.findAll();
     }
 
