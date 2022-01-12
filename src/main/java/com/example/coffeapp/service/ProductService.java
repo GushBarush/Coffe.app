@@ -26,23 +26,23 @@ public class ProductService {
     }
 
     public void updateProduct(Product product, String newName, int averagePrice, int middlePrice, int bigPrice) {
-
-        product.setProductName(newName);
-        product.setAveragePrice(averagePrice);
-        product.setMiddlePrice(middlePrice);
-        product.setBigPrice(bigPrice);
-
-        saveProduct(product);
+//
+//        product.setProductName(newName);
+//        product.setAveragePrice(averagePrice);
+//        product.setMiddlePrice(middlePrice);
+//        product.setBigPrice(bigPrice);
+//
+//        saveProduct(product);
     }
 
     public void newProduct(String productName, int averagePrice, int middlePrice, int bigPrice) {
-        Product product = new Product();
-
-        product.setProductName(productName);
-        product.setAveragePrice(averagePrice);
-        product.setMiddlePrice(middlePrice);
-        product.setBigPrice(bigPrice);
-
-        saveProduct(product);
+//        Product product = new Product();
+//
+//        product.setProductName(productName);
+//        product.setAveragePrice(averagePrice);
+//        product.setMiddlePrice(middlePrice);
+//        product.setBigPrice(bigPrice);
+//
+//        saveProduct(product);
     }
 }

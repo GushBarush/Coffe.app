@@ -3,22 +3,25 @@ package com.example.coffeapp.service;
 import com.example.coffeapp.dto.user.UserDTO;
 import com.example.coffeapp.entity.user.Role;
 import com.example.coffeapp.entity.user.User;
+import com.example.coffeapp.repository.RoleRepo;
 import com.example.coffeapp.repository.UserRepo;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
+    private final RoleRepo roleRepo;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -47,10 +50,10 @@ public class UserService implements UserDetailsService {
         return userDTOS;
     }
 
-    public boolean haveUser(User user){
-        User userDBName = (User) loadUserByUsername(user.getUsername());
+    public boolean haveUser(UserDTO userDTO){
+        User userInDB = userRepo.findByPhoneNumber(userDTO.getPhoneNumber());
 
-        return userDBName != null;
+        return userInDB != null;
     }
 
     public void saveUser(User user) {
@@ -71,16 +74,24 @@ public class UserService implements UserDetailsService {
     }
 
     public void setNewUserNumber(User user) {
-        user.setUserNumber(user.getUsername().substring(user.getUsername().length() - 4));
+        user.setUserNumber(user.getPhoneNumber().substring(user.getPhoneNumber().length() - 4));
     }
 
-    public void addUser(User user) {
-        setNewUserNumber(user);
-        user.setCoffee(0);
-        user.setHappyCoffee(0);
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.ADMIN));
-        saveUser(user);
+    public void addUser(UserDTO userDTO) {
+
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userDTO.setCoffee(0);
+        userDTO.setHappyCoffee(0);
+        userDTO.setActive(true);
+
+        ModelMapper mapper = new ModelMapper();
+
+        User userEntity = mapper.map(userDTO, User.class);
+
+        setNewUserNumber(userEntity);
+        userEntity.setRoles(Collections.singletonList(roleRepo.findByRoleName("USER")));
+
+        userRepo.save(userEntity);
     }
 
     public void addCoffe(User user){
@@ -105,20 +116,22 @@ public class UserService implements UserDetailsService {
     }
 
     public void updateUser(User user, String newName, Map<String, String> form) {
-//        user.setName(newName);
-//
-//        Set<String> roles = Arrays.stream(Role.values())
-//                .map(Role::name)
-//                .collect(Collectors.toSet());
-//
-//        user.getRoles().clear();
-//
-//        for (String key : form.keySet()) {
-//            if (roles.contains(key)) {
-//                user.getRoles().add(Role.valueOf(key));
-//            }
-//        }
-//
-//        saveUser(user);
+        user.setName(newName);
+
+        List<String> roles = new ArrayList<>();
+
+        for (Role role : roleRepo.findAll()) {
+            roles.add(role.getRoleName());
+        }
+
+        user.getRoles().clear();
+
+        for (String key : form.keySet()) {
+            if (roles.contains(key)) {
+                user.getRoles().add(roleRepo.findByRoleName(key));
+            }
+        }
+
+        saveUser(user);
     }
 }
