@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -79,24 +79,38 @@ public class User implements UserDetails {
     public boolean isAdmin() {
         boolean result = false;
 
-            for(Role role : roles) {
-                if (role.getRoleName().equals("ADMIN")) {
-                    result = true;
-                    break;
-                }
+        for (Role role : roles) {
+            if (role.getRoleName().equals("ADMIN")) {
+                result = true;
+                break;
             }
+        }
         return result;
     }
 
     public boolean isBarista() {
         boolean result = false;
 
-        for(Role role : roles) {
+        for (Role role : roles) {
             if (role.getRoleName().equals("BARISTA")) {
                 result = true;
                 break;
             }
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return id + " " +
+                phoneNumber + " " +
+                password + " " +
+                name + " " +
+                userNumber + " " +
+                coffee + " " +
+                happyCoffee + " " +
+                active + " " +
+                roles;
+
     }
 }

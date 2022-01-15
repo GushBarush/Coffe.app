@@ -5,8 +5,8 @@ import com.example.coffeapp.entity.user.Role;
 import com.example.coffeapp.entity.user.User;
 import com.example.coffeapp.repository.RoleRepo;
 import com.example.coffeapp.repository.UserRepo;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,12 +16,14 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-@AllArgsConstructor
 public class UserService implements UserDetailsService {
 
-    private final UserRepo userRepo;
-    private final RoleRepo roleRepo;
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    UserRepo userRepo;
+    @Autowired
+    RoleRepo roleRepo;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -84,12 +86,16 @@ public class UserService implements UserDetailsService {
         userDTO.setHappyCoffee(0);
         userDTO.setActive(true);
 
+        System.out.println(userDTO);
+
         ModelMapper mapper = new ModelMapper();
 
         User userEntity = mapper.map(userDTO, User.class);
 
         setNewUserNumber(userEntity);
-        userEntity.setRoles(Collections.singletonList(roleRepo.findByRoleName("USER")));
+        userEntity.setRoles(Collections.singletonList(roleRepo.findByRoleName("ADMIN")));
+
+        System.out.println(userEntity);
 
         userRepo.save(userEntity);
     }

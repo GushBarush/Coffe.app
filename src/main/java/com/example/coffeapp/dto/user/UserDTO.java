@@ -31,4 +31,17 @@ public class UserDTO implements Serializable {
     private boolean active;
 
     private List<RoleDTO> roles;
+
+    @Override
+    public String toString() {
+        return id + " " +
+                phoneNumber + " " +
+                password + " " +
+                name + " " +
+                userNumber + " " +
+                coffee + " " +
+                happyCoffee + " " +
+                active + " " +
+                roles;
+    }
 }

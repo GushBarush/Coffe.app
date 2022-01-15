@@ -10,14 +10,14 @@
                 <div class="col-sm-5">
                     <div class="input-group">
                         <span class="input-group-text" id="addon-phone">+7</span>
-                        <input class="form-control" type="tel" aria-describedby="addon-phone" pattern="[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}" name="username" placeholder="номер"/>
+                        <input class="form-control" type="tel" aria-describedby="addon-phone" pattern="[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}" name="phoneNumber" placeholder="номер"/>
                     </div>
                 </div>
             </div>
             <div class="row mb-2">
                 <label class="col-sm-3 col-form-label" >Имя:</label>
                     <div class="col-sm-5">
-                        <input class="form-control" type="text" name="nameUser"/>
+                        <input class="form-control" type="text" name="name"/>
                     </div>
             </div>
             <div class="row mb-2">
