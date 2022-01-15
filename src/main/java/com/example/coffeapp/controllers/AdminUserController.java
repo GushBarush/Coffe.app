@@ -1,5 +1,6 @@
 package com.example.coffeapp.controllers;
 
+import com.example.coffeapp.dto.user.UserDTO;
 import com.example.coffeapp.entity.user.User;
 import com.example.coffeapp.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,18 +32,20 @@ public class AdminUserController {
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model){
 
-        model.addAttribute("user", user);
-        model.addAttribute("roles", user.getRoles());
+        UserDTO refreshDTO = userService.getInfo(user);
+
+        model.addAttribute("user", refreshDTO);
+        model.addAttribute("roles", userService.getAllRoles());
 
         return "userEdit";
     }
 
     @PostMapping
-    public String userSave(@RequestParam String nameUser,
+    public String userSave(@RequestParam String name,
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user) {
 
-        userService.updateUser(user, nameUser, form);
+        userService.updateUser(user, name, form);
 
         return "redirect:/admin";
     }

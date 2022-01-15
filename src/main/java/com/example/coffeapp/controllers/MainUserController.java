@@ -20,7 +20,7 @@ public class MainUserController {
 
     @GetMapping
     public String main(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("user", userService.loadUserByUsername(user.getUsername()));
+        model.addAttribute("user", userService.loadUserByUsername(user.getPhoneNumber()));
 
         return "mainPage";
     }

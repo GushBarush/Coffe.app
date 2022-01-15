@@ -140,4 +140,17 @@ public class UserService implements UserDetailsService {
 
         saveUser(user);
     }
+
+    public UserDTO getInfo(User user) {
+
+        User userEntity = (User) loadUserByUsername(user.getPhoneNumber());
+
+        ModelMapper mapper = new ModelMapper();
+
+        return mapper.map(userEntity, UserDTO.class);
+    }
+
+    public List<Role> getAllRoles() {
+        return roleRepo.findAll();
+    }
 }

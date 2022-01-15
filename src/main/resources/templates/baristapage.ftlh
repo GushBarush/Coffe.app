@@ -25,8 +25,8 @@
         <tbody>
         <#list users as user>
             <tr>
-                <td>${user.nameUser!}</td>
-                <td>${user.username!}</td>
+                <td>${user.name}</td>
+                <td>${user.phoneNumber}</td>
                 <td>${user.coffee}</td>
                 <td>${user.happyCoffee}</td>
                 <td>

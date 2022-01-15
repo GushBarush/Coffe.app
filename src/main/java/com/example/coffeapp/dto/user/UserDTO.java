@@ -34,14 +34,16 @@ public class UserDTO implements Serializable {
 
     @Override
     public String toString() {
-        return id + " " +
-                phoneNumber + " " +
-                password + " " +
-                name + " " +
-                userNumber + " " +
-                coffee + " " +
-                happyCoffee + " " +
-                active + " " +
-                roles;
+        return "UserDTO{" +
+                "id=" + id +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", userNumber='" + userNumber + '\'' +
+                ", coffee=" + coffee +
+                ", happyCoffee=" + happyCoffee +
+                ", active=" + active +
+                ", roles=" + roles +
+                '}';
     }
 }

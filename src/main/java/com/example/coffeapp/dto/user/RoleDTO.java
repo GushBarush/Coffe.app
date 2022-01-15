@@ -16,4 +16,9 @@ public class RoleDTO implements Serializable {
     private Long id;
 
     private String roleName;
+
+    @Override
+    public String toString() {
+        return roleName;
+    }
 }
