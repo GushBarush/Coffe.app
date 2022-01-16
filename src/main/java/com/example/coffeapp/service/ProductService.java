@@ -2,7 +2,6 @@ package com.example.coffeapp.service;
 
 import com.example.coffeapp.dto.product.ProductDTO;
 import com.example.coffeapp.dto.product.ProductPriceDTO;
-import com.example.coffeapp.dto.product.ProductSizeDTO;
 import com.example.coffeapp.entity.product.Product;
 import com.example.coffeapp.entity.product.ProductPrice;
 import com.example.coffeapp.repository.ProductPriceRepo;
@@ -35,33 +34,38 @@ public class ProductService {
     }
 
     public void saveNewProduct(ProductPriceDTO productPriceDTO,
-                               ProductDTO productDTO) {
+                               ProductDTO productDTO, boolean dop) {
         ModelMapper mapper = new ModelMapper();
         
         Product productEntity = mapper.map(productDTO, Product.class);
         ProductPrice productPriceEntity = mapper.map(productPriceDTO, ProductPrice.class);
+
+        if (dop) {
+            productEntity.setCategory("dop");
+            productPriceEntity.setProductSize(productSizeRepo.findBySizeName("SMALL"));
+        }
 
         productPriceEntity.setProduct(productRepo.save(productEntity));
 
         productPriceRepo.save(productPriceEntity);
     }
 
-    public List<Object> getNewInfo(boolean dop) {
-        List<Object> productInfo = new ArrayList<>();
-        
-        ProductPriceDTO productPriceDTO = new ProductPriceDTO();
-        ProductDTO productDTO = new ProductDTO();
-        ModelMapper mapper = new ModelMapper();
-
-        productDTO.setDop(dop);
-        if (dop) {
-            productDTO.setCategory("Dop");
-            productPriceDTO.setProductSize(mapper.map(productSizeRepo.findBySizeName("SMALL"), ProductSizeDTO.class));
-        }
-
-        productInfo.add(productDTO);
-        productInfo.add(productPriceDTO);
-        
-        return productInfo;
-    }
+//    public List<Object> getNewInfo(boolean dop) {
+//        List<Object> productInfo = new ArrayList<>();
+//
+//        ProductPriceDTO productPriceDTO = new ProductPriceDTO();
+//        ProductDTO productDTO = new ProductDTO();
+//        ModelMapper mapper = new ModelMapper();
+//
+//        productDTO.setDop(dop);
+//        if (dop) {
+//            productDTO.setCategory("Dop");
+//            productPriceDTO.setProductSize(mapper.map(productSizeRepo.findBySizeName("SMALL"), ProductSizeDTO.class));
+//        }
+//
+//        productInfo.add(productDTO);
+//        productInfo.add(productPriceDTO);
+//
+//        return productInfo;
+//    }
 }

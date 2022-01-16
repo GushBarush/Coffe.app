@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/admin/product")
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -28,24 +26,16 @@ public class AdminProductController {
     }
 
     @GetMapping("/new")
-    public String productNew(@RequestParam boolean dop, Model model) {
-        List<Object> productInfo = productService.getNewInfo(dop); // Array DTO
-
-        model.addAttribute("productDTO", productInfo.get(0)); // ProductDTO
-        model.addAttribute("productPriceDTO", productInfo.get(1)); // ProductPriseDTO
-
-        if(dop) {
-            return "dopNew";
-        }
-
-        return "productNew";
+    public String productNew() {
+        return "dopNew";
     }
 
     @PostMapping("/new")
-    public String saveNewProduct(@PathVariable ProductDTO productDTO,
-                                 @PathVariable ProductPriceDTO productPriseDTO) {
+    public String saveNewProduct(@RequestParam(name = "productDTO") ProductDTO productDTO,
+                                 @RequestParam(name = "productPriceDTO") ProductPriceDTO productPriseDTO,
+                                 @RequestParam boolean dop) {
 
-        productService.saveNewProduct(productPriseDTO, productDTO);
+        productService.saveNewProduct(productPriseDTO, productDTO, dop);
 
         return "redirect:/product";
     }

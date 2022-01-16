@@ -27,6 +27,7 @@
             </div>
         </div>
         <br/>
+        <input type="hidden" value="true" name="dop">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <button class="btn btn-primary" type="submit">Добавить</button>
     </form>
