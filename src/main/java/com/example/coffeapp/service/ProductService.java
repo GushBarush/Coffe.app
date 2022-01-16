@@ -1,10 +1,18 @@
 package com.example.coffeapp.service;
 
+import com.example.coffeapp.dto.product.ProductDTO;
+import com.example.coffeapp.dto.product.ProductPriceDTO;
+import com.example.coffeapp.dto.product.ProductSizeDTO;
 import com.example.coffeapp.entity.product.Product;
+import com.example.coffeapp.entity.product.ProductPrice;
+import com.example.coffeapp.repository.ProductPriceRepo;
 import com.example.coffeapp.repository.ProductRepo;
+import com.example.coffeapp.repository.ProductSizeRepo;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -12,37 +20,48 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepo productRepo;
+    private final ProductPriceRepo productPriceRepo;
+    private final ProductSizeRepo productSizeRepo;
 
-    public List<Product> allProduct(){
-        return productRepo.findAll();
+    public List<ProductDTO> allProduct(){
+        List<Product> productsEntity = productRepo.findAll();
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        ModelMapper mapper = new ModelMapper();
+
+        for (Product product : productsEntity) {
+            productDTOS.add(mapper.map(product, ProductDTO.class));
+        }
+        return productDTOS;
     }
 
-    public void saveProduct(Product product) {
-        productRepo.save(product);
+    public void saveNewProduct(ProductPriceDTO productPriceDTO,
+                               ProductDTO productDTO) {
+        ModelMapper mapper = new ModelMapper();
+        
+        Product productEntity = mapper.map(productDTO, Product.class);
+        ProductPrice productPriceEntity = mapper.map(productPriceDTO, ProductPrice.class);
+
+        productPriceEntity.setProduct(productRepo.save(productEntity));
+
+        productPriceRepo.save(productPriceEntity);
     }
 
-    public void delProduct(Product product) {
-        productRepo.delete(product);
-    }
+    public List<Object> getNewInfo(boolean dop) {
+        List<Object> productInfo = new ArrayList<>();
+        
+        ProductPriceDTO productPriceDTO = new ProductPriceDTO();
+        ProductDTO productDTO = new ProductDTO();
+        ModelMapper mapper = new ModelMapper();
 
-    public void updateProduct(Product product, String newName, int averagePrice, int middlePrice, int bigPrice) {
-//
-//        product.setProductName(newName);
-//        product.setAveragePrice(averagePrice);
-//        product.setMiddlePrice(middlePrice);
-//        product.setBigPrice(bigPrice);
-//
-//        saveProduct(product);
-    }
+        productDTO.setDop(dop);
+        if (dop) {
+            productDTO.setCategory("Dop");
+            productPriceDTO.setProductSize(mapper.map(productSizeRepo.findBySizeName("SMALL"), ProductSizeDTO.class));
+        }
 
-    public void newProduct(String productName, int averagePrice, int middlePrice, int bigPrice) {
-//        Product product = new Product();
-//
-//        product.setProductName(productName);
-//        product.setAveragePrice(averagePrice);
-//        product.setMiddlePrice(middlePrice);
-//        product.setBigPrice(bigPrice);
-//
-//        saveProduct(product);
+        productInfo.add(productDTO);
+        productInfo.add(productPriceDTO);
+        
+        return productInfo;
     }
 }

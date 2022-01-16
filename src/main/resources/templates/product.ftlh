@@ -3,17 +3,23 @@
 <@c.page>
     <p class="h3">Список продуктов</p>
     <hr/>
+
     <form method="get" action="/admin/product/new">
+        <input type="hidden" name="dop" value="false">
         <button class="btn btn-success" type="submit">Новый продукт</button>
     </form>
+    <hr/>
+    <form method="get" action="/admin/product/new">
+        <input type="hidden" name="dop" value="true">
+        <button class="btn btn-success" type="submit">Новый Доп</button>
+    </form>
+
     <hr/>
     <table class="table table-dark table-striped">
         <thead>
         <tr>
             <th>Название</th>
-            <th>ЦенаМАЛ.</th>
-            <th>ЦенаСР.</th>
-            <th>ЦенаБол.</th>
+            <th>Информация</th>
             <th>Редактировать</th>
             <th>Удалить</th>
         </tr>
@@ -22,9 +28,11 @@
         <#list products as product>
             <tr>
                 <td>${product.productName!}</td>
-                <td>${product.averagePrice!}</td>
-                <td>${product.middlePrice!}</td>
-                <td>${product.bigPrice!}</td>
+                <td>
+                    <form method="get" action="/admin/product/info/${product.id}">
+                        <button class="btn btn-success" type="submit">показать</button>
+                    </form>
+                </td>
                 <td>
                     <form method="get" action="/admin/product/edit/${product.id}">
                         <button class="btn btn-success" type="submit">Изменить</button>
@@ -39,4 +47,6 @@
         </#list>
         </tbody>
     </table>
+
 </@c.page>
+

@@ -1,11 +1,13 @@
 package com.example.coffeapp.controllers;
 
-import com.example.coffeapp.entity.product.Product;
+import com.example.coffeapp.dto.product.*;
 import com.example.coffeapp.service.ProductService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/product")
@@ -26,56 +28,25 @@ public class AdminProductController {
     }
 
     @GetMapping("/new")
-    public String productNew() {
+    public String productNew(@RequestParam boolean dop, Model model) {
+        List<Object> productInfo = productService.getNewInfo(dop); // Array DTO
+
+        model.addAttribute("productDTO", productInfo.get(0)); // ProductDTO
+        model.addAttribute("productPriceDTO", productInfo.get(1)); // ProductPriseDTO
+
+        if(dop) {
+            return "dopNew";
+        }
+
         return "productNew";
     }
 
     @PostMapping("/new")
-    public String productAddNew(@RequestParam String productName,
-                                @RequestParam(defaultValue = "0") int averagePrice,
-                                @RequestParam(defaultValue = "0") int middlePrice,
-                                @RequestParam(defaultValue = "0") int bigPrice, Model model) {
+    public String saveNewProduct(@PathVariable ProductDTO productDTO,
+                                 @PathVariable ProductPriceDTO productPriseDTO) {
 
-        if (productName == null || productName.equals("")) {
-            model.addAttribute("messageName", "Название не может быть пустым");
-            return "productNew";
-        }
+        productService.saveNewProduct(productPriseDTO, productDTO);
 
-        productService.newProduct(productName, averagePrice, middlePrice, bigPrice);
-
-        return "redirect:/admin/product";
-    }
-
-    @GetMapping("/delete/{product}")
-    public String productDelete(@PathVariable Product product) {
-        productService.delProduct(product);
-
-        return "redirect:/admin/product";
-    }
-
-    @GetMapping("/edit/{product}")
-    public String productEditForm(@PathVariable Product product, Model model){
-        model.addAttribute("product", product);
-
-        return "productEdit";
-    }
-
-    @PostMapping("/edit")
-    public String productEdit(@RequestParam String productName,
-                              @RequestParam(defaultValue = "0") int averagePrice,
-                              @RequestParam(defaultValue = "0") int middlePrice,
-                              @RequestParam(defaultValue = "0") int bigPrice,
-                              @RequestParam("productId") Product product,
-                              Model model){
-
-        if (productName == null || productName.equals("")) {
-            model.addAttribute("product", product);
-            model.addAttribute("messageName", "Название не может быть пустым");
-            return "productEdit";
-        }
-
-        productService.updateProduct(product, productName, averagePrice, middlePrice, bigPrice);
-
-        return "redirect:/admin/product";
+        return "redirect:/product";
     }
 }

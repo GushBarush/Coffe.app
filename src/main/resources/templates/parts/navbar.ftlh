@@ -26,14 +26,13 @@
                             АдминПанель
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="/admin">АдминПанель</a></li>
+                            <li><a class="dropdown-item" href="/admin">Админ Меню</a></li>
                             <li><a class="dropdown-item" href="/admin/product">Продукты</a></li>
                         </ul>
                     </li>
                 </#if>
             </ul>
             <#if name != "unknown">
-                <div class="navbar-text mr-3">${name}</div>
                 <form method="post" action="/logout">
                     <input type="hidden" name="_csrf" value="${_csrf.token}">
                     <button class="btn btn-danger" type="submit">Выход</button>
