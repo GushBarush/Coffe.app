@@ -1,7 +1,6 @@
 package com.example.coffeapp.service;
 
 import com.example.coffeapp.dto.product.ProductDTO;
-import com.example.coffeapp.dto.product.ProductPriceDTO;
 import com.example.coffeapp.entity.product.Product;
 import com.example.coffeapp.entity.product.ProductPrice;
 import com.example.coffeapp.repository.ProductPriceRepo;
@@ -33,39 +32,47 @@ public class ProductService {
         return productDTOS;
     }
 
-    public void saveNewProduct(ProductPriceDTO productPriceDTO,
-                               ProductDTO productDTO, boolean dop) {
+    public void saveNewDopProduct(ProductDTO productDTO, Double price) {
         ModelMapper mapper = new ModelMapper();
-        
-        Product productEntity = mapper.map(productDTO, Product.class);
-        ProductPrice productPriceEntity = mapper.map(productPriceDTO, ProductPrice.class);
+        Product product = mapper.map(productDTO, Product.class);
+        ProductPrice productPrice = new ProductPrice();
 
-        if (dop) {
-            productEntity.setCategory("dop");
-            productPriceEntity.setProductSize(productSizeRepo.findBySizeName("SMALL"));
-        }
+        productPrice.setProduct(productRepo.save(product));
+        productPrice.setProductSize(productSizeRepo.findBySizeName("SMALL"));
+        productPrice.setPrice(price);
 
-        productPriceEntity.setProduct(productRepo.save(productEntity));
-
-        productPriceRepo.save(productPriceEntity);
+        productPriceRepo.save(productPrice);
     }
 
-//    public List<Object> getNewInfo(boolean dop) {
-//        List<Object> productInfo = new ArrayList<>();
-//
-//        ProductPriceDTO productPriceDTO = new ProductPriceDTO();
-//        ProductDTO productDTO = new ProductDTO();
-//        ModelMapper mapper = new ModelMapper();
-//
-//        productDTO.setDop(dop);
-//        if (dop) {
-//            productDTO.setCategory("Dop");
-//            productPriceDTO.setProductSize(mapper.map(productSizeRepo.findBySizeName("SMALL"), ProductSizeDTO.class));
-//        }
-//
-//        productInfo.add(productDTO);
-//        productInfo.add(productPriceDTO);
-//
-//        return productInfo;
-//    }
+    public void saveNewProduct(ProductDTO productDTO, Double priceSmall, Double priceMiddle, Double priceBig) {
+        ModelMapper mapper = new ModelMapper();
+        Product product = productRepo.save(mapper.map(productDTO, Product.class));
+        ProductPrice productPriceSmall = new ProductPrice();
+        ProductPrice productPriceMiddle = new ProductPrice();
+        ProductPrice productPriceBig = new ProductPrice();
+
+        productPriceSmall.setProduct(product);
+        productPriceMiddle.setProduct(product);
+        productPriceBig.setProduct(product);
+
+        productPriceSmall.setPrice(priceSmall);
+        productPriceMiddle.setPrice(priceMiddle);
+        productPriceBig.setPrice(priceBig);
+
+        productPriceSmall.setProductSize(productSizeRepo.findBySizeName("SMALL"));
+        productPriceMiddle.setProductSize(productSizeRepo.findBySizeName("MEDIUM"));
+        productPriceBig.setProductSize(productSizeRepo.findBySizeName("BIG"));
+
+        productPriceRepo.save(productPriceSmall);
+        productPriceRepo.save(productPriceMiddle);
+        productPriceRepo.save(productPriceBig);
+    }
+
+    public void productDelete(Long productId) {
+        Product product = productRepo.findById(productId).orElse(new Product());
+        List<ProductPrice> productPrices = productPriceRepo.findAllByProduct(product);
+
+        productPriceRepo.deleteAll(productPrices);
+        productRepo.delete(product);
+    }
 }

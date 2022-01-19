@@ -19,28 +19,24 @@
         <thead>
         <tr>
             <th>Название</th>
-            <th>Информация</th>
             <th>Редактировать</th>
             <th>Удалить</th>
         </tr>
         </thead>
         <tbody>
-        <#list products as product>
+        <#list products as productDTO>
             <tr>
-                <td>${product.productName!}</td>
+                <td>${productDTO.productName!}</td>
                 <td>
-                    <form method="get" action="/admin/product/info/${product.id}">
-                        <button class="btn btn-success" type="submit">показать</button>
+                    <form method="get" action="/admin/product/edit/${productDTO.id}">
+                        <button class="btn btn-success" type="submit">⚙</button>
                     </form>
                 </td>
                 <td>
-                    <form method="get" action="/admin/product/edit/${product.id}">
-                        <button class="btn btn-success" type="submit">Изменить</button>
-                    </form>
-                </td>
-                <td>
-                    <form method="get" action="/admin/product/delete/${product.id}">
-                        <button class="btn btn-success" type="submit">удалить</button>
+                    <form method="post" action="/admin/product/delete">
+                        <input type="hidden" value="${productDTO.id}" name="productId">
+                        <input type="hidden" value="${_csrf.token}" name="_csrf">
+                        <button class="btn btn-success" type="submit">❌</button>
                     </form>
                 </td>
             </tr>

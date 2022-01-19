@@ -26,17 +26,54 @@ public class AdminProductController {
     }
 
     @GetMapping("/new")
-    public String productNew() {
-        return "dopNew";
+    public String productNew(@RequestParam(name = "dop") Boolean dop) {
+        if(dop) {
+            return "dopNew";
+        }
+
+        return "productNew";
+    }
+
+    @PostMapping("/new_dop")
+    public String saveNewDopProduct(@RequestParam(name = "productName") String productName,
+                                 @RequestParam(name = "price") Double price,
+                                 @RequestParam(name = "description") String description) {
+
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setDop(true);
+        productDTO.setCategory("dop");
+        productDTO.setProductName(productName);
+        productDTO.setDescription(description);
+
+        productService.saveNewDopProduct(productDTO, price);
+
+        return "redirect:/admin/product";
     }
 
     @PostMapping("/new")
-    public String saveNewProduct(@RequestParam(name = "productDTO") ProductDTO productDTO,
-                                 @RequestParam(name = "productPriceDTO") ProductPriceDTO productPriseDTO,
-                                 @RequestParam boolean dop) {
+    public String saveNewDopProduct(@RequestParam(name = "productName") String productName,
+                                    @RequestParam(name = "priceSmall") Double priceSmall,
+                                    @RequestParam(name = "priceMiddle") Double priceMiddle,
+                                    @RequestParam(name = "priceBig") Double priceBig,
+                                    @RequestParam(name = "category") String category,
+                                    @RequestParam(name = "description") String description) {
 
-        productService.saveNewProduct(productPriseDTO, productDTO, dop);
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setDop(false);
+        productDTO.setCategory(category);
+        productDTO.setProductName(productName);
+        productDTO.setDescription(description);
 
-        return "redirect:/product";
+        productService.saveNewProduct(productDTO, priceSmall, priceMiddle, priceBig);
+
+        return "redirect:/admin/product";
+    }
+
+    @PostMapping("/delete")
+    public String productDelete(@RequestParam(name = "productId") Long productId) {
+
+        productService.productDelete(productId);
+
+        return "redirect:/admin/product";
     }
 }

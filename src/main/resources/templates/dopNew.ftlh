@@ -5,7 +5,7 @@
     <hr/>
     <br/>
     ${messageName!}
-    <form action="/admin/product/new" method="post">
+    <form action="/admin/product/new_dop" method="post">
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="productName">Название товара</span>
@@ -27,7 +27,6 @@
             </div>
         </div>
         <br/>
-        <input type="hidden" value="true" name="dop">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <button class="btn btn-primary" type="submit">Добавить</button>
     </form>
