@@ -28,7 +28,8 @@
             <tr>
                 <td>${productDTO.productName!}</td>
                 <td>
-                    <form method="get" action="/admin/product/edit/${productDTO.id}">
+                    <form method="get" action="/admin/product/edit">
+                        <input type="hidden" value="${productDTO.id}" name="productId">
                         <button class="btn btn-success" type="submit">⚙</button>
                     </form>
                 </td>

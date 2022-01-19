@@ -76,4 +76,38 @@ public class AdminProductController {
 
         return "redirect:/admin/product";
     }
+
+    @GetMapping("/edit")
+    public String getProductInfo(@RequestParam(name = "productId") Long productId, Model model) {
+        ProductDTO productDTO = productService.getProductDTO(productId);
+
+        model.addAttribute("productDTO", productDTO);
+
+        if (productDTO.isDop()) {
+            model.addAttribute("productPriceDTO", productService.getProductPriceDTO(productId));
+            return "dopEdit";
+        }
+
+
+        return "productEdit";
+    }
+
+    @PostMapping("/edit_dop")
+    public String productUpdate(@RequestParam(name = "productId") Long productId,
+                                @RequestParam(name = "productPriceId") Long productPriceId,
+                                @RequestParam(name = "productName") String productName,
+                                @RequestParam(name = "price") Double price,
+                                @RequestParam(name = "description") String description) {
+
+        ProductDTO productDTO = productService.getProductDTO(productId);
+        ProductPriceDTO productPriceDTO = productService.getProductPriceDTO(productPriceId);
+
+        productDTO.setProductName(productName);
+        productDTO.setDescription(description);
+        productPriceDTO.setPrice(price);
+
+        productService.updateProduct(productDTO, productPriceDTO);
+
+        return "redirect:/admin/product";
+    }
 }

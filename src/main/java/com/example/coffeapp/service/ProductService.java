@@ -1,6 +1,7 @@
 package com.example.coffeapp.service;
 
 import com.example.coffeapp.dto.product.ProductDTO;
+import com.example.coffeapp.dto.product.ProductPriceDTO;
 import com.example.coffeapp.entity.product.Product;
 import com.example.coffeapp.entity.product.ProductPrice;
 import com.example.coffeapp.repository.ProductPriceRepo;
@@ -30,6 +31,29 @@ public class ProductService {
             productDTOS.add(mapper.map(product, ProductDTO.class));
         }
         return productDTOS;
+    }
+
+    public ProductDTO getProductDTO(Long productId) {
+        ModelMapper mapper = new ModelMapper();
+        Product product = productRepo.findById(productId).orElse(new Product());
+
+        return mapper.map(product, ProductDTO.class);
+    }
+
+    public ProductPriceDTO getProductPriceDTO(Long productId) {
+        ModelMapper mapper = new ModelMapper();
+        Product product = productRepo.findById(productId).orElse(new Product());
+
+        return mapper.map(productPriceRepo.findByProduct(product), ProductPriceDTO.class);
+    }
+
+    public void updateProduct(ProductDTO productDTO, ProductPriceDTO productPriceDTO){
+        ModelMapper mapper = new ModelMapper();
+        Product product = mapper.map(productDTO, Product.class);
+        ProductPrice productPrice = mapper.map(productPriceDTO, ProductPrice.class);
+
+        productPriceRepo.save(productPrice);
+        productRepo.save(product);
     }
 
     public void saveNewDopProduct(ProductDTO productDTO, Double price) {
