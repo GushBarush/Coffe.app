@@ -99,14 +99,7 @@ public class AdminProductController {
                                 @RequestParam(name = "price") Double price,
                                 @RequestParam(name = "description") String description) {
 
-        ProductDTO productDTO = productService.getProductDTO(productId);
-        ProductPriceDTO productPriceDTO = productService.getProductPriceDTO(productPriceId);
-
-        productDTO.setProductName(productName);
-        productDTO.setDescription(description);
-        productPriceDTO.setPrice(price);
-
-        productService.updateProduct(productDTO, productPriceDTO);
+        productService.updateProduct(productId, productPriceId, productName, price, description);
 
         return "redirect:/admin/product";
     }

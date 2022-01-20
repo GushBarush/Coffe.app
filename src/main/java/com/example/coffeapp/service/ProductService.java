@@ -2,6 +2,7 @@ package com.example.coffeapp.service;
 
 import com.example.coffeapp.dto.product.ProductDTO;
 import com.example.coffeapp.dto.product.ProductPriceDTO;
+import com.example.coffeapp.dto.product.ProductView;
 import com.example.coffeapp.entity.product.Product;
 import com.example.coffeapp.entity.product.ProductPrice;
 import com.example.coffeapp.repository.ProductPriceRepo;
@@ -12,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -33,6 +35,31 @@ public class ProductService {
         return productDTOS;
     }
 
+    public List<ProductView> getProductsView(String category) {
+        List<ProductView> productViews = new ArrayList<>();
+        List<Product> products = productRepo.findAllByCategory(category);
+
+        for (Product product : products) {
+            ProductView productView = new ProductView();
+
+            productView.setProductName(product.getProductName());
+            productView.setDescription(product.getDescription());
+            productView.setCategory(product.getCategory());
+            productView.setImgPng(Arrays.toString(product.getImgPng()));
+
+            if(product.getCategory().equals("dop")) {
+                productView.setPriceSmall(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL")).getPrice());
+            } else {
+                productView.setPriceSmall(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL")).getPrice());
+                productView.setPriceMedium(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("MEDIUM")).getPrice());
+                productView.setPriceBig(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("BIG")).getPrice());
+            }
+            productViews.add(productView);
+        }
+
+        return productViews;
+    }
+
     public ProductDTO getProductDTO(Long productId) {
         ModelMapper mapper = new ModelMapper();
         Product product = productRepo.findById(productId).orElse(new Product());
@@ -47,13 +74,18 @@ public class ProductService {
         return mapper.map(productPriceRepo.findByProduct(product), ProductPriceDTO.class);
     }
 
-    public void updateProduct(ProductDTO productDTO, ProductPriceDTO productPriceDTO){
-        ModelMapper mapper = new ModelMapper();
-        Product product = mapper.map(productDTO, Product.class);
-        ProductPrice productPrice = mapper.map(productPriceDTO, ProductPrice.class);
+    public void updateProduct(Long productId, Long productPriceId, String productName,
+                              Double price, String description){
+        Product product = productRepo.findById(productId).orElse(new Product());
+        ProductPrice productPrice = productPriceRepo.findById(productPriceId).orElse(new ProductPrice());
+
+        product.setProductName(productName);
+        product.setDescription(description);
+
+        productPrice.setPrice(price);
+        productPrice.setProduct(productRepo.save(product));
 
         productPriceRepo.save(productPrice);
-        productRepo.save(product);
     }
 
     public void saveNewDopProduct(ProductDTO productDTO, Double price) {

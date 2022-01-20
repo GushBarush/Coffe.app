@@ -19,7 +19,11 @@ public class MenuController {
     @GetMapping
     public String product(Model model) {
 
-        model.addAttribute("products", productService.allProduct());
+        model.addAttribute("productClassic", productService.getProductsView("classic"));
+        model.addAttribute("productRaf", productService.getProductsView("raf"));
+        model.addAttribute("productHot", productService.getProductsView("hot"));
+        model.addAttribute("productSeason", productService.getProductsView("season"));
+        model.addAttribute("productDop", productService.getProductsView("dop"));
 
         return "menu";
     }
