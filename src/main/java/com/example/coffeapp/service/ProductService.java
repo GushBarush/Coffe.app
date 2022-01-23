@@ -4,6 +4,7 @@ import com.example.coffeapp.dto.product.ProductDTO;
 import com.example.coffeapp.dto.product.ProductPriceDTO;
 import com.example.coffeapp.dto.product.ProductView;
 import com.example.coffeapp.entity.product.Product;
+import com.example.coffeapp.entity.product.ProductImage;
 import com.example.coffeapp.entity.product.ProductPrice;
 import com.example.coffeapp.repository.ProductPriceRepo;
 import com.example.coffeapp.repository.ProductRepo;
@@ -11,9 +12,10 @@ import com.example.coffeapp.repository.ProductSizeRepo;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -45,7 +47,7 @@ public class ProductService {
             productView.setProductName(product.getProductName());
             productView.setDescription(product.getDescription());
             productView.setCategory(product.getCategory());
-            productView.setImgPng(Arrays.toString(product.getImgPng()));
+            productView.setImageId(product.getProductImage().getId());
 
             if(product.getCategory().equals("dop")) {
                 productView.setPriceSmall(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL")).getPrice());
@@ -88,10 +90,16 @@ public class ProductService {
         productPriceRepo.save(productPrice);
     }
 
-    public void saveNewDopProduct(ProductDTO productDTO, Double price) {
+    public void saveNewDopProduct(ProductDTO productDTO, Double price, MultipartFile file) throws IOException {
         ModelMapper mapper = new ModelMapper();
         Product product = mapper.map(productDTO, Product.class);
         ProductPrice productPrice = new ProductPrice();
+        ProductImage productImage;
+
+        if(file.getSize() != 0) {
+            productImage = toImageEntity(file);
+            product.setProductImage(productImage);
+        }
 
         productPrice.setProduct(productRepo.save(product));
         productPrice.setProductSize(productSizeRepo.findBySizeName("SMALL"));
@@ -100,12 +108,16 @@ public class ProductService {
         productPriceRepo.save(productPrice);
     }
 
-    public void saveNewProduct(ProductDTO productDTO, Double priceSmall, Double priceMiddle, Double priceBig) {
+    public void saveNewProduct(ProductDTO productDTO, Double priceSmall,
+                               Double priceMiddle, Double priceBig,
+                               MultipartFile file) throws IOException {
+
         ModelMapper mapper = new ModelMapper();
         Product product = productRepo.save(mapper.map(productDTO, Product.class));
         ProductPrice productPriceSmall = new ProductPrice();
         ProductPrice productPriceMiddle = new ProductPrice();
         ProductPrice productPriceBig = new ProductPrice();
+        ProductImage productImage;
 
         productPriceSmall.setProduct(product);
         productPriceMiddle.setProduct(product);
@@ -119,9 +131,26 @@ public class ProductService {
         productPriceMiddle.setProductSize(productSizeRepo.findBySizeName("MEDIUM"));
         productPriceBig.setProductSize(productSizeRepo.findBySizeName("BIG"));
 
+        if(file.getSize() != 0) {
+            productImage = toImageEntity(file);
+            product.setProductImage(productImage);
+        }
+
         productPriceRepo.save(productPriceSmall);
         productPriceRepo.save(productPriceMiddle);
         productPriceRepo.save(productPriceBig);
+    }
+
+    private ProductImage toImageEntity(MultipartFile file) throws IOException {
+        ProductImage productImage = new ProductImage();
+
+        productImage.setName(file.getName());
+        productImage.setOriginalFileName(file.getOriginalFilename());
+        productImage.setContentType(file.getContentType());
+        productImage.setSize(file.getSize());
+        productImage.setBytes(file.getBytes());
+
+        return productImage;
     }
 
     public void productDelete(Long productId) {

@@ -17,11 +17,11 @@ public class ProductView {
 
     private String description;
 
-    private String imgPng;
-
     private Double priceSmall;
 
     private Double priceMedium;
 
     private Double priceBig;
+
+    private Long imageId;
 }

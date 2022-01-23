@@ -5,7 +5,7 @@
     <hr/>
     <br/>
     ${messageName!}
-    <form action="/admin/product/new_dop" method="post">
+    <form action="/admin/product/new_dop" method="post" enctype="multipart/form-data">
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="productName">Название товара</span>
@@ -25,6 +25,14 @@
                 <span class="input-group-text" id="description">Описание</span>
                 <input class="form-control" type="text" aria-describedby="description" name="description"/>
             </div>
+        </div>
+        <br/>
+        <div class="from-file">
+            <input type="file" class="from-file-input" name="file" id="customFile">
+            <label class="form-file-label" for="customFile">
+                <span class="from-file-text">Выбирете фото...</span>
+                <span class="form-file-button">Поиск</span>
+            </label>
         </div>
         <br/>
         <input type="hidden" value="${_csrf.token}" name="_csrf">

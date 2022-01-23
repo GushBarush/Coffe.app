@@ -5,7 +5,7 @@
     <hr/>
     <br/>
     ${messageName!}
-    <form action="/admin/product/new" method="post">
+    <form action="/admin/product/new" method="post" enctype="multipart/form-data">
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="productName">Название товара</span>
@@ -63,6 +63,14 @@
             <input class="form-check-input" value="season" type="radio" name="category" id="flexRadioDefault2" checked>
             <label class="form-check-label" for="flexRadioDefault2">
                 Сезонные Напитки
+            </label>
+        </div>
+        <br/>
+        <div class="from-file">
+            <input type="file" class="from-file-input" name="file" id="customFile">
+            <label class="form-file-label" for="customFile">
+                <span class="from-file-text">Выбирете фото...</span>
+                <span class="form-file-button">Поиск</span>
             </label>
         </div>
         <br/>

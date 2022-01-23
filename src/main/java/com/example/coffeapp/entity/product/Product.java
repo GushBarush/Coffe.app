@@ -1,7 +1,6 @@
 package com.example.coffeapp.entity.product;
 
 import lombok.Data;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,11 +23,9 @@ public class Product implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Lob
-    @Type(type = "org.hibernate.type.BinaryType")
-    @Column(name = "img_png")
-    private byte[] imgPng;
-
     @Column(name = "is_dop", nullable = false)
     private boolean isDop;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private ProductImage productImage;
 }
