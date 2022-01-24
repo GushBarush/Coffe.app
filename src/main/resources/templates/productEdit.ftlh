@@ -5,7 +5,7 @@
     <hr/>
     <br/>
     ${messageName!}
-    <form action="/admin/product/edit" method="post">
+    <form action="/admin/product/edit" method="post" enctype="multipart/form-data">
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="productName">Название товара</span>
