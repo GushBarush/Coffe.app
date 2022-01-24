@@ -34,6 +34,13 @@
             </div>
         </div>
         <br/>
+        <div class="from-file">
+            <input type="file" class="from-file-input" name="file" id="customFile">
+            <label class="form-file-label" for="customFile">
+                <span class="from-file-text">Выбирете фото...</span>
+            </label>
+        </div>
+        <br/>
         <input type="hidden" value="${product.id}" name="productId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <button class="btn btn-primary" type="submit">Сохранить</button>

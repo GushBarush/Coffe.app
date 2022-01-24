@@ -55,7 +55,7 @@ public class AdminProductController {
     }
 
     @PostMapping("/new")
-    public String saveNewDopProduct(@RequestParam(name = "productName") String productName,
+    public String saveNewProduct(@RequestParam(name = "productName") String productName,
                                     @RequestParam(name = "priceSmall") Double priceSmall,
                                     @RequestParam(name = "priceMiddle") Double priceMiddle,
                                     @RequestParam(name = "priceBig") Double priceBig,
@@ -98,13 +98,14 @@ public class AdminProductController {
     }
 
     @PostMapping("/edit_dop")
-    public String productUpdate(@RequestParam(name = "productId") Long productId,
+    public String productDopUpdate(@RequestParam(name = "productId") Long productId,
                                 @RequestParam(name = "productPriceId") Long productPriceId,
                                 @RequestParam(name = "productName") String productName,
                                 @RequestParam(name = "price") Double price,
-                                @RequestParam(name = "description") String description) {
+                                @RequestParam(name = "description") String description,
+                                @RequestParam(name = "file") MultipartFile file) throws IOException {
 
-        productService.updateProduct(productId, productPriceId, productName, price, description);
+        productService.updateDopProduct(productId, productPriceId, productName, price, description, file);
 
         return "redirect:/admin/product";
     }

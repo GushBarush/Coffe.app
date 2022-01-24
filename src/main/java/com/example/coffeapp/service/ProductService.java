@@ -6,6 +6,7 @@ import com.example.coffeapp.dto.product.ProductView;
 import com.example.coffeapp.entity.product.Product;
 import com.example.coffeapp.entity.product.ProductImage;
 import com.example.coffeapp.entity.product.ProductPrice;
+import com.example.coffeapp.repository.ProductImageRepo;
 import com.example.coffeapp.repository.ProductPriceRepo;
 import com.example.coffeapp.repository.ProductRepo;
 import com.example.coffeapp.repository.ProductSizeRepo;
@@ -25,6 +26,7 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final ProductPriceRepo productPriceRepo;
     private final ProductSizeRepo productSizeRepo;
+    private final ProductImageRepo productImageRepo;
 
     public List<ProductDTO> allProduct(){
         List<Product> productsEntity = productRepo.findAll();
@@ -76,10 +78,17 @@ public class ProductService {
         return mapper.map(productPriceRepo.findByProduct(product), ProductPriceDTO.class);
     }
 
-    public void updateProduct(Long productId, Long productPriceId, String productName,
-                              Double price, String description){
+    public void updateDopProduct(Long productId, Long productPriceId, String productName,
+                              Double price, String description, MultipartFile file) throws IOException {
         Product product = productRepo.findById(productId).orElse(new Product());
         ProductPrice productPrice = productPriceRepo.findById(productPriceId).orElse(new ProductPrice());
+        ProductImage productImage;
+
+        if (file.getSize() != 0) {
+            productImageRepo.delete(product.getProductImage());
+            productImage = toImageEntity(file);
+            product.setProductImage(productImage);
+        }
 
         product.setProductName(productName);
         product.setDescription(description);
