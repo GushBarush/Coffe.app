@@ -11,6 +11,8 @@ import lombok.Setter;
 @Getter
 public class ProductView {
 
+    private Long id;
+
     private String category;
 
     private String productName;

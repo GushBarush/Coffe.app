@@ -46,6 +46,7 @@ public class ProductService {
         for (Product product : products) {
             ProductView productView = new ProductView();
 
+            productView.setId(product.getId());
             productView.setProductName(product.getProductName());
             productView.setDescription(product.getDescription());
             productView.setCategory(product.getCategory());
@@ -80,6 +81,7 @@ public class ProductService {
 
     public void updateDopProduct(Long productId, Long productPriceId, String productName,
                               Double price, String description, MultipartFile file) throws IOException {
+
         Product product = productRepo.findById(productId).orElse(new Product());
         ProductPrice productPrice = productPriceRepo.findById(productPriceId).orElse(new ProductPrice());
         ProductImage productImage;
@@ -97,6 +99,42 @@ public class ProductService {
         productPrice.setProduct(productRepo.save(product));
 
         productPriceRepo.save(productPrice);
+    }
+
+    public void updateProduct(Long productId, String productName,
+                              Double smallPrice, Double mediumPrice,
+                              Double bigPrice, String description,
+                              String category, MultipartFile file) throws IOException {
+
+        Product product = productRepo.findById(productId).orElse(new Product());
+        ProductPrice productPriceSmall = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL"));
+        ProductPrice productPriceMedium = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("MEDIUM"));
+        ProductPrice productPriceBig = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("BIG"));
+        ProductImage productImage;
+
+        if (file.getSize() != 0) {
+            productImageRepo.delete(product.getProductImage());
+            productImage = toImageEntity(file);
+            product.setProductImage(productImage);
+        }
+
+        product.setCategory(category);
+        product.setProductName(productName);
+        product.setDescription(description);
+
+        productPriceSmall.setPrice(smallPrice);
+        productPriceMedium.setPrice(mediumPrice);
+        productPriceBig.setPrice(bigPrice);
+
+        Product productSaved = productRepo.save(product);
+
+        productPriceSmall.setProduct(productSaved);
+        productPriceMedium.setProduct(productSaved);
+        productPriceBig.setProduct(productSaved);
+
+        productPriceRepo.save(productPriceSmall);
+        productPriceRepo.save(productPriceMedium);
+        productPriceRepo.save(productPriceBig);
     }
 
     public void saveNewDopProduct(ProductDTO productDTO, Double price, MultipartFile file) throws IOException {
@@ -163,10 +201,26 @@ public class ProductService {
     }
 
     public void productDelete(Long productId) {
-        Product product = productRepo.findById(productId).orElse(new Product());
+        Product product = productRepo.findById(productId).orElse(null);
         List<ProductPrice> productPrices = productPriceRepo.findAllByProduct(product);
 
         productPriceRepo.deleteAll(productPrices);
         productRepo.delete(product);
+    }
+
+    public ProductView getProductPriceView(Long productId) {
+        Product product = productRepo.findById(productId).orElse(null);
+        ProductView productView = new ProductView();
+
+        productView.setProductName(product.getProductName());
+        productView.setDescription(product.getDescription());
+        productView.setCategory(product.getCategory());
+        productView.setImageId(product.getProductImage().getId());
+
+        productView.setPriceSmall(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL")).getPrice());
+        productView.setPriceMedium(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("MEDIUM")).getPrice());
+        productView.setPriceBig(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("BIG")).getPrice());
+
+        return productView;
     }
 }

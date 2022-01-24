@@ -91,8 +91,9 @@ public class AdminProductController {
         if (productDTO.isDop()) {
             model.addAttribute("productPriceDTO", productService.getProductPriceDTO(productId));
             return "dopEdit";
+        } else {
+            model.addAttribute("productPriceView", productService.getProductPriceView(productId));
         }
-
 
         return "productEdit";
     }
@@ -106,6 +107,21 @@ public class AdminProductController {
                                 @RequestParam(name = "file") MultipartFile file) throws IOException {
 
         productService.updateDopProduct(productId, productPriceId, productName, price, description, file);
+
+        return "redirect:/admin/product";
+    }
+
+    @PostMapping("/edit")
+    public String productUpdate(@RequestParam(name = "productId") Long productId,
+                                @RequestParam(name = "category") String category,
+                                @RequestParam(name = "productName") String productName,
+                                @RequestParam(name = "smallPrice") Double smallPrice,
+                                @RequestParam(name = "mediumPrice") Double mediumPrice,
+                                @RequestParam(name = "bigPrice") Double bigPrice,
+                                @RequestParam(name = "description") String description,
+                                @RequestParam(name = "file", required = false) MultipartFile file) throws IOException {
+
+        productService.updateProduct(productId, productName, smallPrice, mediumPrice, bigPrice, category, description, file);
 
         return "redirect:/admin/product";
     }
