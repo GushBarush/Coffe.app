@@ -103,8 +103,8 @@ public class ProductService {
 
     public void updateProduct(Long productId, String productName,
                               Double smallPrice, Double mediumPrice,
-                              Double bigPrice, String description,
-                              String category, MultipartFile file) throws IOException {
+                              Double bigPrice, String category,
+                              String description, MultipartFile file) throws IOException {
 
         Product product = productRepo.findById(productId).orElse(new Product());
         ProductPrice productPriceSmall = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL"));
@@ -118,9 +118,9 @@ public class ProductService {
             product.setProductImage(productImage);
         }
 
-        product.setCategory(category);
         product.setProductName(productName);
         product.setDescription(description);
+        product.setCategory(category);
 
         productPriceSmall.setPrice(smallPrice);
         productPriceMedium.setPrice(mediumPrice);
