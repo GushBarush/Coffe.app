@@ -103,5 +103,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.checkerframework:checker-qual:3.5.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.22" level="project" />
     <orderEntry type="library" name="Maven: org.modelmapper:modelmapper:3.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.flywaydb:flyway-core:8.4.2" level="project" />
   </component>
 </module>
