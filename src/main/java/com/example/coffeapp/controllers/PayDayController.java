@@ -43,10 +43,7 @@ public class PayDayController {
 
         ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"));
 
-        ZonedDateTime zonedDateTime1 = ZonedDateTime.now(ZoneOffset.UTC);
-
-        model.addAttribute("time1", "e");
-        model.addAttribute("time2", zonedDateTime);
+        model.addAttribute("time1", zonedDateTime);
         return "currentPayDay";
     }
 
