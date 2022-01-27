@@ -9,6 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +22,9 @@ public class PayDayService {
 
     public PayDayDTO getNewPayDay(String userNumber) {
         PayDay payDayEntity = new PayDay();
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        ZonedDateTime time = ZonedDateTime.now(ZoneId.of("Europe/Moscow"))
+                .truncatedTo(ChronoUnit.MILLIS);
+        Timestamp currentTime = new Timestamp(time.toInstant().toEpochMilli());
         ModelMapper mapper = new ModelMapper();
         PayDayDTO payDayDTO;
 
@@ -49,5 +54,17 @@ public class PayDayService {
         payDayDTO = mapper.map(payDayEntity, PayDayDTO.class);
 
         return payDayDTO;
+    }
+
+    public void endPayDay(Long id) {
+        PayDay payDay = payDayRepo.getById(id);
+        ZonedDateTime time = ZonedDateTime.now(ZoneId.of("Europe/Moscow"))
+                .truncatedTo(ChronoUnit.MILLIS);
+        Timestamp currentTime = new Timestamp(time.toInstant().toEpochMilli());
+
+        payDay.setCloseTime(currentTime);
+        payDay.setActive(false);
+
+        payDayRepo.save(payDay);
     }
 }

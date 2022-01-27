@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
@@ -39,5 +40,12 @@ public class PayDayController {
         model.addAttribute("PayDayDTO", payDayService.getNewPayDay(principal.getName()));
 
         return "currentPayDay";
+    }
+
+    @PostMapping("/end")
+    public String endPayDay(@RequestParam(name = "id") Long id) {
+        payDayService.endPayDay(id);
+
+        return "redirect:/payday";
     }
 }
