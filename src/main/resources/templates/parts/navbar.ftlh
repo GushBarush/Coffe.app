@@ -16,16 +16,22 @@
                     <a class="nav-link" aria-current="page" href="/menu">Меню</a>
                 </li>
                 <#if isBarista>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/barista">Бариста</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/barista" id="navbarDropdownMenuLinkBarista" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Бариста
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkBarista">
+                            <li><a class="dropdown-item" href="/barista">Гости</a></li>
+                            <li><a class="dropdown-item" href="/payday">Смена</a></li>
+                        </ul>
                     </li>
                 </#if>
                 <#if isAdmin>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/admin" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="/admin" id="navbarDropdownMenuLinkAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             АдминПанель
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkAdmin">
                             <li><a class="dropdown-item" href="/admin">Админ Меню</a></li>
                             <li><a class="dropdown-item" href="/admin/product">Продукты</a></li>
                         </ul>
