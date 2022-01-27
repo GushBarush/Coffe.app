@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/payday")
 @PreAuthorize("hasAuthority('BARISTA')")
@@ -33,8 +35,8 @@ public class PayDayController {
     }
 
     @PostMapping
-    public String newPayDay(@CurrentSecurityContext(expression = "authentication?.id") Long userId, Model model) {
-        model.addAttribute("PayDayDTO", payDayService.getNewPayDay(userId));
+    public String newPayDay(Principal principal, Model model) {
+        model.addAttribute("PayDayDTO", payDayService.getNewPayDay(principal.getName()));
 
         return "currentPayDay";
     }

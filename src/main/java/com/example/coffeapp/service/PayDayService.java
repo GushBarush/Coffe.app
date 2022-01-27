@@ -17,7 +17,7 @@ public class PayDayService {
     private final PayDayRepo payDayRepo;
     private final UserRepo userRepo;
 
-    public PayDayDTO getNewPayDay(Long userId) {
+    public PayDayDTO getNewPayDay(String userNumber) {
         PayDay payDayEntity = new PayDay();
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         ModelMapper mapper = new ModelMapper();
@@ -25,7 +25,7 @@ public class PayDayService {
 
         payDayEntity.setActive(true);
         payDayEntity.setOpenTime(currentTime);
-        payDayEntity.setUser(userRepo.findById(userId).orElse(null));
+        payDayEntity.setUser(userRepo.findByPhoneNumber(userNumber));
         payDayEntity.setSumAll(0.0);
         payDayEntity.setSumCash(0.0);
         payDayEntity.setSumNotCash(0.0);
