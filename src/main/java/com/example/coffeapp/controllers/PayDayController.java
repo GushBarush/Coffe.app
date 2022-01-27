@@ -2,8 +2,8 @@ package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.dto.payday.PayDayDTO;
 import com.example.coffeapp.service.PayDayService;
+import org.springframework.cglib.core.internal.LoadingCache;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.security.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/payday")
@@ -39,6 +44,10 @@ public class PayDayController {
     public String newPayDay(Principal principal, Model model) {
         model.addAttribute("PayDayDTO", payDayService.getNewPayDay(principal.getName()));
 
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"));
+
+        model.addAttribute("time1", new Date().toInstant().toEpochMilli());
+        model.addAttribute("time2", zonedDateTime.toInstant().toEpochMilli());
         return "currentPayDay";
     }
 
