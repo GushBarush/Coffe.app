@@ -22,6 +22,7 @@ public class PayDayController {
     @GetMapping
     public String getPayDay(Model model) {
         PayDayDTO payDayDTO = payDayService.getCurrentPayDay();
+
         if (payDayDTO != null){
             model.addAttribute("PayDayDTO", payDayDTO);
             return "currentPayDay";

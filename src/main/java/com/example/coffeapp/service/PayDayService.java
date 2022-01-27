@@ -14,11 +14,11 @@ public class PayDayService {
     private final PayDayRepo payDayRepo;
 
     public PayDayDTO getCurrentPayDay() {
-        PayDayDTO payDayDTO = new PayDayDTO();
+        PayDayDTO payDayDTO;
         PayDay payDayEntity = payDayRepo.findByActive(true);
 
         if (payDayEntity == null) {
-            return payDayDTO;
+            return null;
         }
 
         ModelMapper mapper = new ModelMapper();
