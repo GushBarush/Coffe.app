@@ -22,12 +22,11 @@ public class PayDayService {
     public PayDayDTO getNewPayDay(String userNumber) {
         PayDay payDayEntity = new PayDay();
         ModelMapper mapper = new ModelMapper();
-        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Omsk"));
-        Timestamp timestamp = new Timestamp(zonedDateTime.toInstant().toEpochMilli());
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"));
         PayDayDTO payDayDTO;
 
         payDayEntity.setActive(true);
-        payDayEntity.setOpenTime(timestamp);
+        payDayEntity.setOpenTime(new Timestamp(zonedDateTime.toInstant().toEpochMilli()));
         payDayEntity.setUser(userRepo.findByPhoneNumber(userNumber));
         payDayEntity.setSumAll(0.0);
         payDayEntity.setSumCash(0.0);
@@ -56,10 +55,9 @@ public class PayDayService {
 
     public void endPayDay(Long id) {
         PayDay payDay = payDayRepo.getById(id);
-        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Omsk"));
-        Timestamp timestamp = new Timestamp(zonedDateTime.toInstant().toEpochMilli());
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"));
 
-        payDay.setCloseTime(timestamp);
+        payDay.setCloseTime(new Timestamp(zonedDateTime.toInstant().toEpochMilli()));
         payDay.setActive(false);
 
         payDayRepo.save(payDay);

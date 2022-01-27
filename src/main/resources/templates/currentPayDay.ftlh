@@ -3,7 +3,7 @@
 <@c.page>
     <p class="h2">Смена</p>
     <br/>
-    <p class="h2">Смену открыл: ${time1!}</p>
+    <p class="h2">Смену открыл: ${time}</p>
     <p class="h2">Смена открта в: ${PayDayDTO.openTime}</p>
     <hr/>
     <form action="/payday/end" method="post">

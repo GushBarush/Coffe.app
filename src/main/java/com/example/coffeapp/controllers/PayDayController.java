@@ -38,11 +38,11 @@ public class PayDayController {
 
     @PostMapping
     public String newPayDay(Principal principal, Model model) {
-        model.addAttribute("PayDayDTO", payDayService.getNewPayDay(principal.getName()));
+        PayDayDTO payDayDTO = payDayService.getNewPayDay(principal.getName());
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(payDayDTO.getOpenTime().toInstant(), ZoneId.of("Europe/Moscow"));
 
-        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"));
-
-        model.addAttribute("time1", zonedDateTime);
+        model.addAttribute("PayDayDTO", payDayDTO);
+        model.addAttribute("time", zonedDateTime);
         return "currentPayDay";
     }
 
