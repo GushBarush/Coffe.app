@@ -24,7 +24,7 @@ public class PayDayService {
         PayDay payDayEntity = new PayDay();
         ModelMapper mapper = new ModelMapper();
         Date date = new Date();
-        ZonedDateTime zonedDateTime = date.toInstant().atZone(ZoneId.of("Europe/Moscow"));
+        ZonedDateTime zonedDateTime = date.toInstant().atZone(ZoneId.of("UTC+3"));
         Timestamp timestamp =  new Timestamp(zonedDateTime.toInstant().toEpochMilli());
         PayDayDTO payDayDTO;
 
@@ -59,7 +59,7 @@ public class PayDayService {
     public void endPayDay(Long id) {
         PayDay payDay = payDayRepo.getById(id);
         Date date = new Date();
-        ZonedDateTime zonedDateTime = date.toInstant().atZone(ZoneId.of("Europe/Moscow"));
+        ZonedDateTime zonedDateTime = date.toInstant().atZone(ZoneId.of("UTC+3"));
         Timestamp timestamp =  new Timestamp(zonedDateTime.toInstant().toEpochMilli());
 
         payDay.setCloseTime(timestamp);
