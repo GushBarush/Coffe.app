@@ -3,9 +3,11 @@ package com.example.coffeapp.controllers;
 import com.example.coffeapp.dto.payday.PayDayDTO;
 import com.example.coffeapp.service.PayDayService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -28,5 +30,12 @@ public class PayDayController {
             return "currentPayDay";
         }
         return "payDay";
+    }
+
+    @PostMapping
+    public String newPayDay(@CurrentSecurityContext(expression = "authentication?.id") Long userId, Model model) {
+        model.addAttribute("PayDayDTO", payDayService.getNewPayDay(userId));
+
+        return "currentPayDay";
     }
 }
