@@ -30,6 +30,8 @@ public class PayDayService {
         payDayEntity.setSumCash(0.0);
         payDayEntity.setSumNotCash(0.0);
 
+        payDayRepo.save(payDayEntity);
+
         payDayDTO = mapper.map(payDayEntity, PayDayDTO.class);
 
         return payDayDTO;
