@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 @Service
 @AllArgsConstructor
@@ -22,14 +21,12 @@ public class PayDayService {
 
     public PayDayDTO getNewPayDay(String userNumber) {
         PayDay payDayEntity = new PayDay();
-        LocalDateTime ldt = LocalDateTime.now();
-        ZonedDateTime time = ldt.atZone(ZoneId.of("Europe/Moscow"));
-        Timestamp currentTime = new Timestamp(time.toInstant().toEpochMilli());
         ModelMapper mapper = new ModelMapper();
+        Timestamp time = new Timestamp(LocalDateTime.now().atZone(ZoneId.of("Europe/Moscow")).toInstant().toEpochMilli());
         PayDayDTO payDayDTO;
 
         payDayEntity.setActive(true);
-        payDayEntity.setOpenTime(currentTime);
+        payDayEntity.setOpenTime(time);
         payDayEntity.setUser(userRepo.findByPhoneNumber(userNumber));
         payDayEntity.setSumAll(0.0);
         payDayEntity.setSumCash(0.0);
@@ -58,11 +55,9 @@ public class PayDayService {
 
     public void endPayDay(Long id) {
         PayDay payDay = payDayRepo.getById(id);
-        LocalDateTime ldt = LocalDateTime.now();
-        ZonedDateTime time = ldt.atZone(ZoneId.of("Europe/Moscow"));
-        Timestamp currentTime = new Timestamp(time.toInstant().toEpochMilli());
+        Timestamp time = new Timestamp(LocalDateTime.now().atZone(ZoneId.of("Europe/Moscow")).toInstant().toEpochMilli());
 
-        payDay.setCloseTime(currentTime);
+        payDay.setCloseTime(time);
         payDay.setActive(false);
 
         payDayRepo.save(payDay);
