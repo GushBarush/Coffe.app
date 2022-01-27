@@ -22,7 +22,7 @@ public class PayDayService {
     public PayDayDTO getNewPayDay(String userNumber) {
         PayDay payDayEntity = new PayDay();
         ModelMapper mapper = new ModelMapper();
-        OffsetDateTime date = OffsetDateTime.now(ZoneId.of("Europe/Moscow"));
+        OffsetDateTime date = OffsetDateTime.now(ZoneId.of("UTC+6"));
         Timestamp timestamp =  new Timestamp(date.toInstant().toEpochMilli());
         PayDayDTO payDayDTO;
 
@@ -56,7 +56,7 @@ public class PayDayService {
 
     public void endPayDay(Long id) {
         PayDay payDay = payDayRepo.getById(id);
-        OffsetDateTime date = OffsetDateTime.now(ZoneId.of("Europe/Moscow"));
+        OffsetDateTime date = OffsetDateTime.now(ZoneId.of("UTC+6"));
         Timestamp timestamp =  new Timestamp(date.toInstant().toEpochMilli());
 
         payDay.setCloseTime(timestamp);
