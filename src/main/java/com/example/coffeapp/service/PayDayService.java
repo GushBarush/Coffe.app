@@ -9,8 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +22,8 @@ public class PayDayService {
     public PayDayDTO getNewPayDay(String userNumber) {
         PayDay payDayEntity = new PayDay();
         ModelMapper mapper = new ModelMapper();
-        OffsetDateTime date = OffsetDateTime.now(ZoneId.of("UTC+6"));
-        Timestamp timestamp =  new Timestamp(date.toInstant().toEpochMilli());
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
+        Timestamp timestamp = new Timestamp(calendar.toInstant().toEpochMilli());
         PayDayDTO payDayDTO;
 
         payDayEntity.setActive(true);
@@ -56,8 +56,8 @@ public class PayDayService {
 
     public void endPayDay(Long id) {
         PayDay payDay = payDayRepo.getById(id);
-        OffsetDateTime date = OffsetDateTime.now(ZoneId.of("UTC+6"));
-        Timestamp timestamp =  new Timestamp(date.toInstant().toEpochMilli());
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
+        Timestamp timestamp = new Timestamp(calendar.toInstant().toEpochMilli());
 
         payDay.setCloseTime(timestamp);
         payDay.setActive(false);
