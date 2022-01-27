@@ -45,7 +45,7 @@ public class PayDayController {
 
         ZonedDateTime zonedDateTime1 = ZonedDateTime.now(ZoneOffset.UTC);
 
-        model.addAttribute("time1", zonedDateTime1);
+        model.addAttribute("time1", "e");
         model.addAttribute("time2", zonedDateTime);
         return "currentPayDay";
     }
