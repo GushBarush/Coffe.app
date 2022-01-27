@@ -9,8 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.Date;
 
 @Service
 @AllArgsConstructor
@@ -22,12 +21,12 @@ public class PayDayService {
     public PayDayDTO getNewPayDay(String userNumber) {
         PayDay payDayEntity = new PayDay();
         ModelMapper mapper = new ModelMapper();
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
-        Timestamp time = new Timestamp(calendar.toInstant().toEpochMilli());
+        Date date = new Date();
+        Timestamp timestamp =  new Timestamp(date.toInstant().toEpochMilli());
         PayDayDTO payDayDTO;
 
         payDayEntity.setActive(true);
-        payDayEntity.setOpenTime(time);
+        payDayEntity.setOpenTime(timestamp);
         payDayEntity.setUser(userRepo.findByPhoneNumber(userNumber));
         payDayEntity.setSumAll(0.0);
         payDayEntity.setSumCash(0.0);
@@ -56,10 +55,10 @@ public class PayDayService {
 
     public void endPayDay(Long id) {
         PayDay payDay = payDayRepo.getById(id);
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
-        Timestamp time = new Timestamp(calendar.toInstant().toEpochMilli());
+        Date date = new Date();
+        Timestamp timestamp =  new Timestamp(date.toInstant().toEpochMilli());
 
-        payDay.setCloseTime(time);
+        payDay.setCloseTime(timestamp);
         payDay.setActive(false);
 
         payDayRepo.save(payDay);
