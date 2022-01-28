@@ -19,6 +19,16 @@ public class PayDayService {
     private final UserRepo userRepo;
 
     public PayDayDTO getNewPayDay(String userNumber) {
+        PayDay payDayCheck = payDayRepo.findByActive(true);
+
+        if(payDayCheck != null) {
+            PayDayDTO payDayDTO;
+            ModelMapper mapper = new ModelMapper();
+            payDayDTO = mapper.map(payDayCheck, PayDayDTO.class);
+
+            return payDayDTO;
+        }
+
         PayDay payDayEntity = new PayDay();
         ModelMapper mapper = new ModelMapper();
         ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"));
