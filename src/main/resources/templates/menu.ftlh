@@ -8,7 +8,11 @@
     <#list productClassic as product>
         <div class="col">
             <div class="card text-white bg-dark" style="width: 18rem;">
-                <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                <#if product.imageId??>
+                        <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                    <#else>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbIrYhETpbaeELA1-9jKaolsIcKU6ajknrrQ&usqp=CAU" class="card-img-top" alt="...">
+                </#if>
                 <div class="card-body">
                     <h5 class="card-title">${product.productName}</h5>
                     <p class="card-text">${product.description!}</p>
@@ -28,7 +32,11 @@
         <#list productRaf as product>
             <div class="col">
                 <div class="card text-white bg-dark" style="width: 18rem;">
-                    <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                    <#if product.imageId??>
+                        <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                    <#else>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbIrYhETpbaeELA1-9jKaolsIcKU6ajknrrQ&usqp=CAU" class="card-img-top" alt="...">
+                    </#if>
                     <div class="card-body">
                         <h5 class="card-title">${product.productName}</h5>
                         <p class="card-text">${product.description!}</p>
@@ -48,7 +56,11 @@
         <#list productHot as product>
             <div class="col">
                 <div class="card text-white bg-dark" style="width: 18rem;">
-                    <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                    <#if product.imageId??>
+                        <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                    <#else>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbIrYhETpbaeELA1-9jKaolsIcKU6ajknrrQ&usqp=CAU" class="card-img-top" alt="...">
+                    </#if>
                     <div class="card-body">
                         <h5 class="card-title">${product.productName}</h5>
                         <p class="card-text">${product.description!}</p>
@@ -68,7 +80,11 @@
         <#list productSeason as product>
             <div class="col">
                 <div class="card text-white bg-dark" style="width: 18rem;">
-                    <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                    <#if product.imageId??>
+                        <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                    <#else>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbIrYhETpbaeELA1-9jKaolsIcKU6ajknrrQ&usqp=CAU" class="card-img-top" alt="...">
+                    </#if>
                     <div class="card-body">
                         <h5 class="card-title">${product.productName}</h5>
                         <p class="card-text">${product.description!}</p>
@@ -88,7 +104,11 @@
         <#list productDop as product>
             <div class="col">
                 <div class="card text-white bg-dark" style="width: 18rem;">
-                    <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                    <#if product.imageId??>
+                        <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                    <#else>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbIrYhETpbaeELA1-9jKaolsIcKU6ajknrrQ&usqp=CAU" class="card-img-top" alt="...">
+                    </#if>
                     <div class="card-body">
                         <h5 class="card-title">${product.productName}</h5>
                         <p class="card-text">${product.description!}</p>

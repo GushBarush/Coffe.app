@@ -11,8 +11,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="Coffe.app" value="2efc56b6-db5e-4c3d-9c2a-52685471a46b" />
-          <factory-entry name="entityManagerFactory" value="b756a8e5-dd0c-4610-b3e1-17d85cc0a01c" />
+          <factory-entry name="entityManagerFactory" value="793e4804-6ade-4ec4-be07-1916d5b93a4a" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
