@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -26,7 +25,7 @@ public class PayDayService {
         PayDayDTO payDayDTO;
 
         payDayEntity.setActive(true);
-        payDayEntity.setOpenTime(new Timestamp(zonedDateTime.toInstant().toEpochMilli()));
+        payDayEntity.setOpenTime(zonedDateTime);
         payDayEntity.setUser(userRepo.findByPhoneNumber(userNumber));
         payDayEntity.setSumAll(0.0);
         payDayEntity.setSumCash(0.0);
@@ -57,7 +56,7 @@ public class PayDayService {
         PayDay payDay = payDayRepo.getById(id);
         ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"));
 
-        payDay.setCloseTime(new Timestamp(zonedDateTime.toInstant().toEpochMilli()));
+        payDay.setCloseTime(zonedDateTime);
         payDay.setActive(false);
 
         payDayRepo.save(payDay);

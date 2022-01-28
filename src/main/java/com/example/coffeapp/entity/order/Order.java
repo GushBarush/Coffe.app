@@ -10,7 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Entity
@@ -27,7 +27,7 @@ public class Order implements Serializable {
     private Long id;
 
     @Column(name = "time", nullable = false)
-    private Timestamp time;
+    private ZonedDateTime time;
 
     @Column(name = "sum")
     private double sum;

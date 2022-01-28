@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,7 +20,7 @@ public class OrderDTO implements Serializable {
 
     private Long id;
 
-    private Timestamp time;
+    private ZonedDateTime time;
 
     private double sum;
 

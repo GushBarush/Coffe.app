@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "pay_day")
@@ -27,10 +27,10 @@ public class PayDay implements Serializable {
     private boolean active;
 
     @Column(name = "open_time", nullable = false)
-    private Timestamp openTime;
+    private ZonedDateTime openTime;
 
     @Column(name = "close_time")
-    private Timestamp closeTime;
+    private ZonedDateTime closeTime;
 
     @Column(name = "sum_all")
     private Double sumAll;
