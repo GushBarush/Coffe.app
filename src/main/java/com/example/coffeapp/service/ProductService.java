@@ -82,8 +82,8 @@ public class ProductService {
     public void updateDopProduct(Long productId, Long productPriceId, String productName,
                               Double price, String description, MultipartFile file) throws IOException {
 
-        Product product = productRepo.findById(productId).orElse(new Product());
-        ProductPrice productPrice = productPriceRepo.findById(productPriceId).orElse(new ProductPrice());
+        Product product = productRepo.getById(productId);
+        ProductPrice productPrice = productPriceRepo.getById(productPriceId);
         ProductImage productImage;
 
         if (file.getSize() != 0) {
@@ -106,7 +106,7 @@ public class ProductService {
                               Double bigPrice, String category,
                               String description, MultipartFile file) throws IOException {
 
-        Product product = productRepo.findById(productId).orElse(new Product());
+        Product product = productRepo.getById(productId);
         ProductPrice productPriceSmall = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL"));
         ProductPrice productPriceMedium = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("MEDIUM"));
         ProductPrice productPriceBig = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("BIG"));
