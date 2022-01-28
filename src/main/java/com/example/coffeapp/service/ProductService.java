@@ -50,7 +50,9 @@ public class ProductService {
             productView.setProductName(product.getProductName());
             productView.setDescription(product.getDescription());
             productView.setCategory(product.getCategory());
-            productView.setImageId(product.getProductImage().getId());
+            if (product.getProductImage() != null) {
+                productView.setImageId(product.getProductImage().getId());
+            }
 
             if(product.getCategory().equals("dop")) {
                 productView.setPriceSmall(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL")).getPrice());
