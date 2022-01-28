@@ -4,7 +4,7 @@
     <p class="h2">Смена</p>
     <br/>
     <p class="h2">Смену открыл: ${PayDayDTO.user.name}</p>
-    <p class="h2">Смена открта в: ${PayDayDTO.openTime}</p>
+    <p class="h2">Смена открта в: ${PayDayDTO.openTime.toLocalTime()}</p>
     <hr/>
     <form action="/payday/end" method="post">
         <input type="hidden" value="${PayDayDTO.id}" name="id">
