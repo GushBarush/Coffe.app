@@ -26,7 +26,7 @@
                 <td>${user.phoneNumber!}</td>
                 <td>${user.name!}</td>
                 <td>
-                    <form method="get" action="/order/${user.id}">
+                    <form method="post" action="/order/${user.id}">
                         <input type="hidden" value="${PayDayId}" name="id">
                         <button type="submit" class="btn btn-danger">выбрать</button>
                     </form>
