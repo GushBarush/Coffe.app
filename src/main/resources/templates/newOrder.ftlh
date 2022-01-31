@@ -26,9 +26,11 @@
                 <td>${user.phoneNumber!}</td>
                 <td>${user.name!}</td>
                 <td>
-                    <form method="post" action="/order/${user.id}">
-                        <input type="hidden" value="${PayDayId}" name="id">
-                        <button type="submit" class="btn btn-danger">выбрать</button>
+                    <form method="post" action="/order">
+                        <input type="hidden" value="${PayDayId}" name="payDayId">
+                        <input type="hidden" value="${user.id}" name="userId">
+                        <input type="hidden" value="${_csrf.token}" name="_csrf">
+                        <button class="btn btn-success" type="submit">✔</button>
                     </form>
                 </td>
             </tr>

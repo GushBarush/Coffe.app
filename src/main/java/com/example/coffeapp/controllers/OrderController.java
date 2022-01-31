@@ -1,6 +1,5 @@
 package com.example.coffeapp.controllers;
 
-import com.example.coffeapp.entity.user.User;
 import com.example.coffeapp.service.OrderService;
 import com.example.coffeapp.service.ProductService;
 import com.example.coffeapp.service.UserService;
@@ -35,11 +34,11 @@ public class OrderController {
         return "newOrder";
     }
 
-    @PostMapping("{user}")
-    public String selectUser(@PathVariable User user,
-                             @RequestParam(name = "id") Long payDayId, Model model) {
+    @PostMapping()
+    public String selectUser(@RequestParam(name = "userId") Long userId,
+                             @RequestParam(name = "payDayId") Long payDayId, Model model) {
 
-        model.addAttribute("order", orderService.newOrder(user, payDayId));
+        model.addAttribute("order", orderService.newOrder(userId, payDayId));
         model.addAttribute("products", productService.allProduct(false));
         model.addAttribute("productsDop", productService.allProduct(true));
 

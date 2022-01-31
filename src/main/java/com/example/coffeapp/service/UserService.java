@@ -153,4 +153,8 @@ public class UserService implements UserDetailsService {
     public List<Role> getAllRoles() {
         return roleRepo.findAll();
     }
+
+    public User getUserById(Long id) {
+        return userRepo.getById(id);
+    }
 }
