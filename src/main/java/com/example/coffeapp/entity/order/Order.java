@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,7 +33,7 @@ public class Order implements Serializable {
     @Column(name = "sum")
     private double sum;
 
-    @Column(name = "is_cash", nullable = false)
+    @Column(name = "is_cash")
     private boolean isCash;
 
     @ManyToOne

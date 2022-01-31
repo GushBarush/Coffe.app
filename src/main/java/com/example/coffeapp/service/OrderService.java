@@ -28,6 +28,7 @@ public class OrderService {
         orderEntity.setUser(userService.getUserById(userId));
         orderEntity.setPayDay(payDayRepo.getById(payDayId));
         orderEntity.setTime(localDateTime);
+        orderEntity.setSum(0.0);
 
         orderRepo.save(orderEntity);
 
