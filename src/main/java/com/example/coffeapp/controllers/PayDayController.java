@@ -39,11 +39,9 @@ public class PayDayController {
     @PostMapping
     public String newPayDay(Principal principal, Model model) {
         PayDayDTO payDayDTO = payDayService.getNewPayDay(principal.getName());
-        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(payDayDTO.getOpenTime().toInstant(), ZoneId.of("Europe/Moscow"));
 
         model.addAttribute("PayDayDTO", payDayDTO);
-        model.addAttribute("time", zonedDateTime);
-        return "currentPayDay";
+        return "redirect:/payday";
     }
 
     @PostMapping("/end")

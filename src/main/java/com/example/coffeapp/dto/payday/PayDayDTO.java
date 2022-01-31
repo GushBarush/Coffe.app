@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @AllArgsConstructor
@@ -19,9 +20,9 @@ public class PayDayDTO implements Serializable {
 
     private boolean active;
 
-    private ZonedDateTime openTime;
+    private LocalDateTime openTime;
 
-    private ZonedDateTime closeTime;
+    private LocalDateTime closeTime;
 
     private Double sumAll;
 

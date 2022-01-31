@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class OrderDTO implements Serializable {
 
     private Long id;
 
-    private ZonedDateTime time;
+    private LocalDateTime time;
 
     private double sum;
 
