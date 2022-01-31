@@ -23,10 +23,10 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductService {
 
-    final ProductRepo productRepo;
-    final ProductPriceRepo productPriceRepo;
-    final ProductSizeRepo productSizeRepo;
-    final ProductImageRepo productImageRepo;
+    private final ProductRepo productRepo;
+    private final ProductPriceRepo productPriceRepo;
+    private final ProductSizeRepo productSizeRepo;
+    private final ProductImageRepo productImageRepo;
 
     public List<ProductDTO> allProduct(){
         List<Product> productsEntity = productRepo.findAll();
