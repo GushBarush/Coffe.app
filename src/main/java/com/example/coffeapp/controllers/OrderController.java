@@ -23,7 +23,7 @@ public class OrderController {
 
     @GetMapping
     public String newOrder(@RequestParam(name = "id") Long payDayId,
-                           @RequestParam(required = false, defaultValue = "") String filter, Model model) {
+                           @RequestParam(name = "filter", required = false, defaultValue = "") String filter, Model model) {
 
         model.addAttribute("PayDayId", payDayId);
         model.addAttribute("users", userService.userFilterNumber(filter));
