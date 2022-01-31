@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @AllArgsConstructor
 public class RegistrationController {
 
-    private final UserService userService;
+    final UserService userService;
 
     @GetMapping
     public String registration() {
