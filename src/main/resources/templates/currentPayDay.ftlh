@@ -15,7 +15,7 @@
     <hr/>
         <p class="h2">Заказы</p>
     <br/>
-        <form action="/order" method="post">
+        <form action="/order" method="get">
             <input type="hidden" value="${PayDayDTO.id}" name="id">
             <input type="hidden" value="${_csrf.token}" name="_csrf">
             <button class="btn btn-primary" type="submit">Новый заказ</button>
