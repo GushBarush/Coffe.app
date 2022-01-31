@@ -39,6 +39,23 @@ public class ProductService {
         return productDTOS;
     }
 
+    public List<ProductDTO> allProduct(Boolean dop){
+        List<Product> productsEntity;
+        if (dop) {
+            productsEntity = productRepo.findAllByDopIsTrue();
+        } else {
+            productsEntity = productRepo.findAllByDopIsFalse();
+        }
+
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        ModelMapper mapper = new ModelMapper();
+
+        for (Product product : productsEntity) {
+            productDTOS.add(mapper.map(product, ProductDTO.class));
+        }
+        return productDTOS;
+    }
+
     public List<ProductView> getProductsView(String category) {
         List<ProductView> productViews = new ArrayList<>();
         List<Product> products = productRepo.findAllByCategory(category);
@@ -203,7 +220,7 @@ public class ProductService {
     }
 
     public void productDelete(Long productId) {
-        Product product = productRepo.findById(productId).orElse(null);
+        Product product = productRepo.getById(productId);
         List<ProductPrice> productPrices = productPriceRepo.findAllByProduct(product);
 
         productPriceRepo.deleteAll(productPrices);
@@ -211,7 +228,7 @@ public class ProductService {
     }
 
     public ProductView getProductPriceView(Long productId) {
-        Product product = productRepo.findById(productId).orElse(null);
+        Product product = productRepo.getById(productId);
         ProductView productView = new ProductView();
 
         productView.setProductName(product.getProductName());

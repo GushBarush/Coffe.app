@@ -1,14 +1,13 @@
 package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.entity.user.User;
+import com.example.coffeapp.service.OrderService;
+import com.example.coffeapp.service.ProductService;
 import com.example.coffeapp.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/order")
@@ -16,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class OrderController {
 
     final UserService userService;
+    final OrderService orderService;
+    final ProductService productService;
 
-    public OrderController(UserService userService) {
+    public OrderController(UserService userService, OrderService orderService, ProductService productService) {
         this.userService = userService;
+        this.orderService = orderService;
+        this.productService = productService;
     }
 
     @GetMapping
@@ -32,9 +35,14 @@ public class OrderController {
         return "newOrder";
     }
 
-    @GetMapping("{user}")
+    @PostMapping("{user}")
     public String selectUser(@PathVariable User user,
                              @RequestParam(name = "id") Long payDayId, Model model) {
+
+        model.addAttribute("order", orderService.newOrder(user, payDayId));
+        model.addAttribute("products", productService.allProduct(false));
+        model.addAttribute("productsDop", productService.allProduct(true));
+
         return "orderForm";
     }
 }
