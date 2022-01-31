@@ -15,8 +15,8 @@ import java.time.ZoneId;
 @AllArgsConstructor
 public class PayDayService {
 
-    private final PayDayRepo payDayRepo;
-    private final UserRepo userRepo;
+    final PayDayRepo payDayRepo;
+    final UserRepo userRepo;
 
     public PayDayDTO getNewPayDay(String userNumber) {
         PayDay payDayCheck = payDayRepo.findByActive(true);

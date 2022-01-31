@@ -16,9 +16,9 @@ import java.time.ZoneId;
 @AllArgsConstructor
 public class OrderService {
 
-    private final UserService userService;
-    private final OrderRepo orderRepo;
-    private final PayDayRepo payDayRepo;
+    final UserService userService;
+    final OrderRepo orderRepo;
+    final PayDayRepo payDayRepo;
 
     public OrderDTO newOrder(User user, Long payDayId) {
         Order orderEntity = new Order();

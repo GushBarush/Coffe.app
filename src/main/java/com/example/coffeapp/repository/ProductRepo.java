@@ -10,6 +10,5 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     List<Product> findAllByCategory(String category);
 
-    List<Product> findAllByDopIsFalse();
-    List<Product> findAllByDopIsTrue();
+    List<Product> findAllByCategoryIsNot(String category);
 }

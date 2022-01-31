@@ -23,10 +23,10 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductService {
 
-    private final ProductRepo productRepo;
-    private final ProductPriceRepo productPriceRepo;
-    private final ProductSizeRepo productSizeRepo;
-    private final ProductImageRepo productImageRepo;
+    final ProductRepo productRepo;
+    final ProductPriceRepo productPriceRepo;
+    final ProductSizeRepo productSizeRepo;
+    final ProductImageRepo productImageRepo;
 
     public List<ProductDTO> allProduct(){
         List<Product> productsEntity = productRepo.findAll();
@@ -42,9 +42,9 @@ public class ProductService {
     public List<ProductDTO> allProduct(Boolean dop){
         List<Product> productsEntity;
         if (dop) {
-            productsEntity = productRepo.findAllByDopIsTrue();
+            productsEntity = productRepo.findAllByCategory("dop");
         } else {
-            productsEntity = productRepo.findAllByDopIsFalse();
+            productsEntity = productRepo.findAllByCategoryIsNot("dop");
         }
 
         List<ProductDTO> productDTOS = new ArrayList<>();
