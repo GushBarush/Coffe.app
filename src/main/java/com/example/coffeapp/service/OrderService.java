@@ -104,6 +104,18 @@ public class OrderService {
     }
 
     public void deleteOrder(Long id) {
-        orderRepo.delete(orderRepo.getById(id));
+        Order order = orderRepo.getById(id);
+        PayDay payDay = payDayRepo.getById(order.getPayDay().getId());
+
+        if(!order.isActive()) {
+            if(order.isCash()) {
+                payDay.setSumCash(payDay.getSumCash() - order.getSum());
+            } else {
+                payDay.setSumNotCash(payDay.getSumNotCash() - order.getSum());
+            }
+            payDay.setSumAll(payDay.getSumAll() - order.getSum());
+        }
+
+        orderRepo.delete(order);
     }
 }
