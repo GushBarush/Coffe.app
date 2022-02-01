@@ -81,6 +81,15 @@ public class OrderService {
         Order order = orderRepo.getById(id);
         PayDay payDay = order.getPayDay();
 
+        if(!order.isActive()) {
+            if(order.isCash()) {
+                payDay.setSumCash(payDay.getSumCash() - order.getSum());
+            } else {
+                payDay.setSumNotCash(payDay.getSumNotCash() - order.getSum());
+            }
+            payDay.setSumAll(payDay.getSumAll() - order.getSum());
+        }
+
         if (isCash) {
             payDay.setSumCash(payDay.getSumCash() + order.getSum());
         } else {
