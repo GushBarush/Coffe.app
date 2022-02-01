@@ -47,6 +47,7 @@ public class OrderService {
         OrderDTO orderDTO;
 
         orderEntity.setPrice(productPrice);
+        orderEntity.setSum(+ productPrice.getPrice());
 
         orderDTO = mapper.map(orderRepo.save(orderEntity), OrderDTO.class);
 

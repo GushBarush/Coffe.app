@@ -45,7 +45,7 @@
         </#list>
     </select>
     <input type="hidden" value="SMALL" name="size">
-    <input type="hidden" value="${order.id}" name="productId">
+    <input type="hidden" value="${order.id}" name="orderId">
     <input type="hidden" value="${_csrf.token}" name="_csrf">
     <button class="btn btn-primary" type="submit">Добавить</button>
     <br/>
