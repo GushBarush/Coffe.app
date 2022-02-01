@@ -10,7 +10,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -26,6 +25,8 @@ public class OrderDTO implements Serializable {
     private double sum;
 
     private boolean isCash;
+
+    private boolean isActive;
 
     private User user;
 

@@ -36,6 +36,9 @@ public class Order implements Serializable {
     @Column(name = "is_cash")
     private boolean isCash;
 
+    @Column(name = "active")
+    private boolean isActive;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

@@ -1,6 +1,7 @@
 package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.dto.payday.PayDayDTO;
+import com.example.coffeapp.service.OrderService;
 import com.example.coffeapp.service.PayDayService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,11 @@ import java.security.Principal;
 public class PayDayController {
 
     final PayDayService payDayService;
+    final OrderService orderService;
 
-    public PayDayController(PayDayService payDayService) {
+    public PayDayController(PayDayService payDayService, OrderService orderService) {
         this.payDayService = payDayService;
+        this.orderService = orderService;
     }
 
     @GetMapping
@@ -29,16 +32,16 @@ public class PayDayController {
 
         if (payDayDTO != null){
             model.addAttribute("PayDayDTO", payDayDTO);
+            model.addAttribute("orders", orderService.allOrder());
             return "currentPayDay";
         }
         return "payDay";
     }
 
     @PostMapping
-    public String newPayDay(Principal principal, Model model) {
-        PayDayDTO payDayDTO = payDayService.getNewPayDay(principal.getName());
+    public String newPayDay(Principal principal) {
+        payDayService.getNewPayDay(principal.getName());
 
-        model.addAttribute("PayDayDTO", payDayDTO);
         return "redirect:/payday";
     }
 

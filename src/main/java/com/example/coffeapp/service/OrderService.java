@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -23,6 +25,18 @@ public class OrderService {
     final ProductPriceRepo productPriceRepo;
     final ProductSizeRepo productSizeRepo;
 
+    public List<OrderDTO> allOrder() {
+        List<Order> orderList = orderRepo.findAll();
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+        ModelMapper mapper = new ModelMapper();
+
+        for (Order order : orderList) {
+            orderDTOS.add(mapper.map(order, OrderDTO.class));
+        }
+
+        return orderDTOS;
+    }
+
     public OrderDTO newOrder(Long userId, Long payDayId) {
         Order orderEntity = new Order();
         ModelMapper mapper = new ModelMapper();
@@ -33,6 +47,7 @@ public class OrderService {
         orderEntity.setPayDay(payDayRepo.getById(payDayId));
         orderEntity.setTime(localDateTime);
         orderEntity.setSum(0.0);
+        orderEntity.setActive(false);
 
         orderDTO = mapper.map(orderRepo.save(orderEntity), OrderDTO.class);
 
