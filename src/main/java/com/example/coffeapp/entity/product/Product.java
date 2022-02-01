@@ -1,13 +1,16 @@
 package com.example.coffeapp.entity.product;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "product")
-@Data
+@Table(name = "product", schema = "public")
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

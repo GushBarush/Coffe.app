@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "product_image")
+@Table(name = "product_image", schema = "public")
 @Getter
 @Setter
 @AllArgsConstructor

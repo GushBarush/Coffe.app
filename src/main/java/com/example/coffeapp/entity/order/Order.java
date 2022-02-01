@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "order", schema = "public")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -37,11 +36,11 @@ public class Order implements Serializable {
     private boolean isCash;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "pay_day_id")
+    @JoinColumn(name = "pay_day_id", nullable = false)
     private PayDay payDay;
 
     @ManyToMany(fetch = FetchType.LAZY)

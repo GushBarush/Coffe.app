@@ -34,7 +34,7 @@ public class OrderController {
         return "newOrder";
     }
 
-    @PostMapping()
+    @PostMapping
     public String selectUser(@RequestParam(name = "userId") Long userId,
                              @RequestParam(name = "payDayId") Long payDayId, Model model) {
 

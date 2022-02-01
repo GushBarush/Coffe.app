@@ -74,7 +74,9 @@
         </#list>
         </tbody>
     </table>
-
+    <br/>
+    <hr/>
+    <br/>
     <form action="/order/save" method="post">
         <div class="form-check">
             <input class="form-check-input" value="true" type="radio" name="isCash" id="flexRadioDefault1" checked>
