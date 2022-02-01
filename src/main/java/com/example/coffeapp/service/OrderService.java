@@ -67,6 +67,7 @@ public class OrderService {
         ModelMapper mapper = new ModelMapper();
         ProductPrice productPrice = productPriceRepo.getById(productPriceId);
 
+        checkOrder(order);
         order.getProductPriceList().remove(productPrice);
         order.setSum(order.getSum() - productPrice.getPrice());
 
@@ -94,14 +95,7 @@ public class OrderService {
         Order order = orderRepo.getById(id);
         PayDay payDay = order.getPayDay();
 
-        if(!order.isActive()) {
-            if(order.isCash()) {
-                payDay.setSumCash(payDay.getSumCash() - order.getSum());
-            } else {
-                payDay.setSumNotCash(payDay.getSumNotCash() - order.getSum());
-            }
-            payDay.setSumAll(payDay.getSumAll() - order.getSum());
-        }
+        checkOrder(order);
 
         if (isCash) {
             payDay.setSumCash(payDay.getSumCash() + order.getSum());
@@ -113,11 +107,19 @@ public class OrderService {
         order.setActive(false);
         order.setCash(isCash);
 
+        payDayRepo.save(payDay);
         orderRepo.save(order);
     }
 
     public void deleteOrder(Long id) {
         Order order = orderRepo.getById(id);
+
+        checkOrder(order);
+
+        orderRepo.delete(order);
+    }
+
+    private void checkOrder(Order order) {
         PayDay payDay = payDayRepo.getById(order.getPayDay().getId());
 
         if(!order.isActive()) {
@@ -129,6 +131,6 @@ public class OrderService {
             payDay.setSumAll(payDay.getSumAll() - order.getSum());
         }
 
-        orderRepo.delete(order);
+        payDayRepo.save(payDay);
     }
 }
