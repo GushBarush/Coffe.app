@@ -37,17 +37,18 @@
     <br/>
     <hr/>
     <br/>
-<form action="/order/addProduct" method="post">
-    <select class="form-select" aria-label="Default select example" name="productId">
-        <option selected>выберете</option>
-        <#list productsDop as productDTO>
-            <option value="${productDTO.id}">${productDTO.productName}</option>
-        </#list>
-    </select>
-    <input type="hidden" value="SMALL" name="size">
-    <input type="hidden" value="${order.id}" name="orderId">
-    <input type="hidden" value="${_csrf.token}" name="_csrf">
-    <button class="btn btn-primary" type="submit">Добавить</button>
+    <form action="/order/addProduct" method="post">
+        <select class="form-select" aria-label="Default select example" name="productId">
+            <option selected>выберете</option>
+            <#list productsDop as productDTO>
+                <option value="${productDTO.id}">${productDTO.productName}</option>
+            </#list>
+        </select>
+        <input type="hidden" value="SMALL" name="size">
+        <input type="hidden" value="${order.id}" name="orderId">
+        <input type="hidden" value="${_csrf.token}" name="_csrf">
+        <button class="btn btn-primary" type="submit">Добавить</button>
+    </form>
     <br/>
     <hr/>
     <br/>
