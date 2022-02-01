@@ -74,14 +74,14 @@
     <br/>
     <form action="/order/save" method="post">
         <div class="form-check">
-            <input class="form-check-input" value="true" type="radio" name="isCash" id="flexRadioDefault1" checked>
-            <label class="form-check-label" for="flexRadioDefault1">
+            <input class="form-check-input" value="true" type="radio" name="isCash" id="flexRadio1" checked>
+            <label class="form-check-label" for="flexRadio1">
                 Наличные
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" value="false" type="radio" name="isCash" id="flexRadioDefault2" checked>
-            <label class="form-check-label" for="flexRadioDefault2">
+            <input class="form-check-input" value="false" type="radio" name="isCash" id="flexRadio2" checked>
+            <label class="form-check-label" for="flexRadio2">
                 Карта
             </label>
         </div>
