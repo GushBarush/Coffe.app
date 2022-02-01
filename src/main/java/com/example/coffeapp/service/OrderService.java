@@ -37,6 +37,13 @@ public class OrderService {
         return orderDTOS;
     }
 
+    public OrderDTO getOrder(Long id) {
+        Order orderEntity = orderRepo.getById(id);
+        ModelMapper mapper = new ModelMapper();
+
+        return mapper.map(orderEntity, OrderDTO.class);
+    }
+
     public OrderDTO newOrder(Long userId, Long payDayId) {
         Order orderEntity = new Order();
         ModelMapper mapper = new ModelMapper();
