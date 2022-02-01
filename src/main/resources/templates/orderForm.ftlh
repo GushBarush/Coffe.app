@@ -30,7 +30,7 @@
                 500мл.
             </label>
         </div>
-        <input type="hidden" value="${order.id}" name=orderId">
+        <input type="hidden" value="${order.id}" name="orderId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <button class="btn btn-primary" type="submit">Добавить</button>
     </form>
