@@ -38,6 +38,7 @@ public class OrderController {
     public String selectUser(@RequestParam(name = "userId") Long userId,
                              @RequestParam(name = "payDayId") Long payDayId, Model model) {
 
+
         model.addAttribute("order", orderService.newOrder(userId, payDayId));
         model.addAttribute("products", productService.allProduct(false));
         model.addAttribute("productsDop", productService.allProduct(true));

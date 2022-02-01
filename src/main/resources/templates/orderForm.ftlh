@@ -6,15 +6,12 @@
     <p class="h3">для: ${order.user.name}</p>
 
     <form action="/order/addProduct" method="post">
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">Напиток</label>
-            <select class="form-select" id="inputGroupSelect01">
-                <option selected>Выберите...</option>
-                <#list products as product>
-                    <option value="${product.id}">${product.productName}</option>
-                </#list>
-            </select>
-        </div>
+        <select class="form-select" aria-label="Default select example" name="productId">
+            <option selected>выберете</option>
+            <#list products as productDTO>
+                <option value="${productDTO.id}">${productDTO.productName}</option>
+            </#list>
+        </select>
         <div class="form-check">
             <input class="form-check-input" value="SMALL" type="radio" name="size" id="flexRadioDefault1" checked>
             <label class="form-check-label" for="flexRadioDefault1">
@@ -40,22 +37,20 @@
     <br/>
     <hr/>
     <br/>
-    <form action="/order/addProduct" method="post">
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">Напиток</label>
-            <select class="form-select" id="inputGroupSelect01">
-                <option selected>Выберите...</option>
-                <#list productsDop as product>
-                    <option value="${product.id}">${product.productName}</option>
-                </#list>
-            </select>
-        </div>
-        <input type="hidden" value="SMALL" name="size">
-        <input type="hidden" value="${order.id}" name="productId">
-        <input type="hidden" value="${_csrf.token}" name="_csrf">
-        <button class="btn btn-primary" type="submit">Добавить</button>
-    </form>
-
+<form action="/order/addProduct" method="post">
+    <select class="form-select" aria-label="Default select example" name="productId">
+        <option selected>выберете</option>
+        <#list productsDop as productDTO>
+            <option value="${productDTO.id}">${productDTO.productName}</option>
+        </#list>
+    </select>
+    <input type="hidden" value="SMALL" name="size">
+    <input type="hidden" value="${order.id}" name="productId">
+    <input type="hidden" value="${_csrf.token}" name="_csrf">
+    <button class="btn btn-primary" type="submit">Добавить</button>
+    <br/>
+    <hr/>
+    <br/>
     <table class="table table-dark table-striped">
         <thead>
         <tr>
@@ -65,13 +60,15 @@
         </tr>
         </thead>
         <tbody>
-        <#list order.productPrice as productPrice>
-            <tr>
-                <td>${productPrice.product.productName}</td>
-                <td>${productPrice.productSize.sizeName}</td>
-                <td>${productPrice.price}</td>
-            </tr>
-        </#list>
+        <#if order.productPrice?has_content>
+            <#list order.productPrice as productPrice>
+                <tr>
+                    <td>${productPrice.product.productName}</td>
+                    <td>${productPrice.productSize.sizeName}</td>
+                    <td>${productPrice.price}</td>
+                </tr>
+            </#list>
+        </#if>
         </tbody>
     </table>
     <br/>
