@@ -34,9 +34,7 @@ public class OrderService {
         orderEntity.setTime(localDateTime);
         orderEntity.setSum(0.0);
 
-        orderRepo.save(orderEntity);
-
-        orderDTO = mapper.map(orderEntity, OrderDTO.class);
+        orderDTO = mapper.map(orderRepo.save(orderEntity), OrderDTO.class);
 
         return orderDTO;
     }
@@ -50,9 +48,7 @@ public class OrderService {
 
         orderEntity.setPrice(productPrice);
 
-        orderRepo.save(orderEntity);
-
-        orderDTO = mapper.map(orderEntity, OrderDTO.class);
+        orderDTO = mapper.map(orderRepo.save(orderEntity), OrderDTO.class);
 
         return orderDTO;
     }
