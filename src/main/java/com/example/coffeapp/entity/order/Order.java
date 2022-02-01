@@ -11,6 +11,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,5 +48,9 @@ public class Order implements Serializable {
     @JoinTable(name = "product_order",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "product_price_id"))
-    private List<ProductPrice> productPrice;
+    private List<ProductPrice> productPriceList = new ArrayList<>();
+
+    public void setPrice(ProductPrice productPrice) {
+        productPriceList.add(productPrice);
+    }
 }

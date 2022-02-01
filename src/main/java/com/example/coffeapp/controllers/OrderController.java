@@ -1,5 +1,6 @@
 package com.example.coffeapp.controllers;
 
+import com.example.coffeapp.dto.order.OrderDTO;
 import com.example.coffeapp.service.OrderService;
 import com.example.coffeapp.service.ProductService;
 import com.example.coffeapp.service.UserService;
@@ -40,6 +41,20 @@ public class OrderController {
 
 
         model.addAttribute("order", orderService.newOrder(userId, payDayId));
+        model.addAttribute("products", productService.allProduct(false));
+        model.addAttribute("productsDop", productService.allProduct(true));
+
+        return "orderForm";
+    }
+
+    @PostMapping("/addProduct")
+    public String addProduct(@RequestParam(name = "orderId") Long orderId,
+                             @RequestParam(name = "productId") Long productId,
+                             @RequestParam(name = "size") String size, Model model) {
+
+        OrderDTO orderDTO = orderService.updateOrder(orderId, productId, size);
+
+        model.addAttribute("order", orderDTO);
         model.addAttribute("products", productService.allProduct(false));
         model.addAttribute("productsDop", productService.allProduct(true));
 

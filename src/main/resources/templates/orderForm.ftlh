@@ -30,7 +30,7 @@
                 500мл.
             </label>
         </div>
-        <input type="hidden" value="${order.id}" name="productId">
+        <input type="hidden" value="${order.id}" name=orderId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <button class="btn btn-primary" type="submit">Добавить</button>
     </form>
@@ -60,7 +60,6 @@
         </tr>
         </thead>
         <tbody>
-        <#if order.productPrice?has_content>
             <#list order.productPrice as productPrice>
                 <tr>
                     <td>${productPrice.product.productName}</td>
@@ -68,7 +67,6 @@
                     <td>${productPrice.price}</td>
                 </tr>
             </#list>
-        </#if>
         </tbody>
     </table>
     <br/>
