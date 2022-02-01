@@ -2,6 +2,7 @@ package com.example.coffeapp.service;
 
 import com.example.coffeapp.dto.order.OrderDTO;
 import com.example.coffeapp.entity.order.Order;
+import com.example.coffeapp.entity.payday.PayDay;
 import com.example.coffeapp.entity.product.Product;
 import com.example.coffeapp.entity.product.ProductPrice;
 import com.example.coffeapp.repository.*;
@@ -25,8 +26,8 @@ public class OrderService {
     final ProductPriceRepo productPriceRepo;
     final ProductSizeRepo productSizeRepo;
 
-    public List<OrderDTO> allOrder() {
-        List<Order> orderList = orderRepo.findAll();
+    public List<OrderDTO> allOrderByPayDay(Long payDayId) {
+        List<Order> orderList = orderRepo.findAllByPayDay(payDayRepo.getById(payDayId));
         List<OrderDTO> orderDTOS = new ArrayList<>();
         ModelMapper mapper = new ModelMapper();
 
@@ -54,7 +55,7 @@ public class OrderService {
         orderEntity.setPayDay(payDayRepo.getById(payDayId));
         orderEntity.setTime(localDateTime);
         orderEntity.setSum(0.0);
-        orderEntity.setActive(false);
+        orderEntity.setActive(true);
 
         orderDTO = mapper.map(orderRepo.save(orderEntity), OrderDTO.class);
 
@@ -74,5 +75,26 @@ public class OrderService {
         orderDTO = mapper.map(orderRepo.save(orderEntity), OrderDTO.class);
 
         return orderDTO;
+    }
+
+    public void saveOrder(Long id, Boolean isCash) {
+        Order order = orderRepo.getById(id);
+        PayDay payDay = order.getPayDay();
+
+        if (isCash) {
+            payDay.setSumCash(payDay.getSumCash() + order.getSum());
+        } else {
+            payDay.setSumNotCash(payDay.getSumNotCash() + order.getSum());
+        }
+
+        payDay.setSumAll(payDay.getSumAll() + order.getSum());
+        order.setActive(false);
+        order.setCash(isCash);
+
+        orderRepo.save(order);
+    }
+
+    public void deleteOrder(Long id) {
+        orderRepo.delete(orderRepo.getById(id));
     }
 }

@@ -35,9 +35,9 @@
                 <td>${order.sum}</td>
                 <td>
                     <#if order.active>
-                        Оплачен
+                        НЕ оплачен
                         <#else>
-                        Не Оплачен
+                        оплачен
                     </#if>
                 </td>
                 <td>

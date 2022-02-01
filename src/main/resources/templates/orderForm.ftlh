@@ -85,8 +85,15 @@
                 Карта
             </label>
         </div>
-        <input type="hidden" value="${order.id}" name="productId">
+        <input type="hidden" value="${order.id}" name="orderId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
-        <button class="btn btn-primary" type="submit">Сохранить</button>
+        <button class="btn btn-primary" type="submit">Оплатить счёт</button>
+    </form>
+    <hr/>
+    <br/>
+    <form action="/order/delete" method="post">
+        <input type="hidden" value="${order.id}" name="orderId">
+        <input type="hidden" value="${_csrf.token}" name="_csrf">
+        <button class="btn btn-danger" type="submit">Удалить</button>
     </form>
 </@c.page>

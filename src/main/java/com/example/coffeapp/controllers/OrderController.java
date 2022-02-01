@@ -60,4 +60,21 @@ public class OrderController {
 
         return "orderForm";
     }
+
+    @PostMapping("/save")
+    public String saveOrder(@RequestParam(name = "orderId") Long orderId,
+                            @RequestParam(name = "isCash") Boolean isCash) {
+
+        orderService.saveOrder(orderId, isCash);
+
+        return "redirect:/payday";
+    }
+
+    @PostMapping("/delete")
+    public String deleteOrder(@RequestParam(name = "orderId") Long orderId) {
+
+        orderService.deleteOrder(orderId);
+
+        return "redirect:/payday";
+    }
 }

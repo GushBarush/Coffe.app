@@ -35,7 +35,7 @@ public class PayDayController {
 
         if (payDayDTO != null){
             model.addAttribute("PayDayDTO", payDayDTO);
-            model.addAttribute("orders", orderService.allOrder());
+            model.addAttribute("orders", orderService.allOrderByPayDay(payDayDTO.getId()));
             return "currentPayDay";
         }
         return "payDay";
