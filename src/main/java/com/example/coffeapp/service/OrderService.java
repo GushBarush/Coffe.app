@@ -62,6 +62,19 @@ public class OrderService {
         return orderDTO;
     }
 
+    public OrderDTO cleanOrder(Long orderId, Long productPriceId) {
+        Order order = orderRepo.getById(orderId);
+        ModelMapper mapper = new ModelMapper();
+        ProductPrice productPrice = productPriceRepo.getById(productPriceId);
+
+        order.getProductPriceList().remove(productPrice);
+        order.setSum(order.getSum() - productPrice.getPrice());
+
+        orderRepo.save(order);
+
+        return mapper.map(order, OrderDTO.class);
+    }
+
     public OrderDTO updateOrder(Long orderId, Long productId, String size) {
         Order orderEntity = orderRepo.getById(orderId);
         Product product = productRepo.getById(productId);

@@ -56,16 +56,23 @@
         <thead>
         <tr>
             <th>Название</th>
-            <th>Обьём</th>
             <th>${order.sum}</th>
+            <th>Удалить</th>
         </tr>
         </thead>
         <tbody>
             <#list order.productPrice as productPrice>
                 <tr>
                     <td>${productPrice.product.productName}</td>
-                    <td>${productPrice.productSize.sizeName}</td>
                     <td>${productPrice.price}</td>
+                    <td>
+                        <form action="/order/clean" method="post">
+                            <input type="hidden" value="${productPrice.id}" name="productPriceId">
+                            <input type="hidden" value="${order.id}" name="orderId">
+                            <input type="hidden" value="${_csrf.token}" name="_csrf">
+                            <button class="btn btn-danger" type="submit">❌</button>
+                        </form>
+                    </td>
                 </tr>
             </#list>
         </tbody>

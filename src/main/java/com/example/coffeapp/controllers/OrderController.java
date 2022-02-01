@@ -61,6 +61,19 @@ public class OrderController {
         return "orderForm";
     }
 
+    @PostMapping("/clean")
+    public String cleanOrder(@RequestParam(name = "orderId") Long orderId,
+                            @RequestParam(name = "productPriceId") Long productPriceId, Model model) {
+
+        OrderDTO orderDTO = orderService.cleanOrder(orderId, productPriceId);
+
+        model.addAttribute("order", orderDTO);
+        model.addAttribute("products", productService.allProduct(false));
+        model.addAttribute("productsDop", productService.allProduct(true));
+
+        return "orderForm";
+    }
+
     @PostMapping("/save")
     public String saveOrder(@RequestParam(name = "orderId") Long orderId,
                             @RequestParam(name = "isCash") Boolean isCash) {
