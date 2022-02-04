@@ -37,6 +37,7 @@ public class PayDayService {
         payDayEntity.setActive(true);
         payDayEntity.setOpenTime(localDateTime);
         payDayEntity.setUser(userRepo.findByPhoneNumber(userNumber));
+        payDayEntity.setSumFree(0.0);
         payDayEntity.setSumAll(0.0);
         payDayEntity.setSumCash(0.0);
         payDayEntity.setSumNotCash(0.0);
