@@ -6,7 +6,7 @@
     <form method="get" action="/order">
         <div class="col-sm-5">
             <div class="input-group mb-3">
-                <input type="hidden" value="false" name="isFree">
+                <input type="hidden" value="true" name="isFree">
                 <input class="form-control" type="text" name="filter" aria-describedby="button-search" value="${filter!}">
                 <input type="hidden" value="${PayDayId}" name="id">
                 <button class="btn btn-primary" type="submit" id="button-search">Поиск🔍</button>
@@ -28,7 +28,7 @@
                 <td>${user.name!}</td>
                 <td>
                     <form method="post" action="/order">
-                        <input type="hidden" value="false" name="isFree">
+                        <input type="hidden" value="true" name="isFree">
                         <input type="hidden" value="${PayDayId}" name="payDayId">
                         <input type="hidden" value="${user.id}" name="userId">
                         <input type="hidden" value="${_csrf.token}" name="_csrf">

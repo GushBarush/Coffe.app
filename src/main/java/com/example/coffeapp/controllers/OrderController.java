@@ -26,12 +26,11 @@ public class OrderController {
 
     @GetMapping
     public String newOrder(@RequestParam(name = "id") Long payDayId,
-                           @RequestParam(name = "isFree") boolean isFree,
+                           @RequestParam(name = "isFree") Boolean isFree,
                            @RequestParam(name = "filter", required = false, defaultValue = "") String filter, Model model) {
 
         model.addAttribute("PayDayId", payDayId);
         model.addAttribute("filter", filter);
-        model.addAttribute("isFree", isFree);
 
         if (isFree) {
             model.addAttribute("users", userService.userFilterFreeNumber(filter));
