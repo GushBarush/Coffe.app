@@ -199,6 +199,6 @@ public class OrderService {
         payDay.setSumExpense(payDay.getSumExpense() - expense.getSum());
 
         payDayRepo.save(payDay);
-        expenseRepo.save(expense);
+        expenseRepo.delete(expense);
     }
 }
