@@ -115,7 +115,7 @@ public class UserService implements UserDetailsService {
 
     public void addCoffe(User user){
 
-        if (user.getCoffee() == 5) {
+        if (user.getCoffee() == 4) {
             user.setCoffee(0);
             user.setHappyCoffee(user.getHappyCoffee() + 1);
         } else {
