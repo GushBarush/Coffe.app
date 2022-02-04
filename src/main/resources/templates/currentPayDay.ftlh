@@ -44,24 +44,32 @@
             <tr>
                 <td>${order.sum}</td>
                 <td>
-                    <#if order.active>
+                    <#if order.isActive()>
                         НЕ оплачен
                     <#else>
                         оплачен
                     </#if>
                 </td>
                 <td>
-                    <form method="get" action="/payday/order/info">
-                        <input type="hidden" value="${order.id}" name="orderId">
-                        <input type="hidden" value="${_csrf.token}" name="_csrf">
-                        <button class="btn btn-success" type="submit">!</button>
-                    </form>
+                    <#if order.isActive()>
+                        <form method="get" action="/payday/order/info">
+                            <input type="hidden" value="${order.id}" name="orderId">
+                            <input type="hidden" value="${_csrf.token}" name="_csrf">
+                            <button class="btn btn-success" type="submit">!</button>
+                        </form>
+                    <#else>
+                        оплачен!
+                    </#if>
                 </td>
                 <td>
-                    <#if order.cash>
-                        Наличные
-                    <#else>
-                        Карта
+                    <#if order.isFree()>
+                        Бесплатный
+                    <#else >
+                        <#if order.isCash()>
+                            Наличные
+                        <#else>
+                            Карта
+                        </#if>
                     </#if>
                 </td>
             </tr>
