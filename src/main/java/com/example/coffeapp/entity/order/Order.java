@@ -50,7 +50,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "pay_day_id", nullable = false)
     private PayDay payDay;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(name = "product_order",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "product_price_id"))
