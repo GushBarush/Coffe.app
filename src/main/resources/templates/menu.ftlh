@@ -9,7 +9,7 @@
         <div class="col">
             <div class="card text-white bg-dark" style="width: 18rem;">
                 <#if product.imageId??>
-                        <img src="/images/${product.imageId!}" class="card-img-top" alt="...">
+                        <img src="/images/${product.imageId!}" class="card-img-top" height="200" alt="...">
                     <#else>
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbIrYhETpbaeELA1-9jKaolsIcKU6ajknrrQ&usqp=CAU" class="card-img-top" alt="...">
                 </#if>
