@@ -34,6 +34,7 @@ public class OrderController {
 
         if (isFree) {
             model.addAttribute("users", userService.userFilterFreeNumber(filter));
+            return "newFreeOrder";
         } else  {
             model.addAttribute("users", userService.userFilterNumber(filter));
         }
