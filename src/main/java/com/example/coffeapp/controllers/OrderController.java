@@ -97,4 +97,30 @@ public class OrderController {
 
         return "redirect:/payday";
     }
+
+    @PostMapping("/expense")
+    public String expense(@RequestParam(name = "id") Long payDayId, Model model) {
+
+        model.addAttribute("payDayId", payDayId);
+
+        return "newExpense";
+    }
+
+    @PostMapping("/expense/new")
+    public String newExpense(@RequestParam(name = "payDayId") Long payDayId,
+                             @RequestParam(name = "sum") Double sum,
+                             @RequestParam(name = "commit") String commit) {
+
+        orderService.saveExpense(payDayId, sum, commit);
+
+        return "redirect:/payday";
+    }
+
+    @PostMapping("/expense/del")
+    public String delExpense(@RequestParam(name = "expenseId") Long expenseId) {
+
+        orderService.delExpense(expenseId);
+
+        return "redirect:/payday";
+    }
 }

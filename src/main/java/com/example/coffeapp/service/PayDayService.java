@@ -41,6 +41,7 @@ public class PayDayService {
         payDayEntity.setSumAll(0.0);
         payDayEntity.setSumCash(0.0);
         payDayEntity.setSumNotCash(0.0);
+        payDayEntity.setSumExpense(0.0);
 
         payDayRepo.save(payDayEntity);
 

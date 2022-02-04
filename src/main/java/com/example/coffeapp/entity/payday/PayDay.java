@@ -44,6 +44,9 @@ public class PayDay implements Serializable {
     @Column(name = "sum_not_cash")
     private Double sumNotCash;
 
+    @Column(name = "sum_expense")
+    private Double sumExpense;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

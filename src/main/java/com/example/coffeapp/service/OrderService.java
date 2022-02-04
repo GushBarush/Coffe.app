@@ -1,6 +1,8 @@
 package com.example.coffeapp.service;
 
+import com.example.coffeapp.dto.order.ExpenseDTO;
 import com.example.coffeapp.dto.order.OrderDTO;
+import com.example.coffeapp.entity.order.Expense;
 import com.example.coffeapp.entity.order.Order;
 import com.example.coffeapp.entity.payday.PayDay;
 import com.example.coffeapp.entity.product.Product;
@@ -25,6 +27,7 @@ public class OrderService {
     final ProductRepo productRepo;
     final ProductPriceRepo productPriceRepo;
     final ProductSizeRepo productSizeRepo;
+    final ExpenseRepo expenseRepo;
 
     public List<OrderDTO> allOrderByPayDay(Long payDayId) {
         List<Order> orderList = orderRepo.findAllByPayDay(payDayRepo.getById(payDayId));
@@ -36,6 +39,18 @@ public class OrderService {
         }
 
         return orderDTOS;
+    }
+
+    public List<ExpenseDTO> allExpenses(Long payDayId) {
+        List<Expense> expenseList = expenseRepo.findAllByPayDay(payDayRepo.getById(payDayId));
+        List<ExpenseDTO> expenseDTOS = new ArrayList<>();
+        ModelMapper mapper = new ModelMapper();
+
+        for (Expense expense : expenseList) {
+            expenseDTOS.add(mapper.map(expense, ExpenseDTO.class));
+        }
+
+        return expenseDTOS;
     }
 
     public OrderDTO getOrder(Long id) {
@@ -159,5 +174,31 @@ public class OrderService {
                 }
             }
         }
+    }
+
+    public void saveExpense(Long payDayId, Double sum, String commit) {
+        Expense expense = new Expense();
+        PayDay payDay = payDayRepo.getById(payDayId);
+
+        expense.setCommit(commit);
+        expense.setSum(sum);
+        expense.setPayDay(payDay);
+
+        payDay.setSumExpense(payDay.getSumExpense() + expense.getSum());
+        payDay.setSumAll(payDay.getSumAll() - expense.getSum());
+
+        payDayRepo.save(payDay);
+        expenseRepo.save(expense);
+    }
+
+    public void delExpense(Long expenseId) {
+        Expense expense = expenseRepo.getById(expenseId);
+        PayDay payDay = payDayRepo.getById(expense.getPayDay().getId());
+
+        payDay.setSumAll(payDay.getSumAll() + expense.getSum());
+        payDay.setSumExpense(payDay.getSumExpense() - expense.getSum());
+
+        payDayRepo.save(payDay);
+        expenseRepo.save(expense);
     }
 }

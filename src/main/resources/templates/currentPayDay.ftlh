@@ -11,8 +11,10 @@
         <p class="h2">Касса</p>
     <br/>
         <p class="h3">Всего: ${PayDayDTO.sumAll}</p>
+        <p class="h3">Расходы: ${PayDayDTO.sumExpense}</p>
         <p class="h3">Безнал: ${PayDayDTO.sumNotCash}</p>
         <p class="h3">Наличные: ${PayDayDTO.sumCash}</p>
+    <br/>
         <p class="h3">Бесплатные: ${PayDayDTO.sumFree}</p>
     <hr/>
         <p class="h2">Заказы</p>
@@ -86,6 +88,38 @@
         </tbody>
     </table>
     <br/>
+    <p class="h2">Расходы</p>
+    <br/>
+        <form action="/order/expense" method="post">
+            <input type="hidden" value="${PayDayDTO.id}" name="id">
+            <input type="hidden" value="${_csrf.token}" name="_csrf">
+            <button class="btn btn-primary" type="submit">Добавить рассход</button>
+        </form>
+    <br/>
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th>Описание</th>
+            <th>Сумма</th>
+            <th>Удолыт</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list expenses as expense>
+            <tr>
+                <td>${expense.commit}</td>
+                <td>${expense.sum}</td>
+                <td>
+                    <form action="/order/expense/del" method="post">
+                        <input type="hidden" value="${expense.id}" name="expenseId">
+                        <input type="hidden" value="${_csrf.token}" name="_csrf">
+                        <button class="btn btn-primary" type="submit">❌</button>
+                    </form>
+                </td>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
     <br/>
     <hr/>
     <br/>
