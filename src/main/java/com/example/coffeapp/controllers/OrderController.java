@@ -108,8 +108,17 @@ public class OrderController {
 
     @PostMapping("/expense/new")
     public String newExpense(@RequestParam(name = "payDayId") Long payDayId,
-                             @RequestParam(name = "sum") Double sum,
-                             @RequestParam(name = "commit") String commit) {
+                             @RequestParam(name = "sum", defaultValue = "0.0") Double sum,
+                             @RequestParam(name = "commit", defaultValue = "") String commit, Model model) {
+
+        if (commit.equals("")) {
+            model.addAttribute("messageCommit", "Нету коментария");
+            return "newExpense";
+        }
+        if (sum == 0.0) {
+            model.addAttribute("messageSum", "Сумма расхода не может быть 0");
+            return "newExpense";
+        }
 
         orderService.saveExpense(payDayId, sum, commit);
 

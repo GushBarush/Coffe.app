@@ -4,10 +4,10 @@
     <p class="h3">Редактирование товара</p>
     <hr/>
     <br/>
-    ${messageName!}
     <form action="/admin/product/edit_dop" method="post" enctype="multipart/form-data">
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageName!}
                 <span class="input-group-text" id="productName">Название товара</span>
                 <input class="form-control" type="text" value="${productDTO.productName!}" aria-describedby="productName" name="productName"/>
             </div>
@@ -15,6 +15,7 @@
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
+                ${messagePrice!}
                 <span class="input-group-text" id="price">Цена</span>
                 <input class="form-control" type="number" value="${productPriceDTO.price!}" aria-describedby="price" name="price"/>
             </div>

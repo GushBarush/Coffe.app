@@ -6,6 +6,7 @@
     <form action="/order/expense/new" method="post">
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageCommit!}
                 <span class="input-group-text" id="commit">Пару слов о рассходе</span>
                 <input class="form-control" type="text" aria-describedby="commit" name="commit"/>
             </div>
@@ -13,6 +14,7 @@
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageSum!}
                 <span class="input-group-text" id="sum">Сумма расхода</span>
                 <input class="form-control" type="number" aria-describedby="sum" name="sum"/>
             </div>

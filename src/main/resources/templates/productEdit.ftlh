@@ -4,10 +4,10 @@
     <p class="h3">Редактирование товара</p>
     <hr/>
     <br/>
-    ${messageName!}
     <form action="/admin/product/edit" method="post" enctype="multipart/form-data">
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageName!}
                 <span class="input-group-text" id="productName">Название товара</span>
                 <input class="form-control" type="text" value="${productDTO.productName!}" aria-describedby="productName" name="productName"/>
             </div>
@@ -15,6 +15,7 @@
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageSmall!}
                 <span class="input-group-text" id="averagePrice">Цена Мал.</span>
                 <input class="form-control" type="number" value="${productPriceView.priceSmall!}" aria-describedby="averagePrice" name="smallPrice"/>
             </div>
@@ -22,6 +23,7 @@
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageMiddle!}
                 <span class="input-group-text" id="middlePrice">Цена Ср.</span>
                 <input class="form-control" type="number" value="${productPriceView.priceMedium!}" aria-describedby="middlePrice" name="mediumPrice"/>
             </div>
@@ -29,6 +31,7 @@
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageBig!}
                 <span class="input-group-text" id="bigPrice">Цена Бол.</span>
                 <input class="form-control" type="number" value="${productPriceView.priceBig!}" aria-describedby="bigPrice" name="bigPrice"/>
             </div>

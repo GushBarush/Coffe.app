@@ -4,10 +4,10 @@
     <p class="h3">Новый товар</p>
     <hr/>
     <br/>
-    ${messageName!}
     <form action="/admin/product/new" method="post" enctype="multipart/form-data">
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageName!}
                 <span class="input-group-text" id="productName">Название товара</span>
                 <input class="form-control" type="text" aria-describedby="productName" name="productName"/>
             </div>
@@ -15,6 +15,7 @@
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageSmall!}
                 <span class="input-group-text" id="priceSmall">Цена Мал.</span>
                 <input class="form-control" type="number" aria-describedby="priceSmall" name="priceSmall"/>
             </div>
@@ -22,6 +23,7 @@
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageMiddle!}
                 <span class="input-group-text" id="priceMiddle">Цена Ср.</span>
                 <input class="form-control" type="number" aria-describedby="priceMiddle" name="priceMiddle"/>
             </div>
@@ -29,6 +31,7 @@
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
+                ${messageBig!}
                 <span class="input-group-text" id="priceBig">Цена Бол.</span>
                 <input class="form-control" type="number" aria-describedby="priceBig" name="priceBig"/>
             </div>

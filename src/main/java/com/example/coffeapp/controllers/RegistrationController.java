@@ -29,6 +29,16 @@ public class RegistrationController {
             return "registration";
         }
 
+        if (user.getName().equals("") || user.getName() == null) {
+            model.addAttribute("messageName", "Неуказанно имя");
+            return "registration";
+        }
+
+        if(user.getPassword().length() < 8) {
+            model.addAttribute("messagePass", "пароль не может быть меньше 8 символов");
+            return "registration";
+        }
+
         userService.addUser(user);
 
         return "redirect:/login";
