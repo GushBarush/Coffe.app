@@ -1,4 +1,5 @@
 <#import "parts/common.ftlh" as c>
+<#include "parts/security.ftlh">
 
 <@c.page>
         <p class="h2">Смена</p>
@@ -51,14 +52,22 @@
                     </#if>
                 </td>
                 <td>
-                    <#if order.isActive()>
-                        <form method="get" action="/payday/order/info">
-                            <input type="hidden" value="${order.id}" name="orderId">
-                            <input type="hidden" value="${_csrf.token}" name="_csrf">
-                            <button class="btn btn-success" type="submit">!</button>
-                        </form>
-                    <#else>
-                        оплачен!
+                    <#if isAdmin>
+                            <form method="get" action="/payday/order/info">
+                                <input type="hidden" value="${order.id}" name="orderId">
+                                <input type="hidden" value="${_csrf.token}" name="_csrf">
+                                <button class="btn btn-success" type="submit">!</button>
+                            </form>
+                        <#else>
+                            <#if order.isActive()>
+                                <form method="get" action="/payday/order/info">
+                                    <input type="hidden" value="${order.id}" name="orderId">
+                                    <input type="hidden" value="${_csrf.token}" name="_csrf">
+                                    <button class="btn btn-success" type="submit">!</button>
+                                </form>
+                            <#else>
+                                оплачен!
+                            </#if>
                     </#if>
                 </td>
                 <td>
