@@ -75,6 +75,19 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public List<UserDTO> userFilterFreeNumber(String filter) {
+        List<UserDTO> users = userFilterNumber(filter);
+        List<UserDTO> usersFree = new ArrayList<>();
+
+        for (UserDTO userDTO : users) {
+            if(userDTO.getHappyCoffee() > 0 || userDTO.getCoffee() == 5) {
+                usersFree.add(userDTO);
+            }
+        }
+
+        return usersFree;
+    }
+
     public void setNewUserNumber(User user) {
         user.setUserNumber(user.getPhoneNumber().substring(user.getPhoneNumber().length() - 4));
     }

@@ -25,6 +25,8 @@ public class PayDayDTO implements Serializable {
 
     private Double sumAll;
 
+    private Double sumFree;
+
     private Double sumCash;
 
     private Double sumNotCash;

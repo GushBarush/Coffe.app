@@ -21,12 +21,20 @@
             <button class="btn btn-primary" type="submit">Новый заказ</button>
         </form>
     <br/>
+        <form action="/order" method="get">
+            <input type="hidden" value="true" name="isFree">
+            <input type="hidden" value="${PayDayDTO.id}" name="id">
+            <input type="hidden" value="${_csrf.token}" name="_csrf">
+            <button class="btn btn-primary" type="submit">Новый Бесплатный</button>
+        </form>
+    <br/>
     <table class="table table-dark table-striped">
         <thead>
         <tr>
             <th>Сумма</th>
             <th>Статус</th>
             <th>Информация</th>
+            <th>Наличные или карта</th>
         </tr>
         </thead>
         <tbody>
@@ -36,7 +44,7 @@
                 <td>
                     <#if order.active>
                         НЕ оплачен
-                        <#else>
+                    <#else>
                         оплачен
                     </#if>
                 </td>
@@ -46,6 +54,13 @@
                         <input type="hidden" value="${_csrf.token}" name="_csrf">
                         <button class="btn btn-success" type="submit">!</button>
                     </form>
+                </td>
+                <td>
+                    <#if order.cash>
+                        Наличные
+                    <#else>
+                        Карта
+                    </#if>
                 </td>
             </tr>
         </#list>

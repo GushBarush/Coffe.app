@@ -35,6 +35,9 @@ public class PayDay implements Serializable {
     @Column(name = "sum_all")
     private Double sumAll;
 
+    @Column(name = "sum_free")
+    private Double sumFree;
+
     @Column(name = "sum_cash")
     private Double sumCash;
 

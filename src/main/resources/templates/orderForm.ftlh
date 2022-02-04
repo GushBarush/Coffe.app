@@ -81,18 +81,22 @@
     <hr/>
     <br/>
     <form action="/order/save" method="post">
-        <div class="form-check">
-            <input class="form-check-input" value="true" type="radio" name="isCash" id="flexRadio1" checked>
-            <label class="form-check-label" for="flexRadio1">
-                Наличные
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" value="false" type="radio" name="isCash" id="flexRadio2" checked>
-            <label class="form-check-label" for="flexRadio2">
-                Карта
-            </label>
-        </div>
+        <#if order.isFree()>
+            <input type="hidden" value="true" name="isCash">
+        <#else>
+            <div class="form-check">
+                <input class="form-check-input" value="true" type="radio" name="isCash" id="flexRadio1" checked>
+                <label class="form-check-label" for="flexRadio1">
+                    Наличные
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" value="false" type="radio" name="isCash" id="flexRadio2" checked>
+                <label class="form-check-label" for="flexRadio2">
+                    Карта
+                </label>
+            </div>
+        </#if>
         <input type="hidden" value="${order.id}" name="orderId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <button class="btn btn-primary" type="submit">Оплатить счёт</button>

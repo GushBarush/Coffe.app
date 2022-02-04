@@ -28,6 +28,8 @@ public class OrderDTO implements Serializable {
 
     private boolean isActive;
 
+    private boolean isFree;
+
     private User user;
 
     private PayDay payDay;

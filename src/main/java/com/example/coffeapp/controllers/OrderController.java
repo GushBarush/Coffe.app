@@ -26,21 +26,28 @@ public class OrderController {
 
     @GetMapping
     public String newOrder(@RequestParam(name = "id") Long payDayId,
+                           @RequestParam(name = "isFree", defaultValue = "false") Boolean isFree,
                            @RequestParam(name = "filter", required = false, defaultValue = "") String filter, Model model) {
 
         model.addAttribute("PayDayId", payDayId);
-        model.addAttribute("users", userService.userFilterNumber(filter));
         model.addAttribute("filter", filter);
+        model.addAttribute("isFree", isFree);
+
+        if (isFree) {
+            model.addAttribute("users", userService.userFilterFreeNumber(filter));
+        } else  {
+            model.addAttribute("users", userService.userFilterNumber(filter));
+        }
 
         return "newOrder";
     }
 
     @PostMapping
     public String selectUser(@RequestParam(name = "userId") Long userId,
+                             @RequestParam(name = "isFree") Boolean isFree,
                              @RequestParam(name = "payDayId") Long payDayId, Model model) {
 
-
-        model.addAttribute("order", orderService.newOrder(userId, payDayId));
+        model.addAttribute("order", orderService.newOrder(userId, payDayId, isFree));
         model.addAttribute("products", productService.allProduct(false));
         model.addAttribute("productsDop", productService.allProduct(true));
 

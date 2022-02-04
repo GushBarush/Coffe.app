@@ -45,7 +45,7 @@ public class OrderService {
         return mapper.map(orderEntity, OrderDTO.class);
     }
 
-    public OrderDTO newOrder(Long userId, Long payDayId) {
+    public OrderDTO newOrder(Long userId, Long payDayId, Boolean isFree) {
         Order orderEntity = new Order();
         ModelMapper mapper = new ModelMapper();
         LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("Europe/Moscow"));
@@ -56,6 +56,7 @@ public class OrderService {
         orderEntity.setTime(localDateTime);
         orderEntity.setSum(0.0);
         orderEntity.setActive(true);
+        orderEntity.setFree(isFree);
 
         orderDTO = mapper.map(orderRepo.save(orderEntity), OrderDTO.class);
 
@@ -97,15 +98,21 @@ public class OrderService {
 
         checkOrder(order);
 
-        if (isCash) {
-            payDay.setSumCash(payDay.getSumCash() + order.getSum());
+        if (order.isFree()) {
+            payDay.setSumFree(payDay.getSumFree() + order.getSum());
         } else {
-            payDay.setSumNotCash(payDay.getSumNotCash() + order.getSum());
+            if (isCash) {
+                payDay.setSumCash(payDay.getSumCash() + order.getSum());
+            } else {
+                payDay.setSumNotCash(payDay.getSumNotCash() + order.getSum());
+            }
+
+            payDay.setSumAll(payDay.getSumAll() + order.getSum());
         }
 
-        payDay.setSumAll(payDay.getSumAll() + order.getSum());
-        order.setActive(false);
+        updateUser(order);
         order.setCash(isCash);
+        order.setActive(false);
 
         payDayRepo.save(payDay);
         orderRepo.save(order);
@@ -122,15 +129,35 @@ public class OrderService {
     private void checkOrder(Order order) {
         PayDay payDay = payDayRepo.getById(order.getPayDay().getId());
 
-        if(!order.isActive()) {
-            if(order.isCash()) {
-                payDay.setSumCash(payDay.getSumCash() - order.getSum());
-            } else {
-                payDay.setSumNotCash(payDay.getSumNotCash() - order.getSum());
+        if(order.isFree()) {
+            if (!order.isActive()) {
+                payDay.setSumFree(payDay.getSumFree() - order.getSum());
             }
-            payDay.setSumAll(payDay.getSumAll() - order.getSum());
+        } else {
+            if(!order.isActive()) {
+                if(order.isCash()) {
+                    payDay.setSumCash(payDay.getSumCash() - order.getSum());
+                } else {
+                    payDay.setSumNotCash(payDay.getSumNotCash() - order.getSum());
+                }
+                payDay.setSumAll(payDay.getSumAll() - order.getSum());
+            }
         }
 
         payDayRepo.save(payDay);
+    }
+
+    private void updateUser(Order order) {
+        List<ProductPrice> productPriceList = order.getProductPriceList();
+
+        for (ProductPrice productPrice : productPriceList) {
+            if (!productPrice.getProduct().isDop()) {
+                if (order.isFree()) {
+                    userService.delHappyCoffe(order.getUser());
+                } else {
+                    userService.addCoffe(order.getUser());
+                }
+            }
+        }
     }
 }
