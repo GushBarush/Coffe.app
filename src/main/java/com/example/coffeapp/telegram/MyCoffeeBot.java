@@ -1,5 +1,6 @@
 package com.example.coffeapp.telegram;
 
+import com.example.coffeapp.entity.payday.PayDay;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class MyCoffeeBot extends TelegramLongPollingBot {
                         return;
                     case "/smena":
                         execute(SendMessage.builder()
-                                .text(botService.getStats())
+                                .text(parse())
                                 .chatId(message.getChatId().toString())
                                 .build());
                         return;
@@ -58,6 +59,23 @@ public class MyCoffeeBot extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         return "5168296742:AAH-tXdkEqGfyI145vAhIRm5PoSKQGJqPxA";
+    }
+
+    public String parse() {
+        PayDay payDay = botService.getStats();
+        String stats = "Смена закрыта";
+
+        if (payDay != null){
+            return  "Cмену открыл: " + payDay.getUser().getName() + ".\n" +
+                    "В " + payDay.getOpenTime().getHour() + ":" + payDay.getOpenTime().getMinute() + ".\n" +
+                    "Всего: " + payDay.getSumAll() + ".\n" +
+                    "Расходы: " + payDay.getSumExpense() + ".\n" +
+                    "Наличные: " + payDay.getSumCash() + ".\n" +
+                    "Безнал: " + payDay.getSumNotCash() + ".\n" +
+                    "Бесплатных: " + payDay.getSumFree() + ".";
+        }
+
+        return stats;
     }
 
 }
