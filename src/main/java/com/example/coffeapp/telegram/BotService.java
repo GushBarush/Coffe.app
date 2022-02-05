@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class BotService {
 
-    static PayDayRepo payDayRepo;
+    final PayDayRepo payDayRepo;
 
-    public static String getStats() {
+    public String getStats() {
         String stats = "Смена закрыта";
 
         PayDay payDay = payDayRepo.findByActive(true);

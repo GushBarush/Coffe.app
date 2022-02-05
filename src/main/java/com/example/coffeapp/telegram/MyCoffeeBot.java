@@ -1,5 +1,6 @@
 package com.example.coffeapp.telegram;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 
@@ -10,6 +11,9 @@ public class MyCoffeeBot extends AbilityBot {
 
     public static String BOT_TOKEN = "5168296742:AAH-tXdkEqGfyI145vAhIRm5PoSKQGJqPxA";
     public static String BOT_USERNAME = "raft_coffee_bot";
+
+    @Autowired
+    BotService botService;
 
     public MyCoffeeBot() {
         super(BOT_TOKEN, BOT_USERNAME);
@@ -38,7 +42,7 @@ public class MyCoffeeBot extends AbilityBot {
                 .info("Дай информацию о текущей смене")
                 .locality(ALL)
                 .privacy(PUBLIC)
-                .action(ctx -> silent.send(BotService.getStats(), ctx.chatId()))
+                .action(ctx -> silent.send(botService.getStats(), ctx.chatId()))
                 .build();
     }
 }
