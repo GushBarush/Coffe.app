@@ -64,13 +64,13 @@ public class PayDayService {
         return payDayDTO;
     }
 
-    public void endPayDay(Long id) {
+    public PayDay endPayDay(Long id) {
         PayDay payDay = payDayRepo.getById(id);
         LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("Europe/Moscow"));
 
         payDay.setCloseTime(localDateTime);
         payDay.setActive(false);
 
-        payDayRepo.save(payDay);
+        return payDayRepo.save(payDay);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.coffeapp.controllers;
 
 import com.example.coffeapp.dto.payday.PayDayDTO;
+import com.example.coffeapp.entity.payday.PayDay;
 import com.example.coffeapp.service.OrderService;
 import com.example.coffeapp.service.PayDayService;
 import com.example.coffeapp.service.ProductService;
@@ -55,8 +56,9 @@ public class PayDayController {
 
     @PostMapping("/end")
     public String endPayDay(@RequestParam(name = "id") Long id) {
-        payDayService.endPayDay(id);
+        PayDay payDay = payDayService.endPayDay(id);
 
+        myCoffeeBot.endPayDay(payDay);
         return "redirect:/payday";
     }
 

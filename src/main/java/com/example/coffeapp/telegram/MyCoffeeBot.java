@@ -59,9 +59,26 @@ public class MyCoffeeBot extends TelegramLongPollingBot {
 
         execute(SendMessage.builder()
                 .text(
-                        payDay.getUser().getName() + "открыл смену.\n" +
+                        payDay.getUser().getName() + " открыл смену.\n" +
                                 "в: " + payDay.getOpenTime().getHour() +
                                 ":" + payDay.getOpenTime().getMinute())
+                .chatId("-1001361341198")
+                .build());
+    }
+
+    @SneakyThrows
+    public void endPayDay(PayDay payDay) {
+
+        execute(SendMessage.builder()
+                .text(
+                        payDay.getUser().getName() + " закрыл смену.\n" +
+                                "в: " + payDay.getCloseTime().getHour() +
+                                ":" + payDay.getCloseTime().getMinute() + "\n" +
+                                "Всего: " + payDay.getSumAll() + "\n" +
+                                "Расходы: " + payDay.getSumExpense() + "\n" +
+                                "Наличные: " + payDay.getSumCash() + "\n" +
+                                "Безнал: " + payDay.getSumNotCash() + "\n" +
+                                "Бесплатных: " + payDay.getSumFree())
                 .chatId("-1001361341198")
                 .build());
     }
@@ -81,13 +98,13 @@ public class MyCoffeeBot extends TelegramLongPollingBot {
         String stats = "Смена закрыта";
 
         if (payDay != null){
-            return  "Cмену открыл: " + payDay.getUser().getName() + ".\n" +
-                    "В " + payDay.getOpenTime().getHour() + ":" + payDay.getOpenTime().getMinute() + ".\n" +
-                    "Всего: " + payDay.getSumAll() + ".\n" +
-                    "Расходы: " + payDay.getSumExpense() + ".\n" +
-                    "Наличные: " + payDay.getSumCash() + ".\n" +
-                    "Безнал: " + payDay.getSumNotCash() + ".\n" +
-                    "Бесплатных: " + payDay.getSumFree() + ".";
+            return  "Cмену открыл: " + payDay.getUser().getName() + "\n" +
+                    "В " + payDay.getOpenTime().getHour() + ":" + payDay.getOpenTime().getMinute() + "\n" +
+                    "Всего: " + payDay.getSumAll() + "\n" +
+                    "Расходы: " + payDay.getSumExpense() + "\n" +
+                    "Наличные: " + payDay.getSumCash() + "\n" +
+                    "Безнал: " + payDay.getSumNotCash() + "\n" +
+                    "Бесплатных: " + payDay.getSumFree();
         }
 
         return stats;
