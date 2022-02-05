@@ -4,7 +4,7 @@ import com.example.coffeapp.entity.payday.PayDay;
 import com.example.coffeapp.repository.PayDayRepo;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -13,7 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.Optional;
 
-@Service
+@Component
 public class MyCoffeeBot extends TelegramLongPollingBot {
 
     @Autowired
