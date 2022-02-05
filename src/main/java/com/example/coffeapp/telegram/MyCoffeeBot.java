@@ -30,4 +30,15 @@ public class MyCoffeeBot extends AbilityBot {
                 .action(ctx -> silent.send("Hello world!", ctx.chatId()))
                 .build();
     }
+
+    public Ability saySmena() {
+        return Ability
+                .builder()
+                .name("smena")
+                .info("Дай информацию о текущей смене")
+                .locality(ALL)
+                .privacy(PUBLIC)
+                .action(ctx -> silent.send(BotService.getStats(), ctx.chatId()))
+                .build();
+    }
 }
