@@ -1,35 +1,33 @@
 package com.example.coffeapp.telegram;
 
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.abilitybots.api.bot.AbilityBot;
+import org.telegram.abilitybots.api.objects.Ability;
 
-public class MyCoffeeBot extends TelegramLongPollingBot {
+import static org.telegram.abilitybots.api.objects.Locality.ALL;
+import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
 
-    @Override
-    public void onUpdateReceived(Update update) {
-        // We check if the update has a message and the message has text
-        if (update.hasMessage() && update.getMessage().hasText()) {
-            SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
-            message.setChatId(update.getMessage().getChatId().toString());
-            message.setText(update.getMessage().getText());
+public class MyCoffeeBot extends AbilityBot {
 
-            try {
-                execute(message); // Call method to send the message
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-        }
+    public static String BOT_TOKEN = "5168296742:AAH-tXdkEqGfyI145vAhIRm5PoSKQGJqPxA";
+    public static String BOT_USERNAME = "raft_coffee_bot";
+
+    public MyCoffeeBot() {
+        super(BOT_TOKEN, BOT_USERNAME);
     }
 
     @Override
-    public String getBotUsername() {
-        return "raft_coffee_bot";
+    public long creatorId() {
+        return 1223583252;
     }
 
-    @Override
-    public String getBotToken() {
-        return "5168296742:AAH-tXdkEqGfyI145vAhIRm5PoSKQGJqPxA";
+    public Ability sayHelloWorld() {
+        return Ability
+                .builder()
+                .name("hello")
+                .info("says hello world!")
+                .locality(ALL)
+                .privacy(PUBLIC)
+                .action(ctx -> silent.send("Hello world!", ctx.chatId()))
+                .build();
     }
 }
