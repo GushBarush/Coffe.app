@@ -1,7 +1,5 @@
 package com.example.coffeapp;
 
-import com.example.coffeapp.repository.PayDayRepo;
-import com.example.coffeapp.telegram.BotService;
 import com.example.coffeapp.telegram.MyCoffeeBot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
