@@ -1,6 +1,7 @@
 package com.example.coffeapp.telegram;
 
 import com.example.coffeapp.entity.payday.PayDay;
+import com.example.coffeapp.repository.PayDayRepo;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class MyCoffeeBot extends TelegramLongPollingBot {
 
     @Autowired
-    BotService botService;
+    PayDayRepo payDayRepo;
 
     @Override
     @SneakyThrows
@@ -62,7 +63,7 @@ public class MyCoffeeBot extends TelegramLongPollingBot {
     }
 
     public String parse() {
-        PayDay payDay = botService.getStats();
+        PayDay payDay = payDayRepo.findByActive(true);
         String stats = "Смена закрыта";
 
         if (payDay != null){
