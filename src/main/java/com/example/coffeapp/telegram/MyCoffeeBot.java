@@ -36,13 +36,14 @@ public class MyCoffeeBot extends AbilityBot {
     }
 
     public Ability saySmena() {
+        String stats = botService.getStats();
         return Ability
                 .builder()
                 .name("smena")
                 .info("Дай информацию о текущей смене")
                 .locality(ALL)
                 .privacy(PUBLIC)
-                .action(ctx -> silent.send(botService.getStats(), ctx.chatId()))
+                .action(ctx -> silent.send(stats, ctx.chatId()))
                 .build();
     }
 }
