@@ -43,14 +43,21 @@ public class MyCoffeeBot extends TelegramLongPollingBot {
                                     .build());
                         return;
                     case "/smena":
-                        execute(SendMessage.builder()
-                                .text(parse())
-                                .chatId(message.getChatId().toString())
-                                .build());
+                        smena(message);
                         return;
+                    case "/smena@raft_coffee_bot":
+                        smena(message);
                 }
             }
         }
+    }
+
+    @SneakyThrows
+    public void smena(Message message) {
+        execute(SendMessage.builder()
+                .text(parse())
+                .chatId(message.getChatId().toString())
+                .build());
     }
 
     @SneakyThrows
