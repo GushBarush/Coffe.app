@@ -4,6 +4,7 @@ import com.example.coffeapp.dto.payday.PayDayDTO;
 import com.example.coffeapp.service.OrderService;
 import com.example.coffeapp.service.PayDayService;
 import com.example.coffeapp.service.ProductService;
+import com.example.coffeapp.telegram.MyCoffeeBot;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +23,13 @@ public class PayDayController {
     final PayDayService payDayService;
     final OrderService orderService;
     final ProductService productService;
+    final MyCoffeeBot myCoffeeBot;
 
-    public PayDayController(PayDayService payDayService, OrderService orderService, ProductService productService) {
+    public PayDayController(PayDayService payDayService, OrderService orderService, ProductService productService, MyCoffeeBot myCoffeeBot) {
         this.payDayService = payDayService;
         this.orderService = orderService;
         this.productService = productService;
+        this.myCoffeeBot = myCoffeeBot;
     }
 
     @GetMapping
@@ -44,8 +47,9 @@ public class PayDayController {
 
     @PostMapping
     public String newPayDay(Principal principal) {
-        payDayService.getNewPayDay(principal.getName());
+        PayDayDTO payDayDTO = payDayService.getNewPayDay(principal.getName());
 
+        myCoffeeBot.openPayDay(payDayDTO);
         return "redirect:/payday";
     }
 

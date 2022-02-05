@@ -1,5 +1,6 @@
 package com.example.coffeapp.telegram;
 
+import com.example.coffeapp.dto.payday.PayDayDTO;
 import com.example.coffeapp.entity.payday.PayDay;
 import com.example.coffeapp.repository.PayDayRepo;
 import lombok.SneakyThrows;
@@ -50,6 +51,19 @@ public class MyCoffeeBot extends TelegramLongPollingBot {
                 }
             }
         }
+    }
+
+    @SneakyThrows
+    public void openPayDay(PayDayDTO payDayDTO) {
+        PayDay payDay = payDayRepo.getById(payDayDTO.getId());
+
+        execute(SendMessage.builder()
+                .text(
+                        payDay.getUser().getName() + "открыл смену.\n" +
+                                "в: " + payDay.getOpenTime().getHour() +
+                                ":" + payDay.getOpenTime().getMinute())
+                .chatId("-1001361341198")
+                .build());
     }
 
     @Override
