@@ -68,6 +68,13 @@
             <version>3.0.0</version>
         </dependency>
 
+        <!-- telegram bot API https://github.com/rubenlagus/TelegramBots  -->
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>5.7.1</version>
+        </dependency>
+
     </dependencies>
 
 
