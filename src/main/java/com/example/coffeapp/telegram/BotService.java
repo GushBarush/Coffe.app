@@ -3,13 +3,15 @@ package com.example.coffeapp.telegram;
 import com.example.coffeapp.entity.payday.PayDay;
 import com.example.coffeapp.repository.PayDayRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class BotService {
 
-    final PayDayRepo payDayRepo;
+    @Autowired
+    PayDayRepo payDayRepo;
 
     public String getStats() {
         String stats = "Смена закрыта";
