@@ -17,12 +17,12 @@ public class BotService {
         PayDay payDay = payDayRepo.findByActive(true);
 
         if (payDay != null){
-            stats = "Cмену открыл: " + payDay.getUser().getName() + ". " +
-                    "В " + payDay.getOpenTime().getHour() + ":" + payDay.getOpenTime().getMinute() + ". " +
-                    "Всего: " + payDay.getSumAll() + ". " +
-                    "Расходы: " + payDay.getSumExpense() + ". " +
-                    "Наличные: " + payDay.getSumCash() + ". " +
-                    "Безнал: " + payDay.getSumNotCash() + ". " +
+            stats = "Cмену открыл: " + payDay.getUser().getName() + ".\n" +
+                    "В " + payDay.getOpenTime().getHour() + ":" + payDay.getOpenTime().getMinute() + ".\n" +
+                    "Всего: " + payDay.getSumAll() + ".\n" +
+                    "Расходы: " + payDay.getSumExpense() + ".\n" +
+                    "Наличные: " + payDay.getSumCash() + ".\n" +
+                    "Безнал: " + payDay.getSumNotCash() + ".\n" +
                     "Бесплатных: " + payDay.getSumFree() + ".";
         }
 

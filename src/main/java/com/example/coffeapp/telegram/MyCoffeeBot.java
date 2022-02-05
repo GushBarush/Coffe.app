@@ -1,49 +1,60 @@
 package com.example.coffeapp.telegram;
 
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.abilitybots.api.bot.AbilityBot;
-import org.telegram.abilitybots.api.objects.Ability;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.MessageEntity;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
-import static org.telegram.abilitybots.api.objects.Locality.ALL;
-import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
+import java.util.Optional;
 
-public class MyCoffeeBot extends AbilityBot {
-
-    public static String BOT_TOKEN = "5168296742:AAH-tXdkEqGfyI145vAhIRm5PoSKQGJqPxA";
-    public static String BOT_USERNAME = "raft_coffee_bot";
+public class MyCoffeeBot extends TelegramLongPollingBot {
 
     @Autowired
     BotService botService;
 
-    public MyCoffeeBot() {
-        super(BOT_TOKEN, BOT_USERNAME);
+    @Override
+    @SneakyThrows
+    public void onUpdateReceived(Update update) {
+        if(update.hasMessage()) {
+            handleMessage(update.getMessage());
+        }
+    }
+
+    @SneakyThrows
+    public void handleMessage(Message message) {
+        if (message.hasText() && message.hasEntities()) {
+            Optional<MessageEntity> commandEntity =
+                    message.getEntities().stream().filter(e -> "bot_command".equals(e.getType())).findFirst();
+            if(commandEntity.isPresent()) {
+                String command = message.getText().substring(commandEntity.get().getOffset(), commandEntity.get().getLength());
+                switch (command) {
+                    case "/hello":
+                        execute(SendMessage.builder()
+                                    .text("Привет")
+                                    .chatId(message.getChatId().toString())
+                                    .build());
+                        return;
+                    case "/smena":
+                        execute(SendMessage.builder()
+                                .text(botService.getStats())
+                                .chatId(message.getChatId().toString())
+                                .build());
+                        return;
+                }
+            }
+        }
     }
 
     @Override
-    public long creatorId() {
-        return 1223583252;
+    public String getBotUsername() {
+        return "raft_coffee_bot";
     }
 
-    public Ability sayHelloWorld() {
-        return Ability
-                .builder()
-                .name("hello")
-                .info("says hello world!")
-                .locality(ALL)
-                .privacy(PUBLIC)
-                .action(ctx -> silent.send("Hello world!", ctx.chatId()))
-                .build();
-    }
-
-    public Ability saySmena() {
-        String stats = botService.getStats();
-        return Ability
-                .builder()
-                .name("smena")
-                .info("Дай информацию о текущей смене")
-                .locality(ALL)
-                .privacy(PUBLIC)
-                .action(ctx -> silent.send(stats, ctx.chatId()))
-                .build();
+    @Override
+    public String getBotToken() {
+        return "5168296742:AAH-tXdkEqGfyI145vAhIRm5PoSKQGJqPxA";
     }
 }
