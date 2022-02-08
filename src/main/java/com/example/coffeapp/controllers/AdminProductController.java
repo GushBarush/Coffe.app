@@ -64,30 +64,13 @@ public class AdminProductController {
     }
 
     @PostMapping("/new")
-    public String saveNewProduct(@RequestParam(name = "productName", defaultValue = "") String productName,
-                                    @RequestParam(name = "priceSmall", defaultValue = "0.0") Double priceSmall,
-                                    @RequestParam(name = "priceMiddle", defaultValue = "0.0") Double priceMiddle,
-                                    @RequestParam(name = "priceBig", defaultValue = "0.0") Double priceBig,
+    public String saveNewProduct(@RequestParam(name = "productName") String productName,
+                                    @RequestParam(name = "priceSmall") Double priceSmall,
+                                    @RequestParam(name = "priceMiddle") Double priceMiddle,
+                                    @RequestParam(name = "priceBig") Double priceBig,
                                     @RequestParam(name = "category") String category,
-                                    @RequestParam(name = "description", defaultValue = "") String description,
+                                    @RequestParam(name = "description") String description,
                                     @RequestParam(name = "file") MultipartFile file, Model model) throws IOException {
-
-        if(productName.equals("")) {
-            model.addAttribute("messageName", "Не указанно назвине");
-            return "productNew";
-        }
-        if(priceSmall == 0.0) {
-            model.addAttribute("messageSmall", "Не указанна цена");
-            return "productNew";
-        }
-        if(priceMiddle == 0.0) {
-            model.addAttribute("messageMiddle", "Не указанна цена");
-            return "productNew";
-        }
-        if(priceBig == 0.0) {
-            model.addAttribute("messageBig", "Не указанна цена");
-            return "productNew";
-        }
 
         ProductDTO productDTO = new ProductDTO();
         productDTO.setDop(false);
