@@ -1,14 +1,13 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
-
     <p class="h2">Новый заказ</p>
-
     <p class="h3">для: ${order.user.name}</p>
-
+    <br/>
+    <hr/>
     <form action="/order/addProduct" method="post">
         <div class="col-md-3 position-relative">
-            <label for="validationTooltip04" class="form-label">State</label>
+            <label for="validationTooltip04" class="form-label">Кофе</label>
             <select name="productId" class="form-select" id="validationTooltip04" required>
                 <option selected disabled value="">Выберете...</option>
                 <#list products as productDTO>
@@ -45,14 +44,17 @@
     <hr/>
     <br/>
     <form action="/order/addProduct" method="post">
-        <div class="mb-3">
-            <select class="form-select" required aria-label="select example" name="productId">
-                <option selected>выберете</option>
+        <div class="col-md-3 position-relative">
+            <label for="validationTooltip04" class="form-label">Добавки</label>
+            <select name="productId" class="form-select" id="validationTooltip04" required>
+                <option selected disabled value="">Выберете...</option>
                 <#list productsDop as productDTO>
                     <option value="${productDTO.id}">${productDTO.productName}</option>
                 </#list>
             </select>
-            <div class="invalid-feedback">Не выбран!</div>
+            <div class="invalid-tooltip">
+                Не выбран!
+            </div>
         </div>
         <input type="hidden" value="SMALL" name="size">
         <input type="hidden" value="${order.id}" name="orderId">
