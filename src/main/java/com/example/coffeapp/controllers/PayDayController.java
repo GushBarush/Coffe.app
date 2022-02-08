@@ -5,6 +5,7 @@ import com.example.coffeapp.entity.payday.PayDay;
 import com.example.coffeapp.service.OrderService;
 import com.example.coffeapp.service.PayDayService;
 import com.example.coffeapp.service.ProductService;
+import com.example.coffeapp.service.exception.OrderActiveException;
 import com.example.coffeapp.telegram.MyCoffeeBot;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -55,10 +56,16 @@ public class PayDayController {
     }
 
     @PostMapping("/end")
-    public String endPayDay(@RequestParam(name = "id") Long id) {
-        PayDay payDay = payDayService.endPayDay(id);
+    public String endPayDay(@RequestParam(name = "id") Long id, Model model) {
 
-        myCoffeeBot.endPayDay(payDay);
+        try {
+            PayDay payDay = payDayService.endPayDay(id);
+            myCoffeeBot.endPayDay(payDay);
+        } catch (OrderActiveException e) {
+            model.addAttribute("exception", "Смена не может быть закрыта пока есть открытые ордеры");
+            return "redirect:/payday";
+        }
+
         return "redirect:/payday";
     }
 

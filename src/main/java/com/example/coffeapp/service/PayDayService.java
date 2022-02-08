@@ -1,15 +1,19 @@
 package com.example.coffeapp.service;
 
 import com.example.coffeapp.dto.payday.PayDayDTO;
+import com.example.coffeapp.entity.order.Order;
 import com.example.coffeapp.entity.payday.PayDay;
+import com.example.coffeapp.repository.OrderRepo;
 import com.example.coffeapp.repository.PayDayRepo;
 import com.example.coffeapp.repository.UserRepo;
+import com.example.coffeapp.service.exception.OrderActiveException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -17,6 +21,7 @@ public class PayDayService {
 
     final PayDayRepo payDayRepo;
     final UserRepo userRepo;
+    final OrderRepo orderRepo;
 
     public PayDayDTO getNewPayDay(String userNumber) {
         PayDay payDayCheck = payDayRepo.findByActive(true);
@@ -64,8 +69,17 @@ public class PayDayService {
         return payDayDTO;
     }
 
-    public PayDay endPayDay(Long id) {
+    public PayDay endPayDay(Long id) throws OrderActiveException {
         PayDay payDay = payDayRepo.getById(id);
+
+        List<Order> orderList = orderRepo.findAllByPayDay(payDay);
+
+        for(Order order : orderList) {
+            if (order.isActive()) {
+                throw new OrderActiveException("Попытка закрыть смену с активными чеками");
+            }
+        }
+
         LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("Europe/Moscow"));
 
         payDay.setCloseTime(localDateTime);

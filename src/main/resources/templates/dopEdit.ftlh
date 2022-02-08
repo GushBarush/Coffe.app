@@ -28,9 +28,6 @@
         <br/>
         <div class="form-file">
             <input type="file" class="from-file-input" name="file" id="customFile">
-            <label class="form-file-label" for="customFile">
-                <span class="from-file-text">Выбирете фото...</span>
-            </label>
         </div>
         <br/>
         <input type="hidden" value="${productPriceDTO.id}" name="productPriceId">

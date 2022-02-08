@@ -137,6 +137,7 @@ public class OrderService {
         Order order = orderRepo.getById(id);
 
         checkOrder(order);
+        order.getProductPriceList().clear();
 
         orderRepo.delete(order);
     }
@@ -185,7 +186,7 @@ public class OrderService {
         expense.setPayDay(payDay);
 
         payDay.setSumExpense(payDay.getSumExpense() + expense.getSum());
-        payDay.setSumAll(payDay.getSumAll() - expense.getSum());
+        payDay.setSumAll(payDay.getSumCash() - expense.getSum());
 
         payDayRepo.save(payDay);
         expenseRepo.save(expense);
@@ -195,7 +196,7 @@ public class OrderService {
         Expense expense = expenseRepo.getById(expenseId);
         PayDay payDay = payDayRepo.getById(expense.getPayDay().getId());
 
-        payDay.setSumAll(payDay.getSumAll() + expense.getSum());
+        payDay.setSumAll(payDay.getSumCash() + expense.getSum());
         payDay.setSumExpense(payDay.getSumExpense() - expense.getSum());
 
         payDayRepo.save(payDay);
