@@ -10,7 +10,7 @@
                     <div class="input-group">
                         ${message!}
                         <span class="input-group-text" id="addon-phone">+7</span>
-                        <input class="form-control" type="tel" aria-describedby="addon-phone" pattern="[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}" name="phoneNumber" placeholder="номер"/>
+                        <input class="form-control" type="tel" aria-describedby="addon-phone" maxlength="10" pattern="[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}" name="phoneNumber" placeholder="номер"/>
                     </div>
                 </div>
             </div>
