@@ -7,40 +7,36 @@
     <form action="/admin/product/edit" method="post" enctype="multipart/form-data">
         <div class="col-sm-5">
             <div class="input-group">
-                ${messageName!}
                 <span class="input-group-text" id="productName">Название товара</span>
-                <input class="form-control" type="text" value="${productDTO.productName!}" aria-describedby="productName" name="productName"/>
+                <input class="form-control" type="text" value="${productDTO.productName!}" aria-describedby="productName" name="productName" required/>
             </div>
         </div>
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
-                ${messageSmall!}
                 <span class="input-group-text" id="averagePrice">Цена Мал.</span>
-                <input class="form-control" type="number" value="${productPriceView.priceSmall!}" aria-describedby="averagePrice" name="smallPrice"/>
+                <input class="form-control" type="number" value="${productPriceView.priceSmall!}" aria-describedby="averagePrice" name="smallPrice" required/>
             </div>
         </div>
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
-                ${messageMiddle!}
                 <span class="input-group-text" id="middlePrice">Цена Ср.</span>
-                <input class="form-control" type="number" value="${productPriceView.priceMedium!}" aria-describedby="middlePrice" name="mediumPrice"/>
+                <input class="form-control" type="number" value="${productPriceView.priceMedium!}" aria-describedby="middlePrice" name="mediumPrice" required/>
             </div>
         </div>
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
-                ${messageBig!}
                 <span class="input-group-text" id="bigPrice">Цена Бол.</span>
-                <input class="form-control" type="number" value="${productPriceView.priceBig!}" aria-describedby="bigPrice" name="bigPrice"/>
+                <input class="form-control" type="number" value="${productPriceView.priceBig!}" aria-describedby="bigPrice" name="bigPrice" required/>
             </div>
         </div>
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="description">Описание</span>
-                <input class="form-control" type="text" value="${productDTO.description!}" aria-describedby="description" name="description"/>
+                <input class="form-control" type="text" value="${productDTO.description!}" aria-describedby="description" name="description" required/>
             </div>
         </div>
         <br/>
@@ -69,10 +65,11 @@
             </label>
         </div>
         <br/>
-        <div class="from-file">
-            <input type="file" class="from-file-input" name="file" id="customFile">
-            <label class="form-file-label" for="customFile">
-                <span class="from-file-text">Выбирете фото...</span>
+        <div class="form-file">
+            <input type="file" name="file" class="form-file-input" id="customFileDisabled" disabled>
+            <label class="form-file-label" for="customFileDisabled">
+                <span class="form-file-text">Выбирете фото...</span>
+                <span class="form-file-button">Выбрать</span>
             </label>
         </div>
         <br/>

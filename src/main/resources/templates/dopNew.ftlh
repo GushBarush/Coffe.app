@@ -7,31 +7,30 @@
     <form action="/admin/product/new_dop" method="post" enctype="multipart/form-data">
         <div class="col-sm-5">
             <div class="input-group">
-                ${messageName!}
                 <span class="input-group-text" id="productName">Название товара</span>
-                <input class="form-control" type="text" aria-describedby="productName" name="productName"/>
+                <input class="form-control" type="text" aria-describedby="productName" name="productName" required/>
             </div>
         </div>
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
-                ${messagePrice!}
                 <span class="input-group-text" id="price">Цена</span>
-                <input class="form-control" type="number" aria-describedby="price" name="price"/>
+                <input class="form-control" type="number" aria-describedby="price" name="price" required/>
             </div>
         </div>
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="description">Описание</span>
-                <input class="form-control" type="text" aria-describedby="description" name="description"/>
+                <input class="form-control" type="text" aria-describedby="description" name="description" required/>
             </div>
         </div>
         <br/>
-        <div class="from-file">
-            <input type="file" class="from-file-input" name="file" id="customFile">
-            <label class="form-file-label" for="customFile">
-                <span class="from-file-text">Выбирете фото...</span>
+        <div class="form-file">
+            <input type="file" name="file" class="form-file-input" id="customFileDisabled" disabled>
+            <label class="form-file-label" for="customFileDisabled">
+                <span class="form-file-text">Выбирете фото...</span>
+                <span class="form-file-button">Выбрать</span>
             </label>
         </div>
         <br/>
