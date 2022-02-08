@@ -4,44 +4,40 @@
     <p class="h3">Новый товар</p>
     <hr/>
     <br/>
-    <form class="row g-3 needs-validation" action="/admin/product/new" method="post" enctype="multipart/form-data" novalidate>
-        <div class="col-md-4 position-relative">
-            <label for="validationTooltip01" class="form-label">Название товара</label>
-            <input type="text" name="productName" class="form-control" id="validationTooltip01" required>
-            <div class="valid-tooltip">
-                Выглядит неплохо!
+    <form action="/admin/product/new" method="post" enctype="multipart/form-data">
+        <div class="col-sm-5">
+            <div class="input-group">
+                <span class="input-group-text" id="productName">Название товара</span>
+                <input class="form-control" type="text" aria-describedby="productName" name="productName" required/>
             </div>
         </div>
         <br/>
-        <div class="col-md-4 position-relative">
-            <label for="validationTooltip01" class="form-label">Название товара</label>
-            <input type="text" name="priceSmall" class="form-control" id="validationTooltip01" required>
-            <div class="valid-tooltip">
-                Выглядит неплохо!
+        <div class="col-sm-5">
+            <div class="input-group">
+                <span class="input-group-text" id="priceSmall">Цена Мал.</span>
+                <input class="form-control" type="number" aria-describedby="priceSmall" name="priceSmall" required/>
             </div>
         </div>
         <br/>
-        <div class="col-md-4 position-relative">
-            <label for="validationTooltip01" class="form-label">Название товара</label>
-            <input type="text" name="priceMiddle" class="form-control" id="validationTooltip01" required>
-            <div class="valid-tooltip">
-                Выглядит неплохо!
+        <div class="col-sm-5">
+            <div class="input-group">
+                <span class="input-group-text" id="priceMiddle">Цена Ср.</span>
+                <input class="form-control" type="number" aria-describedby="priceMiddle" name="priceMiddle" required/>
             </div>
         </div>
         <br/>
-        <div class="col-md-4 position-relative">
-            <label for="validationTooltip01" class="form-label">Название товара</label>
-            <input type="text" name="priceBig" class="form-control" id="validationTooltip01" required>
-            <div class="valid-tooltip">
-                Выглядит неплохо!
+        <div class="col-sm-5">
+            <div class="input-group">
+                ${messageBig!}
+                <span class="input-group-text" id="priceBig">Цена Бол.</span>
+                <input class="form-control" type="number" aria-describedby="priceBig" name="priceBig" required/>
             </div>
         </div>
         <br/>
-        <div class="col-md-4 position-relative">
-            <label for="validationTooltip01" class="form-label">Название товара</label>
-            <input type="text" name="description" class="form-control" id="validationTooltip01" required>
-            <div class="valid-tooltip">
-                Выглядит неплохо!
+        <div class="col-sm-5">
+            <div class="input-group">
+                <span class="input-group-text" id="description">Описание</span>
+                <input class="form-control" type="text" aria-describedby="description" name="description" required/>
             </div>
         </div>
         <br/>
