@@ -1,19 +1,21 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
-    <script src="/static/orderValidation.js"></script>
 
     <p class="h2">Новый заказ</p>
 
     <p class="h3">для: ${order.user.name}</p>
 
-    <form name="orderForm" action="/order/addProduct" onsubmit="return orderForm()" method="post">
-        <select class="form-select" aria-label="Default select example" name="productId">
-            <option selected>выберете</option>
-            <#list products as productDTO>
-                <option value="${productDTO.id}">${productDTO.productName}</option>
-            </#list>
-        </select>
+    <form action="/order/addProduct" method="post">
+        <div class="mb-3">
+            <select class="form-select" required aria-label="select example" name="productId">
+                <option selected>выберете</option>
+                <#list products as productDTO>
+                    <option value="${productDTO.id}">${productDTO.productName}</option>
+                </#list>
+            </select>
+            <div class="invalid-feedback">Не выбран!</div>
+        </div>
         <div class="form-check">
             <input class="form-check-input" value="SMALL" type="radio" name="size" id="flexRadioDefault1" checked>
             <label class="form-check-label" for="flexRadioDefault1">
@@ -40,12 +42,15 @@
     <hr/>
     <br/>
     <form action="/order/addProduct" method="post">
-        <select class="form-select" aria-label="Default select example" name="productId">
-            <option selected>выберете</option>
-            <#list productsDop as productDTO>
-                <option value="${productDTO.id}">${productDTO.productName}</option>
-            </#list>
-        </select>
+        <div class="mb-3">
+            <select class="form-select" required aria-label="select example" name="productId">
+                <option selected>выберете</option>
+                <#list productsDop as productDTO>
+                    <option value="${productDTO.id}">${productDTO.productName}</option>
+                </#list>
+            </select>
+            <div class="invalid-feedback">Не выбран!</div>
+        </div>
         <input type="hidden" value="SMALL" name="size">
         <input type="hidden" value="${order.id}" name="orderId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
