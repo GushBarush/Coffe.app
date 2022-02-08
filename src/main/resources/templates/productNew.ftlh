@@ -28,7 +28,6 @@
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
-                ${messageBig!}
                 <span class="input-group-text" id="priceBig">Цена Бол.</span>
                 <input class="form-control" type="number" aria-describedby="priceBig" name="priceBig" required/>
             </div>
@@ -67,10 +66,9 @@
         </div>
         <br/>
         <div class="form-file">
-            <input type="file" name="file" class="form-file-input" id="customFileDisabled" disabled>
-            <label class="form-file-label" for="customFileDisabled">
-                <span class="form-file-text">Выбирете фото...</span>
-                <span class="form-file-button">Выбрать</span>
+            <input type="file" class="from-file-input" name="file" id="customFile">
+            <label class="form-file-label" for="customFile">
+                <span class="from-file-text">Выбирете фото...</span>
             </label>
         </div>
         <br/>
