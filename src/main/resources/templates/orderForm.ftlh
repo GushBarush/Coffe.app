@@ -7,14 +7,17 @@
     <p class="h3">для: ${order.user.name}</p>
 
     <form action="/order/addProduct" method="post">
-        <div class="mb-3">
-            <select class="form-select" required aria-label="select example" name="productId">
-                <option selected>выберете</option>
+        <div class="col-md-3 position-relative">
+            <label for="validationTooltip04" class="form-label">State</label>
+            <select name="productId" class="form-select" id="validationTooltip04" required>
+                <option selected disabled value="">Выберете...</option>
                 <#list products as productDTO>
                     <option value="${productDTO.id}">${productDTO.productName}</option>
                 </#list>
             </select>
-            <div class="invalid-feedback">Не выбран!</div>
+            <div class="invalid-tooltip">
+                Не выбран!
+            </div>
         </div>
         <div class="form-check">
             <input class="form-check-input" value="SMALL" type="radio" name="size" id="flexRadioDefault1" checked>
