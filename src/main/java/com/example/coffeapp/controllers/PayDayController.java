@@ -10,10 +10,8 @@ import com.example.coffeapp.telegram.MyCoffeeBot;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
@@ -48,7 +46,8 @@ public class PayDayController {
     }
 
     @PostMapping
-    public String newPayDay(Principal principal) {
+    public String newPayDay(Principal principal,
+                            @ModelAttribute("exception") String message) {
         PayDayDTO payDayDTO = payDayService.getNewPayDay(principal.getName());
 
         myCoffeeBot.openPayDay(payDayDTO);
@@ -56,13 +55,13 @@ public class PayDayController {
     }
 
     @PostMapping("/end")
-    public String endPayDay(@RequestParam(name = "id") Long id, Model model) {
+    public String endPayDay(@RequestParam(name = "id") Long id, RedirectAttributes redirectAttributes) {
 
         try {
             PayDay payDay = payDayService.endPayDay(id);
             myCoffeeBot.endPayDay(payDay);
         } catch (OrderActiveException e) {
-            model.addAttribute("exception", "Смена не может быть закрыта пока есть открытые ордеры");
+            redirectAttributes.addFlashAttribute("exception", e.getMessage());
             return "redirect:/payday";
         }
 
