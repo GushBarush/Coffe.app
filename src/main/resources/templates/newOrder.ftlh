@@ -18,6 +18,7 @@
         <tr>
             <th>Имя</th>
             <th>Номер</th>
+            <th>Тек/Бесп</th>
             <th>Выбрать</th>
         </tr>
         </thead>
@@ -26,6 +27,7 @@
             <tr>
                 <td>${user.phoneNumber!}</td>
                 <td>${user.name!}</td>
+                <td>${user.coffee!}/${user.happyCoffee!}</td>
                 <td>
                     <form method="post" action="/order">
                         <input type="hidden" value="false" name="isFree">

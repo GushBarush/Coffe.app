@@ -1,11 +1,13 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
+    <script src="/static/orderValidation.js"></script>
+
     <p class="h2">Новый заказ</p>
 
     <p class="h3">для: ${order.user.name}</p>
 
-    <form action="/order/addProduct" method="post">
+    <form name="orderForm" action="/order/addProduct" onsubmit="return orderForm()" method="post">
         <select class="form-select" aria-label="Default select example" name="productId">
             <option selected>выберете</option>
             <#list products as productDTO>
