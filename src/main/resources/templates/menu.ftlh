@@ -114,7 +114,7 @@
                         <p class="card-text">${product.description!}</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item list-group-item-action list-group-item-dark">280мл. - ${product.priceSmall} р.</li>
+                        <li class="list-group-item list-group-item-action list-group-item-dark">${product.priceSmall} р.</li>
                     </ul>
                 </div>
             </div>

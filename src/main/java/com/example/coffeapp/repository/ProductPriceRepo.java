@@ -11,7 +11,5 @@ public interface ProductPriceRepo extends JpaRepository<ProductPrice, Long> {
 
     List<ProductPrice> findAllByActiveAndProduct(Boolean b, Product product);
 
-    ProductPrice findAllByProductAndProductSize(Product product, ProductSize productSize);
-
     ProductPrice findByActiveAndProductAndProductSize(Boolean b,Product product, ProductSize productSize);
 }

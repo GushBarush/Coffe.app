@@ -95,7 +95,7 @@ public class OrderService {
     public OrderDTO updateOrder(Long orderId, Long productId, String size) {
         Order orderEntity = orderRepo.getById(orderId);
         Product product = productRepo.getById(productId);
-        ProductPrice productPrice = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName(size));
+        ProductPrice productPrice = productPriceRepo.findByActiveAndProductAndProductSize(true, product, productSizeRepo.findBySizeName(size));
         ModelMapper mapper = new ModelMapper();
         OrderDTO orderDTO;
 

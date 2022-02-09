@@ -28,6 +28,7 @@
         <br/>
         <#if productDTO.dop>
             <input type="hidden" value="true" name="dop">
+            <input type="hidden" value="dop" name="category">
             <#else>
             <div class="col-sm-5">
                 <div class="input-group">
