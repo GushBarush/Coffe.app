@@ -77,6 +77,7 @@ public class ProductService {
         productView.setProductName(product.getProductName());
         productView.setDescription(product.getDescription());
         productView.setCategory(product.getCategory());
+        productView.setDop(product.isDop());
         if (product.getProductImage() != null) {
             productView.setImageId(product.getProductImage().getId());
         }

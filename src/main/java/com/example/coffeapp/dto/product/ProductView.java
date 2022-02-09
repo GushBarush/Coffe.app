@@ -25,5 +25,7 @@ public class ProductView {
 
     private Double priceBig;
 
+    private Boolean dop;
+
     private Long imageId;
 }

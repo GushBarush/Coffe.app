@@ -26,7 +26,7 @@
             </div>
         </div>
         <br/>
-        <#if dop.booleanValue() == true>
+        <#if dop??>
             <input type="hidden" value="true" name="dop">
             <input type="hidden" value="dop" name="category">
         <#else>
