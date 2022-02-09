@@ -26,10 +26,10 @@
             </div>
         </div>
         <br/>
-        <#if dop??>
+        <#if dop>
             <input type="hidden" value="true" name="dop">
             <input type="hidden" value="dop" name="category">
-        <#else>
+            <#else>
             <div class="col-sm-5">
                 <div class="input-group">
                     <span class="input-group-text" id="priceMiddle">Цена Ср.</span>

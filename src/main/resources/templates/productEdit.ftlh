@@ -26,7 +26,7 @@
             </div>
         </div>
         <br/>
-        <#if productDTO.dop??>
+        <#if productDTO.dop>
             <input type="hidden" value="true" name="dop">
             <#else>
             <div class="col-sm-5">
