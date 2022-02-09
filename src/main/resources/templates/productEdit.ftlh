@@ -12,13 +12,13 @@
             </div>
         </div>
         <br/>
-        <br/>
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="description">Описание</span>
                 <input class="form-control" type="text" value="${productDTO.description!}" aria-describedby="description" name="description" required/>
             </div>
         </div>
+        <br/>
         <div class="col-sm-5">
             <div class="input-group">
                 <span class="input-group-text" id="averagePrice">Цена Мал.</span>

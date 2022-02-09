@@ -175,29 +175,11 @@ public class ProductService {
 
         Product productSaved = productRepo.save(product);
 
-        List<ProductPrice> productPriceList = productPriceRepo.findAllByActiveAndProduct(true, product);
+        checkProductPrice(productSaved, "SMALL", priceSmall);
 
-        for (ProductPrice productPrice : productPriceList) {
-            switch (productPrice.getProductSize().getSizeName()) {
-                case "SMALL":
-                    if(!Objects.equals(productPrice.getPrice(), priceSmall)) {
-                        productPrice.setActive(false);
-                        productPriceRepo.save(productPrice);
-                        addNewProductPrice(productSaved, "SMALL", priceSmall);
-                    }
-                case "MEDIUM":
-                    if(!Objects.equals(productPrice.getPrice(), priceMedium)) {
-                        productPrice.setActive(false);
-                        productPriceRepo.save(productPrice);
-                        addNewProductPrice(productSaved, "MEDIUM", priceMedium);
-                    }
-                case "BIG":
-                    if(!Objects.equals(productPrice.getPrice(), priceBig)) {
-                        productPrice.setActive(false);
-                        productPriceRepo.save(productPrice);
-                        addNewProductPrice(productSaved, "BIG", priceBig);
-                    }
-            }
+        if (!productSaved.isDop()) {
+            checkProductPrice(productSaved, "MEDIUM", priceMedium);
+            checkProductPrice(productSaved, "BIG", priceBig);
         }
     }
 
@@ -222,5 +204,16 @@ public class ProductService {
         productPrice.setActive(true);
 
         productPriceRepo.save(productPrice);
+    }
+
+    private void checkProductPrice(Product product, String size, Double price) {
+        ProductPrice productPrice = productPriceRepo
+                .findByActiveAndProductAndProductSize(true, product, productSizeRepo.findBySizeName(size));
+
+        if (!Objects.equals(productPrice.getPrice(), price)) {
+            productPrice.setActive(false);
+            productPriceRepo.save(productPrice);
+            addNewProductPrice(product, size, price);
+        }
     }
 }
