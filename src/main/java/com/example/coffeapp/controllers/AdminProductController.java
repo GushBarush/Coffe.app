@@ -29,47 +29,30 @@ public class AdminProductController {
     }
 
     @GetMapping("/new")
-    public String productNew(@RequestParam(name = "dop") Boolean dop) {
-        if(dop) {
-            return "dopNew";
-        }
+    public String productNew(@RequestParam(name = "dop") Boolean dop, Model model) {
+
+        model.addAttribute("dop", dop);
 
         return "productNew";
     }
 
-    @PostMapping("/new_dop")
-    public String saveNewDopProduct(@RequestParam(name = "productName") String productName,
-                                 @RequestParam(name = "price") Double price,
-                                 @RequestParam(name = "description") String description,
-                                    @RequestParam(name = "file") MultipartFile file) throws IOException {
-
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setDop(true);
-        productDTO.setCategory("dop");
-        productDTO.setProductName(productName);
-        productDTO.setDescription(description);
-
-        productService.saveNewDopProduct(productDTO, price, file);
-
-        return "redirect:/admin/product";
-    }
-
     @PostMapping("/new")
     public String saveNewProduct(@RequestParam(name = "productName") String productName,
-                                    @RequestParam(name = "priceSmall") Double priceSmall,
-                                    @RequestParam(name = "priceMiddle") Double priceMiddle,
-                                    @RequestParam(name = "priceBig") Double priceBig,
-                                    @RequestParam(name = "category") String category,
-                                    @RequestParam(name = "description") String description,
-                                    @RequestParam(name = "file") MultipartFile file) throws IOException {
+                                 @RequestParam(name = "description") String description,
+                                 @RequestParam(name = "category") String category,
+                                 @RequestParam(name = "dop") Boolean isDop,
+                                 @RequestParam(name = "priceSmall") Double priceSmall,
+                                 @RequestParam(name = "priceMedium", required = false) Double priceMedium,
+                                 @RequestParam(name = "priceBig", required = false) Double priceBig,
+                                 @RequestParam(name = "file", required = false) MultipartFile file) throws IOException {
 
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setDop(false);
-        productDTO.setCategory(category);
-        productDTO.setProductName(productName);
-        productDTO.setDescription(description);
-
-        productService.saveNewProduct(productDTO, priceSmall, priceMiddle, priceBig, file);
+        if (isDop) {
+            productService.saveNewDopProduct(productName, description, category,
+                    priceSmall, file);
+        } else {
+            productService.saveNewProduct(productName, description, category,
+                    priceSmall, priceMedium, priceBig, file);
+        }
 
         return "redirect:/admin/product";
     }
@@ -84,44 +67,25 @@ public class AdminProductController {
 
     @GetMapping("/edit")
     public String getProductInfo(@RequestParam(name = "productId") Long productId, Model model) {
-        ProductDTO productDTO = productService.getProductDTO(productId);
+        ProductView productView = productService.getProductView(productId);
 
-        model.addAttribute("productDTO", productDTO);
-
-        if (productDTO.isDop()) {
-            model.addAttribute("productPriceDTO", productService.getProductPriceDTO(productId));
-            return "dopEdit";
-        } else {
-            model.addAttribute("productPriceView", productService.getProductPriceView(productId));
-        }
+        model.addAttribute("productDTO", productView);
 
         return "productEdit";
-    }
-
-    @PostMapping("/edit_dop")
-    public String productDopUpdate(@RequestParam(name = "productId") Long productId,
-                                @RequestParam(name = "productPriceId") Long productPriceId,
-                                @RequestParam(name = "productName") String productName,
-                                @RequestParam(name = "price") Double price,
-                                @RequestParam(name = "description") String description,
-                                @RequestParam(name = "file") MultipartFile file, Model model) throws IOException {
-
-        productService.updateDopProduct(productId, productPriceId, productName, price, description, file);
-
-        return "redirect:/admin/product";
     }
 
     @PostMapping("/edit")
     public String productUpdate(@RequestParam(name = "productId") Long productId,
                                 @RequestParam(name = "category") String category,
-                                @RequestParam(name = "productName") String productName,
-                                @RequestParam(name = "smallPrice") Double priceSmall,
-                                @RequestParam(name = "mediumPrice") Double priceMiddle,
-                                @RequestParam(name = "bigPrice") Double priceBig,
                                 @RequestParam(name = "description") String description,
-                                @RequestParam(name = "file", required = false) MultipartFile file, Model model) throws IOException {
+                                @RequestParam(name = "productName") String productName,
+                                @RequestParam(name = "priceSmall") Double priceSmall,
+                                @RequestParam(name = "priceMedium", required = false, defaultValue = "0.0") Double priceMedium,
+                                @RequestParam(name = "priceBig", required = false, defaultValue = "0.0") Double priceBig,
+                                @RequestParam(name = "file", required = false) MultipartFile file) throws IOException {
 
-        productService.updateProduct(productId, productName, priceSmall, priceMiddle, priceBig, category, description, file);
+            productService.upgradeProduct(productId, category, description,
+                    productName, priceSmall, priceMedium, priceBig, file);
 
         return "redirect:/admin/product";
     }

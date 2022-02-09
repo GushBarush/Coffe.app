@@ -1,7 +1,6 @@
 package com.example.coffeapp.service;
 
 import com.example.coffeapp.dto.product.ProductDTO;
-import com.example.coffeapp.dto.product.ProductPriceDTO;
 import com.example.coffeapp.dto.product.ProductView;
 import com.example.coffeapp.entity.product.Product;
 import com.example.coffeapp.entity.product.ProductImage;
@@ -18,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +29,7 @@ public class ProductService {
     final ProductImageRepo productImageRepo;
 
     public List<ProductDTO> allProduct(){
-        List<Product> productsEntity = productRepo.findAll();
+        List<Product> productsEntity = productRepo.findAllByActiveTrue();
         List<ProductDTO> productDTOS = new ArrayList<>();
         ModelMapper mapper = new ModelMapper();
 
@@ -42,9 +42,9 @@ public class ProductService {
     public List<ProductDTO> allProduct(Boolean dop){
         List<Product> productsEntity;
         if (dop) {
-            productsEntity = productRepo.findAllByCategory("dop");
+            productsEntity = productRepo.findAllActiveTrueAndByCategory("dop");
         } else {
-            productsEntity = productRepo.findAllByCategoryIsNot("dop");
+            productsEntity = productRepo.findAllByActiveTrueAndCategoryIsNot("dop");
         }
 
         List<ProductDTO> productDTOS = new ArrayList<>();
@@ -58,81 +58,55 @@ public class ProductService {
 
     public List<ProductView> getProductsView(String category) {
         List<ProductView> productViews = new ArrayList<>();
-        List<Product> products = productRepo.findAllByCategory(category);
+        List<Product> products = productRepo.findAllActiveTrueAndByCategory(category);
 
         for (Product product : products) {
-            ProductView productView = new ProductView();
-
-            productView.setId(product.getId());
-            productView.setProductName(product.getProductName());
-            productView.setDescription(product.getDescription());
-            productView.setCategory(product.getCategory());
-            if (product.getProductImage() != null) {
-                productView.setImageId(product.getProductImage().getId());
-            }
-
-            if(product.getCategory().equals("dop")) {
-                productView.setPriceSmall(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL")).getPrice());
-            } else {
-                productView.setPriceSmall(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL")).getPrice());
-                productView.setPriceMedium(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("MEDIUM")).getPrice());
-                productView.setPriceBig(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("BIG")).getPrice());
-            }
+            ProductView productView = getProductView(product.getId());
             productViews.add(productView);
         }
 
         return productViews;
     }
 
-    public ProductDTO getProductDTO(Long productId) {
-        ModelMapper mapper = new ModelMapper();
-        Product product = productRepo.findById(productId).orElse(new Product());
-
-        return mapper.map(product, ProductDTO.class);
-    }
-
-    public ProductPriceDTO getProductPriceDTO(Long productId) {
-        ModelMapper mapper = new ModelMapper();
-        Product product = productRepo.findById(productId).orElse(new Product());
-
-        return mapper.map(productPriceRepo.findByProduct(product), ProductPriceDTO.class);
-    }
-
-    public void updateDopProduct(Long productId, Long productPriceId, String productName,
-                              Double price, String description, MultipartFile file) throws IOException {
-
+    public ProductView getProductView(Long productId) {
         Product product = productRepo.getById(productId);
-        ProductPrice productPrice = productPriceRepo.getById(productPriceId);
-        ProductImage productImage;
 
-        if (file.getSize() != 0) {
-            productImageRepo.delete(product.getProductImage());
-            productImage = toImageEntity(file);
-            product.setProductImage(productImage);
+        ProductView productView = new ProductView();
+
+        productView.setId(product.getId());
+        productView.setProductName(product.getProductName());
+        productView.setDescription(product.getDescription());
+        productView.setCategory(product.getCategory());
+        if (product.getProductImage() != null) {
+            productView.setImageId(product.getProductImage().getId());
         }
 
-        product.setProductName(productName);
-        product.setDescription(description);
+        if(product.getCategory().equals("dop")) {
+            productView.setPriceSmall(productPriceRepo
+                    .findByActiveTrueAndProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL"))
+                    .getPrice());
+        } else {
+            productView.setPriceSmall(productPriceRepo
+                    .findByActiveTrueAndProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL"))
+                    .getPrice());
+            productView.setPriceMedium(productPriceRepo
+                    .findByActiveTrueAndProductAndProductSize(product, productSizeRepo.findBySizeName("MEDIUM"))
+                    .getPrice());
+            productView.setPriceBig(productPriceRepo
+                    .findByActiveTrueAndProductAndProductSize(product, productSizeRepo.findBySizeName("BIG"))
+                    .getPrice());
+        }
 
-        productPrice.setPrice(price);
-        productPrice.setProduct(productRepo.save(product));
-
-        productPriceRepo.save(productPrice);
+        return productView;
     }
 
-    public void updateProduct(Long productId, String productName,
-                              Double smallPrice, Double mediumPrice,
-                              Double bigPrice, String category,
-                              String description, MultipartFile file) throws IOException {
+    public void saveNewDopProduct(String productName, String description, String category,
+                                  Double priceSmall, MultipartFile file) throws IOException {
 
-        Product product = productRepo.getById(productId);
-        ProductPrice productPriceSmall = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL"));
-        ProductPrice productPriceMedium = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("MEDIUM"));
-        ProductPrice productPriceBig = productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("BIG"));
+        Product product = new Product();
         ProductImage productImage;
 
-        if (file.getSize() != 0) {
-            productImageRepo.delete(product.getProductImage());
+        if(file.getSize() != 0) {
             productImage = toImageEntity(file);
             product.setProductImage(productImage);
         }
@@ -140,71 +114,90 @@ public class ProductService {
         product.setProductName(productName);
         product.setDescription(description);
         product.setCategory(category);
+        product.setActive(true);
+        product.setDop(true);
 
-        productPriceSmall.setPrice(smallPrice);
-        productPriceMedium.setPrice(mediumPrice);
-        productPriceBig.setPrice(bigPrice);
+        addNewProductPrice(productRepo.save(product), "SMALL", priceSmall);
+    }
+
+    public void saveNewProduct(String productName, String description, String category,
+                               Double priceSmall, Double priceMedium, Double priceBig, MultipartFile file) throws IOException {
+
+        Product product = new Product();
+        ProductImage productImage;
+
+        if(file.getSize() != 0) {
+            productImage = toImageEntity(file);
+            product.setProductImage(productImage);
+        }
+
+        product.setProductName(productName);
+        product.setDescription(description);
+        product.setCategory(category);
+        product.setActive(true);
+        product.setDop(false);
 
         Product productSaved = productRepo.save(product);
 
-        productPriceSmall.setProduct(productSaved);
-        productPriceMedium.setProduct(productSaved);
-        productPriceBig.setProduct(productSaved);
-
-        productPriceRepo.save(productPriceSmall);
-        productPriceRepo.save(productPriceMedium);
-        productPriceRepo.save(productPriceBig);
+        addNewProductPrice(productSaved, "SMALL", priceSmall);
+        addNewProductPrice(productSaved, "MEDIUM", priceMedium);
+        addNewProductPrice(productSaved, "BIG", priceBig);
     }
 
-    public void saveNewDopProduct(ProductDTO productDTO, Double price, MultipartFile file) throws IOException {
-        ModelMapper mapper = new ModelMapper();
-        Product product = mapper.map(productDTO, Product.class);
-        ProductPrice productPrice = new ProductPrice();
-        ProductImage productImage;
+    public void productDelete(Long productId) {
+        Product product = productRepo.getById(productId);
+        List<ProductPrice> productPrices = productPriceRepo.findAllByActiveTrueAndProduct(product);
+
+        for (ProductPrice productPrice : productPrices) {
+            productPrice.setActive(false);
+            productPriceRepo.save(productPrice);
+        }
+
+        product.setActive(false);
+
+        productRepo.save(product);
+    }
+
+    public void upgradeProduct(Long productId, String category, String description, String productName,
+                                  Double priceSmall, Double priceMedium, Double priceBig, MultipartFile file) throws IOException {
+
+        Product product = productRepo.getById(productId);
+
+        product.setCategory(category);
+        product.setDescription(description);
+        product.setProductName(productName);
 
         if(file.getSize() != 0) {
-            productImage = toImageEntity(file);
+            ProductImage productImage = toImageEntity(file);
             product.setProductImage(productImage);
         }
 
-        productPrice.setProduct(productRepo.save(product));
-        productPrice.setProductSize(productSizeRepo.findBySizeName("SMALL"));
-        productPrice.setPrice(price);
+        Product productSaved = productRepo.save(product);
 
-        productPriceRepo.save(productPrice);
-    }
+        List<ProductPrice> productPriceList = productPriceRepo.findAllByActiveTrueAndProduct(product);
 
-    public void saveNewProduct(ProductDTO productDTO, Double priceSmall,
-                               Double priceMiddle, Double priceBig,
-                               MultipartFile file) throws IOException {
-
-        ModelMapper mapper = new ModelMapper();
-        Product product = productRepo.save(mapper.map(productDTO, Product.class));
-        ProductPrice productPriceSmall = new ProductPrice();
-        ProductPrice productPriceMiddle = new ProductPrice();
-        ProductPrice productPriceBig = new ProductPrice();
-        ProductImage productImage;
-
-        productPriceSmall.setProduct(product);
-        productPriceMiddle.setProduct(product);
-        productPriceBig.setProduct(product);
-
-        productPriceSmall.setPrice(priceSmall);
-        productPriceMiddle.setPrice(priceMiddle);
-        productPriceBig.setPrice(priceBig);
-
-        productPriceSmall.setProductSize(productSizeRepo.findBySizeName("SMALL"));
-        productPriceMiddle.setProductSize(productSizeRepo.findBySizeName("MEDIUM"));
-        productPriceBig.setProductSize(productSizeRepo.findBySizeName("BIG"));
-
-        if(file.getSize() != 0) {
-            productImage = toImageEntity(file);
-            product.setProductImage(productImage);
+        for (ProductPrice productPrice : productPriceList) {
+            switch (productPrice.getProductSize().getSizeName()) {
+                case "SMALL":
+                    if(!Objects.equals(productPrice.getPrice(), priceSmall)) {
+                        productPrice.setActive(false);
+                        productPriceRepo.save(productPrice);
+                        addNewProductPrice(productSaved, "SMALL", priceSmall);
+                    }
+                case "MEDIUM":
+                    if(!Objects.equals(productPrice.getPrice(), priceMedium)) {
+                        productPrice.setActive(false);
+                        productPriceRepo.save(productPrice);
+                        addNewProductPrice(productSaved, "MEDIUM", priceMedium);
+                    }
+                case "BIG":
+                    if(!Objects.equals(productPrice.getPrice(), priceBig)) {
+                        productPrice.setActive(false);
+                        productPriceRepo.save(productPrice);
+                        addNewProductPrice(productSaved, "BIG", priceBig);
+                    }
+            }
         }
-
-        productPriceRepo.save(productPriceSmall);
-        productPriceRepo.save(productPriceMiddle);
-        productPriceRepo.save(productPriceBig);
     }
 
     private ProductImage toImageEntity(MultipartFile file) throws IOException {
@@ -219,27 +212,14 @@ public class ProductService {
         return productImage;
     }
 
-    public void productDelete(Long productId) {
-        Product product = productRepo.getById(productId);
-        List<ProductPrice> productPrices = productPriceRepo.findAllByProduct(product);
+    private void addNewProductPrice(Product product, String size, Double price) {
+        ProductPrice productPrice = new ProductPrice();
 
-        productPriceRepo.deleteAll(productPrices);
-        productRepo.delete(product);
-    }
+        productPrice.setProduct(product);
+        productPrice.setPrice(price);
+        productPrice.setProductSize(productSizeRepo.findBySizeName(size));
+        productPrice.setActive(true);
 
-    public ProductView getProductPriceView(Long productId) {
-        Product product = productRepo.getById(productId);
-        ProductView productView = new ProductView();
-
-        productView.setProductName(product.getProductName());
-        productView.setDescription(product.getDescription());
-        productView.setCategory(product.getCategory());
-        productView.setImageId(product.getProductImage().getId());
-
-        productView.setPriceSmall(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL")).getPrice());
-        productView.setPriceMedium(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("MEDIUM")).getPrice());
-        productView.setPriceBig(productPriceRepo.findAllByProductAndProductSize(product, productSizeRepo.findBySizeName("BIG")).getPrice());
-
-        return productView;
+        productPriceRepo.save(productPrice);
     }
 }

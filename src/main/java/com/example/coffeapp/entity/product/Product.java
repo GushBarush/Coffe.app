@@ -26,6 +26,9 @@ public class Product implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "active", nullable = false)
+    private Boolean active;
+
     @Column(name = "is_dop", nullable = false)
     private boolean isDop;
 

@@ -12,26 +12,6 @@
             </div>
         </div>
         <br/>
-        <div class="col-sm-5">
-            <div class="input-group">
-                <span class="input-group-text" id="averagePrice">Цена Мал.</span>
-                <input class="form-control" type="number" value="${productPriceView.priceSmall!}" aria-describedby="averagePrice" name="smallPrice" required/>
-            </div>
-        </div>
-        <br/>
-        <div class="col-sm-5">
-            <div class="input-group">
-                <span class="input-group-text" id="middlePrice">Цена Ср.</span>
-                <input class="form-control" type="number" value="${productPriceView.priceMedium!}" aria-describedby="middlePrice" name="mediumPrice" required/>
-            </div>
-        </div>
-        <br/>
-        <div class="col-sm-5">
-            <div class="input-group">
-                <span class="input-group-text" id="bigPrice">Цена Бол.</span>
-                <input class="form-control" type="number" value="${productPriceView.priceBig!}" aria-describedby="bigPrice" name="bigPrice" required/>
-            </div>
-        </div>
         <br/>
         <div class="col-sm-5">
             <div class="input-group">
@@ -39,32 +19,57 @@
                 <input class="form-control" type="text" value="${productDTO.description!}" aria-describedby="description" name="description" required/>
             </div>
         </div>
-        <br/>
-        <div class="form-check">
-            <input class="form-check-input" value="classic" type="radio" name="category" id="flexRadioDefault1" checked>
-            <label class="form-check-label" for="flexRadioDefault1">
-                Класический кофе
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" value="raf" type="radio" name="category" id="flexRadioDefault2" checked>
-            <label class="form-check-label" for="flexRadioDefault2">
-                Raf Кофе
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" value="hot" type="radio" name="category" id="flexRadioDefault3" checked>
-            <label class="form-check-label" for="flexRadioDefault3">
-                Согревающие напитки
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" value="season" type="radio" name="category" id="flexRadioDefault4" checked>
-            <label class="form-check-label" for="flexRadioDefault4">
-                Сезонные Напитки
-            </label>
+        <div class="col-sm-5">
+            <div class="input-group">
+                <span class="input-group-text" id="averagePrice">Цена Мал.</span>
+                <input class="form-control" type="number" value="${productDTO.priceSmall!}" aria-describedby="averagePrice" name="priceSmall" required/>
+            </div>
         </div>
         <br/>
+        <#if productDTO.dop??>
+            <input type="hidden" value="true" name="dop">
+            <#else>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <span class="input-group-text" id="middlePrice">Цена Ср.</span>
+                    <input class="form-control" type="number" value="${productDTO.priceMedium!}" aria-describedby="middlePrice" name="priceMedium" required/>
+                </div>
+            </div>
+            <br/>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <span class="input-group-text" id="bigPrice">Цена Бол.</span>
+                    <input class="form-control" type="number" value="${productDTO.priceBig!}" aria-describedby="bigPrice" name="priceBig" required/>
+                </div>
+            </div>
+            <br/>
+            <div class="form-check">
+                <input class="form-check-input" value="classic" type="radio" name="category" id="flexRadioDefault1" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Класический кофе
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" value="raf" type="radio" name="category" id="flexRadioDefault2" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Raf Кофе
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" value="hot" type="radio" name="category" id="flexRadioDefault3" checked>
+                <label class="form-check-label" for="flexRadioDefault3">
+                    Согревающие напитки
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" value="season" type="radio" name="category" id="flexRadioDefault4" checked>
+                <label class="form-check-label" for="flexRadioDefault4">
+                    Сезонные Напитки
+                </label>
+            </div>
+            <br/>
+            <input type="hidden" value="false" name="dop">
+        </#if>
         <div class="form-file">
             <input type="file" class="from-file-input" name="file" id="customFile">
         </div>

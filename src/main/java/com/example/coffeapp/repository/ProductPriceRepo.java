@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ProductPriceRepo extends JpaRepository<ProductPrice, Long> {
 
-    List<ProductPrice> findAllByProduct(Product product);
-
-    ProductPrice findByProduct(Product product);
+    List<ProductPrice> findAllByActiveTrueAndProduct(Product product);
 
     ProductPrice findAllByProductAndProductSize(Product product, ProductSize productSize);
+
+    ProductPrice findByActiveTrueAndProductAndProductSize(Product product, ProductSize productSize);
 }

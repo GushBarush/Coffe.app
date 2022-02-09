@@ -24,6 +24,9 @@ public class ProductPrice implements Serializable {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @Column(name = "active", nullable = false)
+    private Boolean active;
+
     @ManyToOne
     @JoinColumn(name = "size_id")
     private ProductSize productSize;

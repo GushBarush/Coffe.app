@@ -21,6 +21,8 @@ public class ProductDTO implements Serializable {
 
     private String description;
 
+    private Boolean active;
+
     private String imgPng;
 
     private boolean isDop;

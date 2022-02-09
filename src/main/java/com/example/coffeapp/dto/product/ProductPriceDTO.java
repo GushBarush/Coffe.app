@@ -17,6 +17,8 @@ public class ProductPriceDTO implements Serializable {
 
     private Double price;
 
+    private Boolean active;
+
     private ProductSizeDTO productSize;
 
     private ProductDTO product;
