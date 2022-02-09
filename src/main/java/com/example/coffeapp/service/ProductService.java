@@ -42,7 +42,7 @@ public class ProductService {
     public List<ProductDTO> allProduct(Boolean dop){
         List<Product> productsEntity;
         if (dop) {
-            productsEntity = productRepo.findAllActiveAndByCategory(true, "dop");
+            productsEntity = productRepo.findAllByActiveAndByCategory(true, "dop");
         } else {
             productsEntity = productRepo.findAllByActiveAndCategoryIsNot(true, "dop");
         }
@@ -58,7 +58,7 @@ public class ProductService {
 
     public List<ProductView> getProductsView(String category) {
         List<ProductView> productViews = new ArrayList<>();
-        List<Product> products = productRepo.findAllActiveAndByCategory(true, category);
+        List<Product> products = productRepo.findAllByActiveAndByCategory(true, category);
 
         for (Product product : products) {
             ProductView productView = getProductView(product.getId());
