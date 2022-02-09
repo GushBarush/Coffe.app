@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ProductRepo extends JpaRepository<Product, Long> {
 
-    List<Product> findAllActiveTrueAndByCategory(String category);
+    List<Product> findAllActiveAndByCategory(Boolean b, String category);
 
-    List<Product> findAllByActiveTrueAndCategoryIsNot(String category);
+    List<Product> findAllByActiveAndCategoryIsNot(Boolean b, String category);
 
-    List<Product> findAllByActiveTrue();
+    List<Product> findAllByActive(Boolean b);
 }

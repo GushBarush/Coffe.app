@@ -29,7 +29,7 @@ public class ProductService {
     final ProductImageRepo productImageRepo;
 
     public List<ProductDTO> allProduct(){
-        List<Product> productsEntity = productRepo.findAllByActiveTrue();
+        List<Product> productsEntity = productRepo.findAllByActive(true);
         List<ProductDTO> productDTOS = new ArrayList<>();
         ModelMapper mapper = new ModelMapper();
 
@@ -42,9 +42,9 @@ public class ProductService {
     public List<ProductDTO> allProduct(Boolean dop){
         List<Product> productsEntity;
         if (dop) {
-            productsEntity = productRepo.findAllActiveTrueAndByCategory("dop");
+            productsEntity = productRepo.findAllActiveAndByCategory(true, "dop");
         } else {
-            productsEntity = productRepo.findAllByActiveTrueAndCategoryIsNot("dop");
+            productsEntity = productRepo.findAllByActiveAndCategoryIsNot(true, "dop");
         }
 
         List<ProductDTO> productDTOS = new ArrayList<>();
@@ -58,7 +58,7 @@ public class ProductService {
 
     public List<ProductView> getProductsView(String category) {
         List<ProductView> productViews = new ArrayList<>();
-        List<Product> products = productRepo.findAllActiveTrueAndByCategory(category);
+        List<Product> products = productRepo.findAllActiveAndByCategory(true, category);
 
         for (Product product : products) {
             ProductView productView = getProductView(product.getId());
@@ -83,17 +83,17 @@ public class ProductService {
 
         if(product.getCategory().equals("dop")) {
             productView.setPriceSmall(productPriceRepo
-                    .findByActiveTrueAndProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL"))
+                    .findByActiveAndProductAndProductSize(true, product, productSizeRepo.findBySizeName("SMALL"))
                     .getPrice());
         } else {
             productView.setPriceSmall(productPriceRepo
-                    .findByActiveTrueAndProductAndProductSize(product, productSizeRepo.findBySizeName("SMALL"))
+                    .findByActiveAndProductAndProductSize(true, product, productSizeRepo.findBySizeName("SMALL"))
                     .getPrice());
             productView.setPriceMedium(productPriceRepo
-                    .findByActiveTrueAndProductAndProductSize(product, productSizeRepo.findBySizeName("MEDIUM"))
+                    .findByActiveAndProductAndProductSize(true, product, productSizeRepo.findBySizeName("MEDIUM"))
                     .getPrice());
             productView.setPriceBig(productPriceRepo
-                    .findByActiveTrueAndProductAndProductSize(product, productSizeRepo.findBySizeName("BIG"))
+                    .findByActiveAndProductAndProductSize(true, product, productSizeRepo.findBySizeName("BIG"))
                     .getPrice());
         }
 
@@ -146,7 +146,7 @@ public class ProductService {
 
     public void productDelete(Long productId) {
         Product product = productRepo.getById(productId);
-        List<ProductPrice> productPrices = productPriceRepo.findAllByActiveTrueAndProduct(product);
+        List<ProductPrice> productPrices = productPriceRepo.findAllByActiveAndProduct(true, product);
 
         for (ProductPrice productPrice : productPrices) {
             productPrice.setActive(false);
@@ -174,7 +174,7 @@ public class ProductService {
 
         Product productSaved = productRepo.save(product);
 
-        List<ProductPrice> productPriceList = productPriceRepo.findAllByActiveTrueAndProduct(product);
+        List<ProductPrice> productPriceList = productPriceRepo.findAllByActiveAndProduct(true, product);
 
         for (ProductPrice productPrice : productPriceList) {
             switch (productPrice.getProductSize().getSizeName()) {
