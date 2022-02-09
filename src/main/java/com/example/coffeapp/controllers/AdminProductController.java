@@ -31,7 +31,7 @@ public class AdminProductController {
     @GetMapping("/new")
     public String productNew(@RequestParam(name = "dop") Boolean dop, Model model) {
 
-        model.addAttribute("dop", dop.toString());
+        model.addAttribute("dop", dop);
 
         return "productNew";
     }
